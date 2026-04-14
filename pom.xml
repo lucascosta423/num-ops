@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.main</groupId>
-	<artifactId>numberManager</artifactId>
+	<artifactId>numOps</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>numberManager</name>
+	<name>numOps</name>
 	<description>Projeto para realização do desafio da faculdade</description>
 	<url/>
 	<licenses>
