@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,20 +26,18 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserModel implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
-    private String usuario;
-
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -55,7 +54,7 @@ public class UserModel implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "provedor_id")
-    private ProviderModel provedor;
+    private ProviderModel provider;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -79,12 +78,12 @@ public class UserModel implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return this.usuario;
+        return this.email;
     }
 
     @Override

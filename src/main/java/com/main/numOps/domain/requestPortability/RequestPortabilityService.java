@@ -3,11 +3,10 @@ package com.main.numOps.domain.requestPortability;
 
 import com.main.numOps.Enuns.Status;
 import com.main.numOps.dtos.Portability.RequestPortabilityDTO;
-import com.main.numOps.dtos.Portability.UpdateDocumentOrReason;
 import com.main.numOps.dtos.Portability.ResponsePortabilityDTO;
+import com.main.numOps.dtos.Portability.UpdateDocumentOrReason;
 import com.main.numOps.dtos.Portability.UpdateNumberForPortabilityDTO;
 import com.main.numOps.exeptions.NotFoundException;
-import com.main.numOps.services.FilesUpload.GoogleCloudStorageService;
 import com.main.numOps.utils.AuthUtils;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import org.springframework.beans.BeanUtils;
@@ -26,25 +25,21 @@ public class RequestPortabilityService {
 
     private final RequestPortabilityRepository requestPortabilityRepository;
     private final NumberForPortabilityService requestNumberService;
-    private final GoogleCloudStorageService cloudStorageService;
     private final AuthUtils authUtils;
 
-    public RequestPortabilityService(RequestPortabilityRepository requestPortabilityRepository, NumberForPortabilityService requestNumberService, GoogleCloudStorageService cloudStorageService, AuthUtils authUtils) {
+    public RequestPortabilityService(RequestPortabilityRepository requestPortabilityRepository, NumberForPortabilityService requestNumberService, AuthUtils authUtils) {
         this.requestPortabilityRepository = requestPortabilityRepository;
         this.requestNumberService = requestNumberService;
-        this.cloudStorageService = cloudStorageService;
         this.authUtils = authUtils;
     }
 
     @Transactional
     public SucessResponse save(RequestPortabilityDTO dto) throws IOException {
 
-        String fileUrl = cloudStorageService.uploadFile(dto.getFatura());
-
         var portabilityModel = new RequestPortabilityModel();
+
         BeanUtils.copyProperties(dto,portabilityModel,"fileFatura");
 
-        portabilityModel.setFileFatura(fileUrl);
         fillDataPortability(portabilityModel);
 
         var returnPortabilitySaved = requestPortabilityRepository.save(portabilityModel);

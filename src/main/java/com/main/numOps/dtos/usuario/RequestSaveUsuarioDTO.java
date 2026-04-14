@@ -12,13 +12,7 @@ public record RequestSaveUsuarioDTO(
 
         @Email(message = "O e-mail deve ser válido")
         @NotBlank(message = "Email não pode ser vazio")
-        @Pattern(
-                regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-                message = "O e-mail deve ser válido")
         String email,
-
-        @NotBlank(message = "Usuario não pode ser vazio")
-        String usuario,
 
         @NotBlank(message = "Senha não pode ser vazia")
         String senha,
@@ -27,6 +21,6 @@ public record RequestSaveUsuarioDTO(
         Integer provedor,
 
         @NotBlank(message = "Tipo do usuario nao pode ser vazio")
-        String tipoUsuario
+        String role
 ) {
 }
