@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: numberManager
+
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}/postgres
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      pool-name: MeuPoolPostgres
+
+  Jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate.ddl-auto: update
+
+token:
+  secret: ${JWT_SECRET:my-secret-key}
+
+
+gcp:
+  project-id: ferrous-module-408518
+  bucket-name: filesrequestportability
+  credentials:
+    location: classpath:google-credentials.json
+
