@@ -1,11 +1,12 @@
 package com.main.numOps.services.FilesUpload;
 
-import com.main.numOps.Enuns.Status;
-import com.main.numOps.domain.baseDids.DidsModel;
-import com.main.numOps.domain.baseDids.DidsRepository;
+import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.domain.Number.NumberModel;
+import com.main.numOps.domain.Number.NumberRepository;
 import com.main.numOps.domain.providers.ProviderService;
-import com.main.numOps.services.serviceImpl.FileHandlingImp;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -18,23 +19,21 @@ import java.util.List;
 import static com.main.numOps.utils.FileUtils.mapLineToModel;
 
 @Service
-public class NumberFilesService implements FileHandlingImp<DidsModel> {
+public class NumberFilesService {
 
-    private final DidsRepository didsRepository;
-    private final ProviderService providerService;
+    private final NumberBatchService numberBatchService;
 
-    public NumberFilesService(DidsRepository didsRepository, ProviderService providerService) {
-        this.didsRepository = didsRepository;
-        this.providerService = providerService;
+    public NumberFilesService(NumberBatchService numberBatchService) {
+        this.numberBatchService = numberBatchService;
     }
 
-    @Override
+    @Async
     public void processFile(MultipartFile file) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.ISO_8859_1))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
             String headerLine = reader.readLine();
             String[] headers = headerLine.split(";");
 
-            List<DidsModel> batch = new ArrayList<>();
+            List<NumberModel> batch = new ArrayList<>();
             int batchSize = 1000;
 
             String line;
@@ -42,41 +41,33 @@ public class NumberFilesService implements FileHandlingImp<DidsModel> {
             while ((line = reader.readLine()) != null) {
                 if (!line.isEmpty()) {
 
-                    DidsModel numero = mapLineToModel(line, headers, DidsModel::new, (model, header, value) -> {
+                    NumberModel numero = mapLineToModel(line, headers, NumberModel::new, (model, header, value) -> {
                         switch (header) {
                             case "cn" -> model.setCn(value);
                             case "prefixo" -> model.setPrefixo(value);
                             case "mcdu" -> model.setMcdu(value);
                             case "area" -> model.setArea(value);
-                            case "cliente" -> model.setCliente(value);
-                            case "documento" -> model.setDocumento(value);
-                            case "provedor" -> {
-                                Integer idProvedor = Integer.parseInt(value);
-                                model.setProvedor(providerService.findById(idProvedor));
-                            }
-                            case "status" -> model.setStatus(Status.valueOf(value));
+                            case "uf" -> model.setUfArea(value);
                         }
-                        if (model.getStatus() == null) {
-                            model.setStatus(Status.N);
+                        if (model.getStatusNumber() == null) {
+                            model.setStatusNumber(StatusNumber.AVAILABLE);
                         }
+
                     });
+
                     batch.add(numero);
 
                     if (batch.size() >= batchSize) {
-                        saveBatch(batch);
+                        numberBatchService.saveBatch(batch);
                         batch.clear();
                     }
                 }
             }
 
             if (!batch.isEmpty()) {
-                saveBatch(batch);
+                numberBatchService.saveBatch(batch);
             }
         }
     }
 
-    @Override
-    public void saveBatch(List<DidsModel> batch) {
-        didsRepository.saveAll(batch);
-    }
 }

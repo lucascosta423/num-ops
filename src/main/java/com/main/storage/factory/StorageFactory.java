@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StorageFactory {
 
-    @Value("${app.storage.type}")
+//    @Value("${app.storage.type}")
     private String type;
 
     private final LocalStorageService local;

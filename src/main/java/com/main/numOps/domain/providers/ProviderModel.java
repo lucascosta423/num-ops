@@ -1,6 +1,6 @@
 package com.main.numOps.domain.providers;
 
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,9 +47,9 @@ public class ProviderModel {
 
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusNumber statusNumber;
 
     public boolean verifyStatus(){
-        return this.status == Status.I;
+        return this.statusNumber == StatusNumber.ACTIVE;
     }
 }

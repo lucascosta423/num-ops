@@ -2,7 +2,7 @@ package com.main.numOps.domain.requestPortability;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.user.UserModel;
 import jakarta.persistence.*;
@@ -52,5 +52,5 @@ public class RequestPortabilityModel {
     private List<NumberForPortabilityModel> numberForPortabilityModel;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusNumber statusNumber;
 }

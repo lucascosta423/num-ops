@@ -109,7 +109,7 @@ public class NumberForPortabilityService {
             StatusPortability statusEnum = StatusPortability.valueOf(status.trim().toUpperCase());
             model.setStatusSolicitacao(statusEnum);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Status de portabilidade inválido: " + status);
+            throw new IllegalArgumentException("StatusNumber de portabilidade inválido: " + status);
         }
     }
 

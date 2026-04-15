@@ -1,6 +1,6 @@
 package com.main.numOps.dtos.Portability;
 
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.requestPortability.NumberForPortabilityModel;
 import com.main.numOps.domain.requestPortability.RequestPortabilityModel;
 
@@ -16,7 +16,7 @@ public record ResponsePortabilityDTO(
         String provedor,
         LocalDateTime dataCriado,
         LocalDateTime dataFinalizado,
-        Status status,
+        StatusNumber statusNumber,
         List<NumberForPortabilityModel> solicitacoes
 ) {
     public static ResponsePortabilityDTO fromEntity(RequestPortabilityModel portabilidadeModel) {
@@ -25,11 +25,11 @@ public record ResponsePortabilityDTO(
                 portabilidadeModel.getRazao(),
                 portabilidadeModel.getDocumento(),
                 portabilidadeModel.getFileFatura(),
-                portabilidadeModel.getUsuario().getUsuario(),
+                portabilidadeModel.getUsuario().getName(),
                 portabilidadeModel.getProvedor().getNome(),
                 portabilidadeModel.getDataCriado(),
                 portabilidadeModel.getDataFinalizado(),
-                portabilidadeModel.getStatus(),
+                portabilidadeModel.getStatusNumber(),
                 portabilidadeModel.getNumberForPortabilityModel()
         );
     }

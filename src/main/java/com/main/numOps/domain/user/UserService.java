@@ -1,6 +1,6 @@
 package com.main.numOps.domain.user;
 
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.Enuns.UserRole;
 import com.main.numOps.dtos.user.RequestSaveUsuarioDTO;
 import com.main.numOps.dtos.user.RequestUpdateUsuarioDTO;
@@ -73,7 +73,7 @@ public class UserService {
     }
 
     private void fillDataUser(UserModel userModel,RequestSaveUsuarioDTO usuarioDTO){
-        userModel.setStatus(Status.A);
+        userModel.setStatusNumber(StatusNumber.AVAILABLE);
         userModel.setPassword(cryptPassword(usuarioDTO.senha()));
         userModel.setRole(UserRole.valueOf(usuarioDTO.role().toUpperCase()));
         userModel.setProvider(providerService.findById(usuarioDTO.provedor()));
@@ -103,17 +103,17 @@ public class UserService {
     public SucessResponse changeUserStatus(UUID id){
         var usuario = findByIdUser(id);
 
-        switch (usuario.getStatus()){
-            case A:
-                usuario.setStatus(Status.I);
+        switch (usuario.getStatusNumber()){
+            case ACTIVE:
+                usuario.setStatusNumber(StatusNumber.INACTIVE);
                 return new SucessResponse("Usuario desativado com sucesso","OK");
-            case I:
-                usuario.setStatus(Status.A);
+            case INACTIVE:
+                usuario.setStatusNumber(StatusNumber.ACTIVE);
                 return new SucessResponse("Usuario ativado com sucesso","OK");
         }
 
         userRepository.save(usuario);
 
-        return new SucessResponse("Nao foi possivel alterar o status do usuario","Erro");
+        return new SucessResponse("Nao foi possivel alterar o statusNumber do usuario","Erro");
     }
 }

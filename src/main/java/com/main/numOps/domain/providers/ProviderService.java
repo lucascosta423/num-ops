@@ -1,8 +1,8 @@
 package com.main.numOps.domain.providers;
 
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.dtos.provider.RequestProviderDTO;
 import com.main.numOps.exeptions.NotFoundException;
-import com.main.numOps.Enuns.Status;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class ProviderService {
         var model = new ProviderModel();
         BeanUtils.copyProperties(dto, model);
 
-        model.setStatus(Status.A);
+        model.setStatusNumber(StatusNumber.ACTIVE);
 
         providerRepository.save(model);
 
@@ -33,9 +33,9 @@ public class ProviderService {
     public SucessResponse changeProviderStatus(Integer id){
         ProviderModel providerModel = findById(id);
 
-        switch (providerModel.getStatus()){
-            case A -> providerModel.setStatus(Status.I);
-            case I -> providerModel.setStatus(Status.A);
+        switch (providerModel.getStatusNumber()){
+            case ACTIVE -> providerModel.setStatusNumber(StatusNumber.INACTIVE);
+            case INACTIVE -> providerModel.setStatusNumber(StatusNumber.ACTIVE);
         }
 
         providerRepository.save(providerModel);

@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 @Service
 public class LocalStorageService implements StorageService {
 
-    @Value("${app.storage.local-path:/tmp/storage}")
+//    @Value("${app.storage.local-path:/tmp/storage}")
     private String path;
 
     @Override

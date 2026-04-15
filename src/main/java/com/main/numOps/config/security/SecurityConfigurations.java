@@ -30,26 +30,37 @@ public class SecurityConfigurations {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/provedor/**", "/usuario/**", "/numero/**", "/operadoras/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/usuario/**", "/provedor/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/usuario/**", "/provedor/**", "/portabilidade/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("ADMIN")
-
-                        .requestMatchers(HttpMethod.POST, "/portabilidade/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.GET, "/numero/**", "/portabilidade/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.PUT, "/numero/update/*","portabilidade/update/").hasAnyRole("ADMIN", "USER")
-
-                        .requestMatchers("/**").hasRole("SUPER_ADMIN")
-
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+//        return httpSecurity
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorize -> authorize
+//
+//                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
+//
+//                        .requestMatchers(HttpMethod.POST, "/provedor/**", "/usuario/**", "/numero/**", "/operadoras/**").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.GET, "/usuario/**", "/provedor/**").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.PUT, "/usuario/**", "/provedor/**", "/portabilidade/**").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("ADMIN")
+//
+//                        .requestMatchers(HttpMethod.POST, "/portabilidade/**").hasAnyRole("ADMIN", "USER")
+//                        .requestMatchers(HttpMethod.GET, "/numero/**", "/portabilidade/**").hasAnyRole("ADMIN", "USER")
+//                        .requestMatchers(HttpMethod.PUT, "/numero/update/*","portabilidade/update/").hasAnyRole("ADMIN", "USER")
+//
+//                        .requestMatchers("/**").hasRole("SUPER_ADMIN")
+//
+//                        .anyRequest().authenticated()
+//                )
+//                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

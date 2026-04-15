@@ -1,7 +1,7 @@
 package com.main.numOps.domain.requestPortability;
 
 
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.dtos.Portability.RequestPortabilityDTO;
 import com.main.numOps.dtos.Portability.ResponsePortabilityDTO;
 import com.main.numOps.dtos.Portability.UpdateDocumentOrReason;
@@ -51,9 +51,9 @@ public class RequestPortabilityService {
 
     private void fillDataPortability(RequestPortabilityModel portabilityModel){
         portabilityModel.setId(gerarId());
-        portabilityModel.setStatus(Status.N);
+//        portabilityModel.setStatusNumber(StatusNumber.N);
         portabilityModel.setUsuario(authUtils.getCurrentUser());
-        portabilityModel.setProvedor(authUtils.getCurrentUser().getProvedor());
+        portabilityModel.setProvedor(authUtils.getCurrentUser().getProvider());
     }
 
     public SucessResponse updateDocumentOrReason(String id, UpdateDocumentOrReason dto){
@@ -79,7 +79,7 @@ public class RequestPortabilityService {
     @Transactional
     public SucessResponse finalizeRequestPortability(String id){
         RequestPortabilityModel portabilidadeModel = findById(id);
-        portabilidadeModel.setStatus(Status.F);
+//        portabilidadeModel.setStatusNumber(StatusNumber.F);
         portabilidadeModel.setDataFinalizado(LocalDateTime.now());
         requestPortabilityRepository.save(portabilidadeModel);
         return new SucessResponse("Solicitacao finalizada com sucesso","OK");
@@ -96,7 +96,7 @@ public class RequestPortabilityService {
             return requestPortabilityRepository.findAll(pageable)
                     .map(ResponsePortabilityDTO::fromEntity);
         }else {
-            return requestPortabilityRepository.findByProvedor(authUtils.getCurrentUser().getProvedor(),pageable)
+            return requestPortabilityRepository.findByProvedor(authUtils.getCurrentUser().getProvider(),pageable)
                     .map(ResponsePortabilityDTO::fromEntity);
         }
     }

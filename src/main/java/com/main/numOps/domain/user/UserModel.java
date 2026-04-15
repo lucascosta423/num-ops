@@ -1,6 +1,6 @@
 package com.main.numOps.domain.user;
 
-import com.main.numOps.Enuns.Status;
+import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.Enuns.UserRole;
 import com.main.numOps.domain.providers.ProviderModel;
 import jakarta.persistence.*;
@@ -50,7 +50,7 @@ public class UserModel implements UserDetails {
     }
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusNumber statusNumber;
 
     @ManyToOne
     @JoinColumn(name = "provedor_id")
@@ -102,7 +102,7 @@ public class UserModel implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.status == Status.A;
+        return this.statusNumber == StatusNumber.ACTIVE;
     }
 
 
