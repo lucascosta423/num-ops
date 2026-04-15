@@ -1,0 +1,173 @@
+type: collection.insomnia.rest/5.0
+name: NumOps
+meta:
+  id: wrk_3115712b8a9a4eb3b151da290cc7af5f
+  created: 1776274519107
+  modified: 1776274519107
+  description: ""
+collection:
+  - name: Number
+    meta:
+      id: fld_2adda2f0af894e2d94be9aafd0cd2028
+      created: 1776274527695
+      modified: 1776274527695
+      sortKey: -1776274527695
+      description: ""
+    children:
+      - url: http://localhost:8080/numero/upload
+        name: upload
+        meta:
+          id: req_5e604c33cce742139e78757c7691f0b7
+          created: 1776274532471
+          modified: 1776275097474
+          isPrivate: false
+          description: ""
+          sortKey: -1776274535479
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_6421722d643f4eed9afbb40b4a29758f
+              name: file
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              multiline: true
+              fileName: /home/lucassantos/Downloads/fileNumOps.csv
+        parameters:
+          - id: pair_58b2ac9a6ce044779138108988a573c5
+            name: ""
+            value: ""
+            description: ""
+            disabled: true
+            type: text
+            multiline: true
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/numero/activate/1
+        name: ativar
+        meta:
+          id: req_47f811b0162d427097829b0bc8fd54e7
+          created: 1776275100250
+          modified: 1776281141446
+          isPrivate: false
+          description: ""
+          sortKey: -1776275100250
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "cliente": "João da Silva",
+              "documento": "12345678901",
+              "cep": "29100-000",
+              "logradouro": "Rua das Palmeiras",
+              "numeroEndereco": "123",
+              "complemento": "Apto 101",
+              "bairro": "Centro",
+              "cidade": "Vila Velha",
+              "uf": "ES"
+            }
+        parameters:
+          - id: pair_783399142b9b4f7ea1057e332d34ec24
+            name: ""
+            value: ""
+            description: ""
+            disabled: true
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/numero/list
+        name: list number AVAILABLE
+        meta:
+          id: req_7c1e5b95364343b88c1650c1b2ec04b0
+          created: 1776280160740
+          modified: 1776280350593
+          isPrivate: false
+          description: ""
+          sortKey: -1776274817864.5
+        method: GET
+        parameters:
+          - id: pair_6206aa6602854033aa350655e6e2b1f5
+            name: area
+            value: Serra
+            description: ""
+            disabled: false
+          - id: pair_242c82e8c729409a93066494748d8b4f
+            name: uf
+            value: ES
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/numero/cancel/1
+        name: cancelar
+        meta:
+          id: req_013462f3c3a94d9db5db2d393cbf1cda
+          created: 1776281148736
+          modified: 1776281171919
+          isPrivate: false
+          description: ""
+          sortKey: -1776274959057.25
+        method: POST
+        parameters:
+          - id: pair_783399142b9b4f7ea1057e332d34ec24
+            name: ""
+            value: ""
+            description: ""
+            disabled: true
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_189884d7f404b62156d89461c003c25f1670150d
+    created: 1776274519111
+    modified: 1776274519111
+environments:
+  name: Base Environment
+  meta:
+    id: env_189884d7f404b62156d89461c003c25f1670150d
+    created: 1776274519111
+    modified: 1776274519111
+    isPrivate: false
