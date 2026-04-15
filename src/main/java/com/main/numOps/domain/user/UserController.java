@@ -1,8 +1,8 @@
-package com.main.numOps.domain.users;
+package com.main.numOps.domain.user;
 
-import com.main.numOps.dtos.usuario.RequestSaveUsuarioDTO;
-import com.main.numOps.dtos.usuario.RequestUpdateUsuarioDTO;
-import com.main.numOps.dtos.usuario.ResponseUsuarioDto;
+import com.main.numOps.dtos.user.RequestSaveUsuarioDTO;
+import com.main.numOps.dtos.user.RequestUpdateUsuarioDTO;
+import com.main.numOps.dtos.user.ResponseUsuarioDto;
 import com.main.numOps.domain.providers.ProviderService;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,17 +21,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/usuario")
 
-public class UsuarioController {
-    private final UsuarioService usuarioService;
+public class UserController {
+    private final UserService userService;
 
-    public UsuarioController(UsuarioService usuarioService, ProviderService providerService) {
-        this.usuarioService = usuarioService;
+    public UserController(UserService userService, ProviderService providerService) {
+        this.userService = userService;
     }
 
     @PostMapping("/save/user")
     public ResponseEntity<SucessResponse> saveUsuario(@RequestBody @Valid RequestSaveUsuarioDTO requestSaveUsuarioDTO){
 
-        var sucess = usuarioService.save(requestSaveUsuarioDTO);
+        var sucess = userService.save(requestSaveUsuarioDTO);
 
        return ResponseEntity.status(HttpStatus.CREATED).body(sucess);
     }
@@ -43,20 +43,20 @@ public class UsuarioController {
                     size = 10,
                     direction = Sort.Direction.ASC)
             Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAllUsers(pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAllUsers(pageable));
     }
 
     @PutMapping("update/{id}")
     public ResponseEntity<SucessResponse> updateUser(@PathVariable(value = "id") UUID id,
                                                      @Valid @RequestBody RequestUpdateUsuarioDTO usuarioDto){
 
-        SucessResponse response = usuarioService.updateUser(id,usuarioDto);
+        SucessResponse response = userService.updateUser(id,usuarioDto);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("delete/{id}")
     public ResponseEntity<SucessResponse> changeProviderStatus(@PathVariable(value = "id") UUID id){
-        SucessResponse response = usuarioService.changeUserStatus(id);
+        SucessResponse response = userService.changeUserStatus(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

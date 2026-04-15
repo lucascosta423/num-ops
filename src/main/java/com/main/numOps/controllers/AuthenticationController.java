@@ -1,9 +1,9 @@
 package com.main.numOps.controllers;
 
 import com.main.numOps.config.TokenService;
-import com.main.numOps.dtos.usuario.AuthenticationDTO;
-import com.main.numOps.dtos.usuario.LoginResponseDTO;
-import com.main.numOps.domain.users.UserModel;
+import com.main.numOps.dtos.user.AuthenticationDTO;
+import com.main.numOps.dtos.user.LoginResponseDTO;
+import com.main.numOps.domain.user.UserModel;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

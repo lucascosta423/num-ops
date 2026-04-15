@@ -4,7 +4,7 @@ package com.main.numOps.domain.requestPortability;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.main.numOps.Enuns.Status;
 import com.main.numOps.domain.providers.ProviderModel;
-import com.main.numOps.domain.users.UserModel;
+import com.main.numOps.domain.user.UserModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

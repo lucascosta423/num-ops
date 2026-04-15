@@ -1,4 +1,4 @@
-package com.main.numOps.domain.users;
+package com.main.numOps.domain.user;
 
 import com.main.numOps.Enuns.Status;
 import com.main.numOps.Enuns.UserRole;

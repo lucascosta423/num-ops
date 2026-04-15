@@ -3,7 +3,7 @@ package com.main.numOps.config.security;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.main.numOps.config.TokenService;
-import com.main.numOps.domain.users.UsuarioRepository;
+import com.main.numOps.domain.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,11 +20,11 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
         this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 return;
             }
 
-            UserDetails user = usuarioRepository.findByUsuario(usuario);
+            UserDetails user = userRepository.findByUsuario(usuario);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);

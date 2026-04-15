@@ -1,10 +1,10 @@
-package com.main.numOps.domain.users;
+package com.main.numOps.domain.user;
 
 import com.main.numOps.Enuns.Status;
 import com.main.numOps.Enuns.UserRole;
-import com.main.numOps.dtos.usuario.RequestSaveUsuarioDTO;
-import com.main.numOps.dtos.usuario.RequestUpdateUsuarioDTO;
-import com.main.numOps.dtos.usuario.ResponseUsuarioDto;
+import com.main.numOps.dtos.user.RequestSaveUsuarioDTO;
+import com.main.numOps.dtos.user.RequestUpdateUsuarioDTO;
+import com.main.numOps.dtos.user.ResponseUsuarioDto;
 import com.main.numOps.exeptions.NotFoundException;
 import com.main.numOps.domain.providers.ProviderService;
 import com.main.numOps.utils.responseApi.SucessResponse;
@@ -19,13 +19,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UsuarioService {
+public class UserService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
     private  final ProviderService providerService;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, ProviderService providerService) {
-        this.usuarioRepository = usuarioRepository;
+    public UserService(UserRepository userRepository, ProviderService providerService) {
+        this.userRepository = userRepository;
         this.providerService = providerService;
     }
 
@@ -35,14 +35,14 @@ public class UsuarioService {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(dto, userModel);
 
-        String tipo = dto.tipoUsuario().toLowerCase();
+        String tipo = dto.role().toLowerCase();
 
         if (!tipo.equals("admin") && !tipo.equals("user")) {
-            throw new IllegalArgumentException("Tipo de usuário inválido: " + dto.tipoUsuario());
+            throw new IllegalArgumentException("Tipo de usuário inválido: " + dto.role());
         }
 
         fillDataUser(userModel, dto);
-        usuarioRepository.save(userModel);
+        userRepository.save(userModel);
 
         String msg = tipo.equals("admin") ?
                 "Administrador criado com sucesso" :
@@ -53,12 +53,12 @@ public class UsuarioService {
 
     public Page<ResponseUsuarioDto> findAllUsers(Pageable pageable) {
 
-        return usuarioRepository.findAll(pageable)
+        return userRepository.findAll(pageable)
                 .map(ResponseUsuarioDto::fromEntity);
     }
 
     public UserModel findByIdUser(UUID id) {
-        return usuarioRepository.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuario não encontrado"));
     }
 
@@ -67,16 +67,16 @@ public class UsuarioService {
 
         UserModel usuario = findByIdUser(id);
         updateDataUser(usuario, dto);
-        usuarioRepository.save(usuario);
+        userRepository.save(usuario);
 
         return new SucessResponse("Usuario atualizado","Ok");
     }
 
     private void fillDataUser(UserModel userModel,RequestSaveUsuarioDTO usuarioDTO){
         userModel.setStatus(Status.A);
-        userModel.setSenha(cryptPassword(usuarioDTO.senha()));
-        userModel.setRole(UserRole.valueOf(usuarioDTO.tipoUsuario().toUpperCase()));
-        userModel.setProvedor(providerService.findById(usuarioDTO.provedor()));
+        userModel.setPassword(cryptPassword(usuarioDTO.senha()));
+        userModel.setRole(UserRole.valueOf(usuarioDTO.role().toUpperCase()));
+        userModel.setProvider(providerService.findById(usuarioDTO.provedor()));
 
     }
 
@@ -84,7 +84,7 @@ public class UsuarioService {
 
         Optional.ofNullable(dto.getNome())
                 .filter(nome -> !nome.trim().isEmpty())
-                .ifPresent(userModel::setNome);
+                .ifPresent(userModel::setName);
 
         Optional.ofNullable(dto.getEmail())
                 .filter(email -> !email.trim().isEmpty())
@@ -92,7 +92,7 @@ public class UsuarioService {
 
         Optional.ofNullable(dto.getSenha())
                 .filter(senha -> !senha.trim().isEmpty())
-                .ifPresent(senha -> userModel.setSenha(cryptPassword(senha)));
+                .ifPresent(senha -> userModel.setPassword(cryptPassword(senha)));
     }
 
     private String cryptPassword(String password){
@@ -112,7 +112,7 @@ public class UsuarioService {
                 return new SucessResponse("Usuario ativado com sucesso","OK");
         }
 
-        usuarioRepository.save(usuario);
+        userRepository.save(usuario);
 
         return new SucessResponse("Nao foi possivel alterar o status do usuario","Erro");
     }
