@@ -1,19 +1,18 @@
 package com.main.numOps.Enuns;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusNumber {
     AVAILABLE("Disponível"),
     UNAVAILABLE("Não disponível"),
     ACTIVE("Ativo"),
     INACTIVE("Inativo");
 
-    private final String descricao;
+    private final String descriptor;
 
-    StatusNumber(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getDescricao() {
-        return descricao;
+    StatusNumber(String descriptor) {
+        this.descriptor = descriptor;
     }
 
 }

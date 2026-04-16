@@ -1,12 +1,9 @@
 package com.main.numOps.services.FilesUpload;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.Number.NumberModel;
-import com.main.numOps.domain.Number.NumberRepository;
-import com.main.numOps.domain.providers.ProviderService;
+import com.main.numOps.domain.Number.did.NumberModel;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;

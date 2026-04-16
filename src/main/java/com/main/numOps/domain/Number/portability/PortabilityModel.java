@@ -1,7 +1,6 @@
-package com.main.numOps.domain.requestPortability;
+package com.main.numOps.domain.Number.portability;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.main.numOps.Enuns.StatusPortability;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,12 +12,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "solicitacaonumero")
-@Table(name = "SO_Numero")
-public class NumberForPortabilityModel {
+@Entity(name = "portability")
+public class PortabilityModel {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
     private String numero;
@@ -41,8 +40,4 @@ public class NumberForPortabilityModel {
 
     private StatusPortability statusSolicitacao;
 
-    @ManyToOne
-    @JoinColumn(name = "port_ticket", nullable = false)
-    @JsonIgnore
-    private RequestPortabilityModel requestPortabilityModel;
 }
