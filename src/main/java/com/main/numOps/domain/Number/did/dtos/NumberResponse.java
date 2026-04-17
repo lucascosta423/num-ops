@@ -10,16 +10,6 @@ public record NumberResponse(
         String numero,
         String area,
         String ufArea,
-        String provedor,
-        String cliente,
-        String documento,
-        String cep,
-        String logradouro,
-        String numeroEndereco,
-        String complemento,
-        String bairro,
-        String cidade,
-        String uf,
         LocalDateTime dateAtivacao,
         StatusNumber statusNumber
 ) {
@@ -29,17 +19,7 @@ public record NumberResponse(
                 n.getNumero(),
                 n.getArea(),
                 n.getUfArea(),
-                n.getProvider().getNome(),
-                n.getCliente(),
-                n.getDocumento(),
-                n.getCep(),
-                n.getLogradouro(),
-                n.getNumeroEndereco(),
-                n.getComplemento(),
-                n.getBairro(),
-                n.getCidade(),
-                n.getUf(),
-                n.getDataAtivacao(),
+                n.getDateCreated(),
                 n.getStatusNumber()
         );
     }

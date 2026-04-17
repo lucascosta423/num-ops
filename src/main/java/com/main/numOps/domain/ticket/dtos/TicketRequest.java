@@ -14,6 +14,7 @@ public record TicketRequest(
         String bairro,
         String cidade,
         String uf,
+        String type,
         List<String> numeros,
         MultipartFile fatura
 ) {

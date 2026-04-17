@@ -3,7 +3,7 @@ package com.main.numOps.domain.ticket;
 import com.main.numOps.domain.Number.did.NumberService;
 import com.main.numOps.domain.Number.portability.PortabilityService;
 import com.main.numOps.domain.providers.ProviderModel;
-import com.main.numOps.domain.providers.ProviderService;
+import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
 import com.main.numOps.domain.ticket.enuns.TicketType;
 import com.main.numOps.mapper.TicketMapper;
@@ -14,14 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
-    private final ProviderService providerService;
     private final TicketMapper mapper;
     private final PortabilityService portabilityService;
     private final NumberService numberService;
 
-    public TicketService(TicketRepository ticketRepository, ProviderService providerService, TicketMapper mapper, PortabilityService portabilityService, NumberService numberService) {
+    public TicketService(TicketRepository ticketRepository, TicketMapper mapper, PortabilityService portabilityService, NumberService numberService) {
         this.ticketRepository = ticketRepository;
-        this.providerService = providerService;
         this.mapper = mapper;
         this.portabilityService = portabilityService;
         this.numberService = numberService;
@@ -37,7 +35,7 @@ public class TicketService {
 
         switch (TicketType.valueOf(type)) {
             case PORTABILITY:
-                portabilityService.createPortabilityNumbers(ticket,ticketRequest.numeros());
+                portabilityService.createPortabilityNumbers(ticket, ticketRequest.numeros());
                 break;
 
             case DID:
@@ -46,6 +44,7 @@ public class TicketService {
 
             case CANCELLATION:
                 return;
+                break;
 
             default:
                 throw new IllegalArgumentException("Ticket type not supported");
@@ -60,8 +59,9 @@ public class TicketService {
         return ticketRepository.findByProvider(provider,pageable);
     }
 
-    public Page<TicketModel> findAll(Pageable pageable){
-        return ticketRepository.findAll(pageable);
+    public Page<TicketReponse> findAll(Pageable pageable){
+        return ticketRepository.findAll(pageable)
+                .map(TicketReponse::fromEntity);
     }
 
     public void cancel(Integer id){

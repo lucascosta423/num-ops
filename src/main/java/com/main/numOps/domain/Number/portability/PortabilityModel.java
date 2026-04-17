@@ -20,6 +20,26 @@ public class PortabilityModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String razao;
+
+    private String documento;
+
+    private String cep;
+
+    private String logradouro;
+
+    private String numeroEndereco;
+
+    private String complemento;
+
+    private String bairro;
+
+    private String cidade;
+
+    private String uf;
+
+    private String fatura;
+
     @Column(nullable = false)
     private String numero;
 

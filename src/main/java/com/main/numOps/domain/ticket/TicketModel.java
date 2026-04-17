@@ -1,6 +1,7 @@
 package com.main.numOps.domain.ticket;
 
 import com.main.numOps.domain.providers.ProviderModel;
+import com.main.numOps.domain.ticket.enuns.TicketStatus;
 import com.main.numOps.domain.ticket.enuns.TicketType;
 import com.main.numOps.domain.user.UserModel;
 import com.main.numOps.utils.TicketIdGenerator;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "solicitacaoPortabilidade")
+@Entity(name = "tickets")
 public class TicketModel {
 
     @Id
@@ -60,7 +61,7 @@ public class TicketModel {
     @Enumerated(EnumType.STRING)
     private TicketType type;
 
-    private String status;
+    private TicketStatus status;
 
     @PrePersist
     protected void onCreate() {

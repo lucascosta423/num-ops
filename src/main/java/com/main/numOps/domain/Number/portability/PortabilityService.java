@@ -1,9 +1,7 @@
 package com.main.numOps.domain.Number.portability;
 
-import com.main.numOps.domain.operators.OperatorsService;
 import com.main.numOps.domain.ticket.TicketModel;
 import com.main.numOps.mapper.PortabilityMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +26,6 @@ public class PortabilityService {
     }
 
     private PortabilityModel buildPortabilityNumber(String numero, TicketModel ticket) {
-
         return portabilityMapper.toModel(numero,ticket);
     }
 
