@@ -22,7 +22,7 @@ public class TicketModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
     private String ticket;
 
@@ -47,11 +47,11 @@ public class TicketModel {
     private String fatura;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario", nullable = false)
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "provedor_id", nullable = false)
+    @JoinColumn(name = "provedor", nullable = false)
     private ProviderModel provider;
 
     private LocalDateTime dateCreated;
@@ -61,6 +61,7 @@ public class TicketModel {
     @Enumerated(EnumType.STRING)
     private TicketType type;
 
+    @Enumerated(EnumType.STRING)
     private TicketStatus status;
 
     @PrePersist

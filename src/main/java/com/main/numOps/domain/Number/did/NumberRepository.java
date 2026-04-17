@@ -15,7 +15,7 @@ public interface NumberRepository extends JpaRepository<NumberModel,Integer> {
     Page<NumberModel> findByProvider(ProviderModel provider, Pageable pageable);
 
     @Query("""
-    SELECT n FROM numero n
+    SELECT n FROM numbers n
     WHERE (:status IS NULL OR n.statusNumber = :status)
       AND (:ufArea IS NULL OR n.ufArea = :ufArea)
       AND (:area IS NULL OR n.area = :area)

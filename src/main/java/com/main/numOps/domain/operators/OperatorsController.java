@@ -46,7 +46,7 @@ public class OperatorsController {
     }
 
     @GetMapping("/numero")
-    public ResponseEntity<OperatorsModel> getByNumero(@RequestBody NumberLookupDTO numeroOperadoraDTO){
+    public ResponseEntity<CarrierResponse> getByNumero(@RequestBody NumberLookupDTO numeroOperadoraDTO){
 
         var operadoraDTO = operatorsService.findByNumber(
                 numeroOperadoraDTO.prefixo(),

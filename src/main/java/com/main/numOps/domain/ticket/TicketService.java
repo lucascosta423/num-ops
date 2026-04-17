@@ -39,12 +39,11 @@ public class TicketService {
                 break;
 
             case DID:
-                numberService.activateNumber(ticket, ticketRequest.numeros());
+                //numberService.activateNumber(ticket, ticketRequest.numeros());
                 break;
 
             case CANCELLATION:
                 return;
-                break;
 
             default:
                 throw new IllegalArgumentException("Ticket type not supported");

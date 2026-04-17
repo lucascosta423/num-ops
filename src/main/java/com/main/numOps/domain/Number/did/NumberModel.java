@@ -1,6 +1,7 @@
 package com.main.numOps.domain.Number.did;
 
 import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.TicketModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,10 @@ public class NumberModel {
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
     private TicketModel ticket;
+
+    @ManyToOne
+    @JoinColumn(name = "provedor_id", nullable = false)
+    private ProviderModel provider;
 
     @Enumerated(EnumType.STRING)
     private StatusNumber statusNumber;
