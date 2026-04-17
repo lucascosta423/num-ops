@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.dtos;
+package com.main.numOps.domain.Number.did.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 

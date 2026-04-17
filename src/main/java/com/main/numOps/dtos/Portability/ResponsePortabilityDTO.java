@@ -1,8 +1,7 @@
 package com.main.numOps.dtos.Portability;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.requestPortability.NumberForPortabilityModel;
-import com.main.numOps.domain.requestPortability.RequestPortabilityModel;
+import com.main.numOps.domain.Number.portability.PortabilityModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +16,7 @@ public record ResponsePortabilityDTO(
         LocalDateTime dataCriado,
         LocalDateTime dataFinalizado,
         StatusNumber statusNumber,
-        List<NumberForPortabilityModel> solicitacoes
+        List<PortabilityModel> solicitacoes
 ) {
     public static ResponsePortabilityDTO fromEntity(RequestPortabilityModel portabilidadeModel) {
         return new ResponsePortabilityDTO(

@@ -1,9 +1,9 @@
-package com.main.numOps.domain.Number;
+package com.main.numOps.domain.Number.did;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.Number.dtos.ActivateNumberRequest;
-import com.main.numOps.domain.Number.dtos.NumberAvailableResponse;
-import com.main.numOps.domain.Number.dtos.NumberResponse;
+import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
+import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
+import com.main.numOps.domain.Number.did.dtos.NumberResponse;
 import com.main.numOps.exeptions.NotFoundException;
 import com.main.numOps.utils.AuthUtils;
 import com.main.numOps.utils.responseApi.SucessResponse;
@@ -31,19 +31,8 @@ public class NumberService {
             throw new IllegalStateException("Número não está disponível para ativação");
         }
 
-        numberModel.setCliente(dto.cliente());
-        numberModel.setDocumento(dto.documento());
-        numberModel.setCep(dto.cep());
-        numberModel.setLogradouro(dto.logradouro());
-        numberModel.setNumeroEndereco(dto.numeroEndereco());
-        numberModel.setComplemento(dto.complemento());
-        numberModel.setBairro(dto.bairro());
-        numberModel.setCidade(dto.cidade());
-        numberModel.setUf(dto.uf());
-
         numberModel.setStatusNumber(StatusNumber.ACTIVE);
         //numberModel.setProvider(authUtils.getCurrentUser().getProvider());
-        numberModel.setDataAtivacao(LocalDateTime.now());
 
         numberRepository.save(numberModel);
 
@@ -58,19 +47,7 @@ public class NumberService {
             throw new IllegalStateException("Número não está ativo para cancelamento");
         }
 
-        numberModel.setCliente(null);
-        numberModel.setDocumento(null);
-        numberModel.setCep(null);
-        numberModel.setLogradouro(null);
-        numberModel.setNumeroEndereco(null);
-        numberModel.setComplemento(null);
-        numberModel.setBairro(null);
-        numberModel.setCidade(null);
-        numberModel.setUf(null);
-
         numberModel.setStatusNumber(StatusNumber.AVAILABLE);
-        numberModel.setProvider(null);
-        numberModel.setDataAtivacao(null);
 
         numberRepository.save(numberModel);
 

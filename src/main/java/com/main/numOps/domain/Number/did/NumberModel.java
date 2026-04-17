@@ -1,7 +1,7 @@
-package com.main.numOps.domain.Number;
+package com.main.numOps.domain.Number.did;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.providers.ProviderModel;
+import com.main.numOps.domain.ticket.TicketModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,34 +35,18 @@ public class NumberModel {
 
     private String ufArea;
 
-    private String cliente;
+    private LocalDateTime dateCreated;
 
-    private String documento;
-
-    private String cep;
-
-    private String logradouro;
-
-    private String numeroEndereco;
-
-    private String complemento;
-
-    private String bairro;
-
-    private String cidade;
-
-    private String uf;
-
-    private LocalDateTime dataAtivacao;
+    private LocalDateTime dateFinished;
 
     private LocalDateTime dataUpload;
 
     @ManyToOne
-    private ProviderModel provider;
+    @JoinColumn(name = "ticket_id", nullable = false)
+    private TicketModel ticket;
 
     @Enumerated(EnumType.STRING)
     private StatusNumber statusNumber;
-
 
     @PrePersist
     private void onCreate(){

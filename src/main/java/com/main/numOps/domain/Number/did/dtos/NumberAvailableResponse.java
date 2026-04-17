@@ -1,6 +1,6 @@
-package com.main.numOps.domain.Number.dtos;
+package com.main.numOps.domain.Number.did.dtos;
 
-import com.main.numOps.domain.Number.NumberModel;
+import com.main.numOps.domain.Number.did.NumberModel;
 
 public record NumberAvailableResponse(
         Integer id,

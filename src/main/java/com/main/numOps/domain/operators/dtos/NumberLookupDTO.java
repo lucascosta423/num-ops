@@ -1,6 +1,6 @@
-package com.main.numOps.dtos.operators;
+package com.main.numOps.domain.operators.dtos;
 
-public record RequestNumeroOperadoraDTO(
+public record NumberLookupDTO(
         String codigoNacional,
         String prefixo,
         String mcdu

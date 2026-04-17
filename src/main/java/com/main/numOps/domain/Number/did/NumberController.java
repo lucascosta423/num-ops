@@ -1,7 +1,7 @@
-package com.main.numOps.domain.Number;
+package com.main.numOps.domain.Number.did;
 
-import com.main.numOps.domain.Number.dtos.ActivateNumberRequest;
-import com.main.numOps.domain.Number.dtos.NumberAvailableResponse;
+import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
+import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
 import com.main.numOps.services.FilesUpload.NumberFilesService;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import io.swagger.v3.oas.annotations.Hidden;
