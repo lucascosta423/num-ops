@@ -16,4 +16,18 @@ public enum TicketType {
         this.prefixo = prefixo;
     }
 
+    public static TicketType from(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Ticket type cannot be null");
+        }
+
+        for (TicketType type : values()) {
+            if (type.descriptor.equalsIgnoreCase(value)) {
+                return type;
+            }
+        }
+
+        throw new IllegalArgumentException("Invalid ticket type: " + value);
+    }
+
 }

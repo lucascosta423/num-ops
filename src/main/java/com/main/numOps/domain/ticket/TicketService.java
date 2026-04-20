@@ -1,69 +1,60 @@
 package com.main.numOps.domain.ticket;
 
-import com.main.numOps.domain.Number.did.NumberService;
-import com.main.numOps.domain.Number.portability.PortabilityService;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
-import com.main.numOps.domain.ticket.enuns.TicketType;
 import com.main.numOps.mapper.TicketMapper;
+import com.main.numOps.utils.AuthUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
-    private final TicketMapper mapper;
-    private final PortabilityService portabilityService;
-    private final NumberService numberService;
+        private final TicketMapper mapper;
+    private final AuthUtils authUtils;
 
-    public TicketService(TicketRepository ticketRepository, TicketMapper mapper, PortabilityService portabilityService, NumberService numberService) {
+
+    public TicketService(TicketRepository ticketRepository, TicketMapper mapper, AuthUtils authUtils) {
         this.ticketRepository = ticketRepository;
         this.mapper = mapper;
-        this.portabilityService = portabilityService;
-        this.numberService = numberService;
+        this.authUtils = authUtils;
     }
 
+    @Transactional
     public void save(TicketRequest ticketRequest){
 
-        TicketModel ticketModel = mapper.toModel(ticketRequest);
+        TicketModel ticket = mapper.toModel(ticketRequest);
 
-        var type = ticketModel.getType().getDescriptor();
+        var ticketSaved = ticketRepository.save(ticket);
 
-        var ticket = ticketRepository.save(ticketModel);
+        var type = ticketSaved.getType();
 
-        switch (TicketType.valueOf(type)) {
-            case PORTABILITY:
-                portabilityService.createPortabilityNumbers(ticket, ticketRequest.numeros());
-                break;
 
-            case DID:
-                //numberService.activateNumber(ticket, ticketRequest.numeros());
-                break;
-
-            case CANCELLATION:
-                return;
-
-            default:
-                throw new IllegalArgumentException("Ticket type not supported");
-        }
     }
 
     public TicketModel findById(Integer id){
         return ticketRepository.findById(id).orElseThrow();
     }
 
-    public Page<TicketModel> findByProvider(ProviderModel provider, Pageable pageable){
-        return ticketRepository.findByProvider(provider,pageable);
-    }
+    public Page<TicketReponse> listTickets(Pageable pageable){
+        if (authUtils.isAdmin()) {
+            return ticketRepository.findAll(pageable)
+                    .map(TicketReponse::fromEntity);
+        }
 
-    public Page<TicketReponse> findAll(Pageable pageable){
-        return ticketRepository.findAll(pageable)
-                .map(TicketReponse::fromEntity);
+        var provider = authUtils.getCurrentUser().getProvider();
+        return findByProvider(provider, pageable);
     }
 
     public void cancel(Integer id){
         ticketRepository.deleteById(id);
+    }
+
+    private Page<TicketReponse> findByProvider(ProviderModel provider, Pageable pageable){
+        return ticketRepository.findByProvider(provider,pageable)
+                .map(TicketReponse::fromEntity);
     }
 }

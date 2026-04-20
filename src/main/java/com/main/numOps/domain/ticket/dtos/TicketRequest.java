@@ -1,5 +1,6 @@
 package com.main.numOps.domain.ticket.dtos;
 
+import com.main.numOps.domain.ticket.enuns.TicketType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public record TicketRequest(
         String bairro,
         String cidade,
         String uf,
-        String type,
+        TicketType type,
         @NotEmpty
         List<String> numeros,
         @NotNull

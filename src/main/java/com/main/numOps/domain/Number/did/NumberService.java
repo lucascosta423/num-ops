@@ -4,6 +4,7 @@ import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
 import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
 import com.main.numOps.domain.Number.did.dtos.NumberResponse;
+import com.main.numOps.domain.ticket.TicketModel;
 import com.main.numOps.exeptions.NotFoundException;
 import com.main.numOps.utils.AuthUtils;
 import com.main.numOps.utils.responseApi.SucessResponse;
@@ -23,7 +24,7 @@ public class NumberService {
         this.authUtils = authUtils;
     }
 
-    public SucessResponse activateNumber(Integer id, ActivateNumberRequest dto) {
+    public SucessResponse activateNumber(Integer id) {
 
         NumberModel numberModel = findById(id);
 
@@ -32,7 +33,6 @@ public class NumberService {
         }
 
         numberModel.setStatusNumber(StatusNumber.ACTIVE);
-        //numberModel.setProvider(authUtils.getCurrentUser().getProvider());
 
         numberRepository.save(numberModel);
 

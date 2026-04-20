@@ -41,9 +41,9 @@ public class NumberController {
     }
 
     @PostMapping("activate/{id}")
-    public ResponseEntity<SucessResponse> requestNumberActivate(@PathVariable Integer id, @RequestBody @Valid ActivateNumberRequest dto) {
+    public ResponseEntity<SucessResponse> requestNumberActivate(@PathVariable Integer id) {
 
-        var success = numberService.activateNumber(id, dto);
+        var success = numberService.activateNumber(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }
@@ -56,7 +56,6 @@ public class NumberController {
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }
 
-    @Hidden
     @PostMapping("upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {

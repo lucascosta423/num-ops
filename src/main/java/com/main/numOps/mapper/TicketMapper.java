@@ -28,7 +28,7 @@ public class TicketMapper {
         model.setCidade(request.cidade());
         model.setUf(request.uf());
         model.setFatura("Fatura");
-        model.setType(TicketType.valueOf(request.type().toUpperCase()));
+        model.setType(request.type());
         model.setProvider(authUtils.getCurrentUser().getProvider());
         model.setUser(authUtils.getCurrentUser());
         model.setStatus(TicketStatus.CREATED);

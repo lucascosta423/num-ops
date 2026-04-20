@@ -2,6 +2,7 @@ package com.main.numOps.domain.ticket;
 
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
+import com.main.numOps.utils.AuthUtils;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,13 +23,13 @@ public class TicketController {
 
     @GetMapping
     public ResponseEntity<Page<TicketReponse>> listTicket(
-            @PageableDefault(page = 0,size = 10,direction = Sort.Direction.ASC) Pageable pageable
-    ){
-        return ResponseEntity.ok(ticketService.findAll(pageable));
+            @PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        return ResponseEntity.ok(ticketService.listTickets(pageable));
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void createdTicket(@ModelAttribute @Valid TicketRequest request){
+    public void createdTicket(@ModelAttribute @Valid TicketRequest request) {
         ticketService.save(request);
     }
 }
