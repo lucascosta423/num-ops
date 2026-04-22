@@ -1,10 +1,29 @@
 package com.main.numOps.Enuns;
 
-public enum StatusPortability {
-    A("Autorizado"),
-    P("Pendente"),
-    R("Rejeitado");
+import lombok.Getter;
 
-    StatusPortability(String descricao) {
+@Getter
+public enum StatusPortability {
+
+    AUTHORIZED("A", "Autorizado"),
+    PENDING("P", "Pendente"),
+    REJECTED("R", "Rejeitado"),
+    CANCELED("C", "Cancelado");
+
+    private final String code;
+    private final String description;
+
+    StatusPortability(String code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    public static StatusPortability fromCode(String code) {
+        for (StatusPortability status : values()) {
+            if (status.code.equalsIgnoreCase(code)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Código inválido: " + code);
     }
 }

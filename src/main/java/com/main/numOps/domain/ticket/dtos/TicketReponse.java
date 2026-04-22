@@ -7,6 +7,8 @@ import com.main.numOps.domain.ticket.enuns.TicketType;
 import java.time.LocalDateTime;
 
 public record TicketReponse(
+        Integer id,
+
         String ticket,
 
         String razao,
@@ -45,6 +47,7 @@ public record TicketReponse(
 
     public static TicketReponse fromEntity(TicketModel model){
         return new TicketReponse(
+                model.getId(),
                 model.getTicket(),
                 model.getRazao(),
                 model.getDocumento(),

@@ -53,7 +53,7 @@ public class UserModel implements UserDetails {
     private StatusNumber statusNumber;
 
     @ManyToOne
-    @JoinColumn(name = "provedor_id")
+    @JoinColumn(name = "provider_id")
     private ProviderModel provider;
 
     @Override

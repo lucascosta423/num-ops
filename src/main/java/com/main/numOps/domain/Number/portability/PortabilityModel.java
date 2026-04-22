@@ -37,7 +37,7 @@ public class PortabilityModel {
     private Integer cnlAreLocal;
 
     @ManyToOne
-    @JoinColumn(name = "provedor_id", nullable = false)
+    @JoinColumn(name = "provider_id", nullable = false)
     private ProviderModel provider;
 
     @ManyToOne

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface OperatorsRepository extends JpaRepository<OperatorsModel,Integer> {
 
-    @Query("SELECT b FROM OperatorsModel b WHERE " +
+    @Query("SELECT b FROM operators b WHERE " +
             "b.prefixo = :prefixo " +
             "AND :mcdu BETWEEN b.faixaInicial AND b.faixaFinal " +
             "AND b.codigoNacional = :codigoNacional")

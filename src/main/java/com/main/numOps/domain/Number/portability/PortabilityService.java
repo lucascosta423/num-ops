@@ -33,6 +33,10 @@ public class PortabilityService {
         portabilityRepository.saveAll(listaNumeros);
     }
 
+    public void cancelByTicket(TicketModel ticketModel){
+        portabilityRepository.cancelByTicket(ticketModel);
+    }
+
 
     private void save(PortabilityModel model) {
         try {

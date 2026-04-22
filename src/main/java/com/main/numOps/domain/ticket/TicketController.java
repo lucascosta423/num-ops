@@ -2,7 +2,6 @@ package com.main.numOps.domain.ticket;
 
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
-import com.main.numOps.utils.AuthUtils;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +28,12 @@ public class TicketController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void createdTicket(@ModelAttribute @Valid TicketRequest request) {
-        ticketService.save(request);
+    public ResponseEntity<TicketModel> createdTicket(@ModelAttribute @Valid TicketRequest request) {
+        return ResponseEntity.ok().body(ticketService.save(request));
+    }
+
+    @PatchMapping("/cancel/{id}")
+    public void cancelTicket(@PathVariable Integer id){
+        ticketService.cancel(id);
     }
 }

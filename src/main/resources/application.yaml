@@ -34,3 +34,7 @@ spring:
 token:
   secret: ${JWT_SECRET:my-secret-key}
 
+app:
+  storage:
+    type: local
+    local-path: /tmp/storage

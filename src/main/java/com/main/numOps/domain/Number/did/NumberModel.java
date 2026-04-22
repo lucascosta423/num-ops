@@ -47,7 +47,7 @@ public class NumberModel {
     private TicketModel ticket;
 
     @ManyToOne
-    @JoinColumn(name = "provedor_id", nullable = false)
+    @JoinColumn(name = "provider_id", nullable = false)
     private ProviderModel provider;
 
     @Enumerated(EnumType.STRING)

@@ -27,7 +27,7 @@ public class PortabilityMapper {
         portabilityModel.setAreaLocal(number.areaLocal());
         portabilityModel.setCnlAreLocal(number.cnlAreLocal());
         portabilityModel.setTicket(ticket);
-        portabilityModel.setStatus(StatusPortability.P);
+        portabilityModel.setStatus(StatusPortability.PENDING);
 
         return portabilityModel;
 
