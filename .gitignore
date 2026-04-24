@@ -39,3 +39,5 @@ build/
 
 ### Google Storage ###
 src/main/resources/google-credentials.json
+
+storage
