@@ -3,15 +3,29 @@ package com.main.numOps.utils;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class TicketIdGenerator {
 
-    private static final int SIZE = 8;
+    private static final int SIZE = 8; // aumentei pra reduzir colisão
+
+    private static final char[] ALPHABET =
+            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".toCharArray();
+
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("HHmmss");
 
     public static String gerar(String prefixo) {
-        return prefixo + "-" + NanoIdUtils.randomNanoId(
+
+        String hora = LocalDateTime.now().format(FORMATTER);
+
+        String random = NanoIdUtils.randomNanoId(
                 NanoIdUtils.DEFAULT_NUMBER_GENERATOR,
-                NanoIdUtils.DEFAULT_ALPHABET,
+                ALPHABET,
                 SIZE
         );
+
+        return prefixo + "-" + random + "-"  + hora;
     }
 }

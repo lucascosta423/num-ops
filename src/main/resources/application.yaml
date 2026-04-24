@@ -37,4 +37,4 @@ token:
 app:
   storage:
     type: local
-    local-path: /tmp/storage
+    local-path: ./storage/faturas

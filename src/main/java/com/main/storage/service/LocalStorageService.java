@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class LocalStorageService implements StorageService {
 
-    @Value("${app.storage.local-path:/tmp/storage}")
+    @Value("${app.storage.local-path:./storage/faturas}")
     private String path;
 
     private Path root;
@@ -22,7 +22,7 @@ public class LocalStorageService implements StorageService {
     public void init() {
         try {
             root = Paths.get(path);
-            Files.createDirectories(root); // garante que a pasta exista
+            Files.createDirectories(root);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao inicializar diretório de storage", e);
         }
@@ -31,11 +31,18 @@ public class LocalStorageService implements StorageService {
     @Override
     public String upload(InputStream file, String fileName) {
         try {
-            Path target = root.resolve(fileName);
+            if (fileName == null || fileName.isBlank()) {
+                throw new RuntimeException("Nome do arquivo inválido");
+            }
+
+            String safeFileName = Path.of(fileName).getFileName().toString();
+
+            Path target = root.resolve(safeFileName);
 
             Files.copy(file, target, StandardCopyOption.REPLACE_EXISTING);
 
-            return fileName;
+            return safeFileName;
+
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar arquivo", e);
         }

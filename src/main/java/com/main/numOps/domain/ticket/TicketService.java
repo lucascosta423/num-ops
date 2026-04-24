@@ -6,22 +6,27 @@ import com.main.numOps.domain.ticket.dtos.TicketRequest;
 import com.main.numOps.domain.ticket.enuns.TicketStatus;
 import com.main.numOps.mapper.TicketMapper;
 import com.main.numOps.utils.AuthUtils;
+import com.main.storage.factory.StorageFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final StorageFactory storageFactory;
     private final TicketMapper mapper;
     private final AuthUtils authUtils;
 
 
-    public TicketService(TicketRepository ticketRepository, TicketMapper mapper, AuthUtils authUtils) {
+    public TicketService(TicketRepository ticketRepository, StorageFactory storageFactory, TicketMapper mapper, AuthUtils authUtils) {
         this.ticketRepository = ticketRepository;
+        this.storageFactory = storageFactory;
         this.mapper = mapper;
         this.authUtils = authUtils;
     }
@@ -32,6 +37,11 @@ public class TicketService {
         TicketModel ticket = mapper.toModel(ticketRequest);
 
         TicketModel saved = ticketRepository.save(ticket);
+
+        String fileName = uploadFatura(ticketRequest, saved.getTicket());
+
+        saved.setFatura(fileName);
+
 
         switch (saved.getType()) {
             case PORTABILITY -> System.out.println("OK Portabilidade");
@@ -68,12 +78,12 @@ public class TicketService {
         }
 
         ticket.setStatus(TicketStatus.CANCELED);
-        ticket.setCancelRequestedBy(authUtils.getCurrentUser());
+        ticket.setCancelRequestedBy(authUtils.getCurrentUser().getEmail());
         ticket.setCancelRequestedAt(LocalDateTime.now());
 
         TicketModel saved = ticketRepository.save(ticket);
 
-        switch (saved.getType()){
+        switch (saved.getType()) {
             case PORTABILITY -> System.out.print("Ticket Cancelado!");
 
             case DID -> System.out.println("Ticket Cancelado!");
@@ -85,5 +95,60 @@ public class TicketService {
     private Page<TicketReponse> findByProvider(ProviderModel provider, Pageable pageable) {
         return ticketRepository.findByProvider(provider, pageable)
                 .map(TicketReponse::fromEntity);
+    }
+
+    private String uploadFatura(TicketRequest request, String ticket) {
+        try {
+            MultipartFile file = request.fatura();
+
+            if (file == null || file.isEmpty()) {
+                throw new RuntimeException("Fatura é obrigatória");
+            }
+
+            if (!"application/pdf".equalsIgnoreCase(file.getContentType()) || !isPdf(file)) {
+                throw new RuntimeException("Arquivo deve ser um PDF válido");
+            }
+
+            String fileName =
+                    request.razao().replaceAll("\\s+", "") +
+                            "-" +
+                            ticket + ".pdf";
+
+            try (InputStream is = file.getInputStream()) {
+                return storageFactory.getStorage().upload(is, fileName);
+            }
+
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fazer upload da fatura", e);
+        }
+    }
+
+    public InputStream downloadFatura(Integer ticketId) {
+        TicketModel ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new RuntimeException("Ticket não encontrado"));
+
+        if (ticket.getFatura() == null) {
+            throw new RuntimeException("Este ticket não possui fatura");
+        }
+
+        return storageFactory.getStorage().download(ticket.getFatura());
+    }
+
+    private boolean isPdf(MultipartFile file) {
+        try (InputStream is = file.getInputStream()) {
+
+            byte[] header = new byte[5];
+            if (is.read(header) != 5) {
+                return false;
+            }
+
+            String headerStr = new String(header);
+            return "%PDF-".equals(headerStr);
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

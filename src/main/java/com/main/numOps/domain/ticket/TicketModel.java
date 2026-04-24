@@ -51,16 +51,14 @@ public class TicketModel {
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_cancel")
-    private UserModel cancelRequestedBy;
-
-    @ManyToOne
     @JoinColumn(name = "provider", nullable = false)
     private ProviderModel provider;
 
     private LocalDateTime dateCreated;
 
     private LocalDateTime dateFinished;
+
+    private String cancelRequestedBy;
 
     private LocalDateTime cancelRequestedAt;
 

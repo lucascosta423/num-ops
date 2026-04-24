@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     uf VARCHAR(255),
     fatura VARCHAR(255),
     usuario UUID NOT NULL,
-    usuario_cancel UUID NOT NULL,
+    cancel_requested_by VARCHAR(255),
     provider INTEGER NOT NULL,
     date_created TIMESTAMP,
     date_finished TIMESTAMP,
@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS tickets (
     type VARCHAR(255),
     status VARCHAR(255),
     CONSTRAINT fk_tickets_usuario FOREIGN KEY (usuario) REFERENCES usuario (id),
-    CONSTRAINT fk_tickets_usuario_cancelamento FOREIGN KEY (usuario_cancel) REFERENCES usuario (id),
     CONSTRAINT fk_tickets_provider FOREIGN KEY (provider) REFERENCES provider (id)
 );
 
