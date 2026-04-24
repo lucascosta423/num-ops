@@ -31,7 +31,7 @@ INSERT INTO usuario (
              gen_random_uuid(), -- se estiver usando PostgreSQL com pgcrypto
              'Administrador',
              'admin@ultracom.com',
-             '$2a$10$7QJ9u3h7Qp1l5nK0rQW8QeX2r8JrW6zF7ZJ6FJq1Q0ZlXK9wzYwO2', -- senha criptografada (exemplo: 123456)
+             '$2a$12$4ZW9/SlQeAqyEydvpg7GIu29bViFGAbHvlM/4JBS5EUNBslbDzkRq', -- senha criptografada (exemplo: 123456)
              'ADMIN',
              NOW(),
              'ACTIVE',
