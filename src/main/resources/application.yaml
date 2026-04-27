@@ -15,7 +15,6 @@ spring:
       pool-name: MeuPoolPostgres
 
   jackson:
-    date-format: yyyy-MM-dd'T'HH:mm:ss
     serialization:
       write-dates-as-timestamps: false
 

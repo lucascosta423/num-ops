@@ -4,6 +4,7 @@ import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.enuns.TicketStatus;
 import com.main.numOps.domain.ticket.enuns.TicketType;
 import com.main.numOps.domain.user.UserModel;
+import com.main.numOps.utils.DateUtils;
 import com.main.numOps.utils.TicketIdGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -70,7 +71,8 @@ public class TicketModel {
 
     @PrePersist
     protected void onCreate() {
-        this.dateCreated = LocalDateTime.now();
+        this.dateCreated = DateUtils.nowWithoutNanos();
+
         if (this.id == null) {
             if (this.type == null) {
                 throw new IllegalStateException("TicketType não pode ser nulo para gerar ID");

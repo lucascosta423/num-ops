@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Tag(name = "Numero", description = "API REST para gerenciamento de numeros")
 @RestController
-@RequestMapping("/numero")
+@RequestMapping("/number")
 public class NumberController {
     private final NumberService numberService;
     private final NumberFilesService numberFilesService;
