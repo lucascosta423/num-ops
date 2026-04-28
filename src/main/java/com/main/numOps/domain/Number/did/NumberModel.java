@@ -3,6 +3,7 @@ package com.main.numOps.domain.Number.did;
 import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.TicketModel;
+import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,7 +56,8 @@ public class NumberModel {
 
     @PrePersist
     private void onCreate(){
-        this.dataUpload = LocalDateTime.now();
+        this.dataUpload = DateUtils.nowWithoutNanos();
+        this.dateCreated = DateUtils.nowWithoutNanos();
     }
 
 

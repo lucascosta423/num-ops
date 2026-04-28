@@ -6,6 +6,7 @@ import com.main.numOps.domain.ticket.dtos.TicketRequest;
 import com.main.numOps.domain.ticket.enuns.TicketStatus;
 import com.main.numOps.mapper.TicketMapper;
 import com.main.numOps.utils.AuthUtils;
+import com.main.numOps.utils.DateUtils;
 import com.main.storage.factory.StorageFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
 
 @Service
 public class TicketService {
@@ -79,16 +79,16 @@ public class TicketService {
 
         ticket.setStatus(TicketStatus.CANCELED);
         ticket.setCancelRequestedBy(authUtils.getCurrentUser().getEmail());
-        ticket.setCancelRequestedAt(LocalDateTime.now());
+        ticket.setCancelRequestedAt(DateUtils.nowWithoutNanos());
 
         TicketModel saved = ticketRepository.save(ticket);
 
         switch (saved.getType()) {
-            case PORTABILITY -> System.out.print("Ticket Cancelado!");
+            case PORTABILITY -> System.out.print("Ticket Portabilidade Cancelado!");
 
-            case DID -> System.out.println("Ticket Cancelado!");
+            case DID -> System.out.println("Ticket Did Cancelado!");
 
-            case CANCELLATION -> System.out.println("Ticket Cancelado!");
+            case CANCELLATION -> System.out.println("Ticket Cancelamento Cancelado!");
         }
     }
 
@@ -109,10 +109,7 @@ public class TicketService {
                 throw new RuntimeException("Arquivo deve ser um PDF válido");
             }
 
-            String fileName =
-                    request.razao().replaceAll("\\s+", "") +
-                            "-" +
-                            ticket + ".pdf";
+            String fileName = ticket + ".pdf";
 
             try (InputStream is = file.getInputStream()) {
                 return storageFactory.getStorage().upload(is, fileName);

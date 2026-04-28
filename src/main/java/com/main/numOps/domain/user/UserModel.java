@@ -3,6 +3,7 @@ package com.main.numOps.domain.user;
 import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.Enuns.UserRole;
 import com.main.numOps.domain.providers.ProviderModel;
+import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,10 +45,6 @@ public class UserModel implements UserDetails {
     private UserRole role;
 
     private LocalDateTime dataCriado;
-    @PrePersist
-    protected void onCreate() {
-        this.dataCriado = LocalDateTime.now();
-    }
 
     @Enumerated(EnumType.STRING)
     private StatusNumber statusNumber;
@@ -110,8 +107,9 @@ public class UserModel implements UserDetails {
         return role != null && role.isAdmin();
     }
 
-    public boolean isSuperAdmin() {
-        return role != null && role.isSuperAdmin();
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriado = DateUtils.nowWithoutNanos();
     }
 
 }

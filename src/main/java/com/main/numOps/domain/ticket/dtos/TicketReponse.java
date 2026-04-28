@@ -35,6 +35,10 @@ public record TicketReponse(
 
         String provider,
 
+        String cancelRequestedBy,
+
+        LocalDateTime cancelRequestedAt,
+
         LocalDateTime dateCreated,
 
         LocalDateTime dateFinished,
@@ -61,6 +65,8 @@ public record TicketReponse(
                 model.getFatura(),
                 model.getUser().getName(),
                 model.getProvider().getNome(),
+                model.getCancelRequestedBy(),
+                model.getCancelRequestedAt(),
                 model.getDateCreated(),
                 model.getDateFinished(),
                 model.getType(),

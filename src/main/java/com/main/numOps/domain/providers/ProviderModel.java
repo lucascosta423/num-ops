@@ -1,6 +1,7 @@
 package com.main.numOps.domain.providers;
 
 import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,22 +34,23 @@ public class ProviderModel {
     private String email;
 
     private LocalDateTime dataCriado;
-    @PrePersist
-    protected void onCreate() {
-        this.dataCriado = LocalDateTime.now();
-    }
 
     private LocalDateTime dataAtualizacao;
-    @PreUpdate
-    protected void onUpdate() {
-        this.dataAtualizacao = LocalDateTime.now();
-    }
-
 
     @Enumerated(EnumType.STRING)
     private StatusNumber statusNumber;
 
     public boolean verifyStatus(){
         return this.statusNumber == StatusNumber.ACTIVE;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriado = DateUtils.nowWithoutNanos();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataAtualizacao = DateUtils.nowWithoutNanos();
     }
 }
