@@ -8,7 +8,7 @@ public enum StatusPortability {
     AUTHORIZED("A", "Autorizado"),
     PENDING("P", "Pendente"),
     REJECTED("R", "Rejeitado"),
-    CANCELED("C", "Cancelado");
+    PORTED("PO", "Portado");
 
     private final String code;
     private final String description;

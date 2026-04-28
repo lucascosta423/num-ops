@@ -27,4 +27,9 @@ public class OperatorsService {
                 .map(CarrierResponse::fromEntity)
                 .orElseThrow(() -> new NotFoundException("Numero nao encontrado"));
     }
+
+    public Integer findCnlAreaLocal(String areaLocal){
+        return operatorsRepository.findCnlAreaLocal(areaLocal)
+                .orElseThrow(() -> new NotFoundException("Cnl Não encontrado"));
+    }
 }

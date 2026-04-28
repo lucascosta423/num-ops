@@ -22,6 +22,7 @@ public class OperatorsFilesService implements FileHandlingImp<OperatorsModel> {
     }
 
     public void processFile(MultipartFile file) throws IOException {
+
         try (Stream<String> lines = FileUtils.readerFile(file)) {
             List<OperatorsModel> batch = new ArrayList<>();
             int batchSize = 1000; // Define o tamanho do lote

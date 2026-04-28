@@ -1,5 +1,6 @@
 package com.main.numOps.domain.ticket;
 
+import com.main.numOps.domain.Number.portability.PortabilityService;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
@@ -19,13 +20,15 @@ import java.io.InputStream;
 @Service
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final PortabilityService portabilityService;
     private final StorageFactory storageFactory;
     private final TicketMapper mapper;
     private final AuthUtils authUtils;
 
 
-    public TicketService(TicketRepository ticketRepository, StorageFactory storageFactory, TicketMapper mapper, AuthUtils authUtils) {
+    public TicketService(TicketRepository ticketRepository, PortabilityService portabilityService, StorageFactory storageFactory, TicketMapper mapper, AuthUtils authUtils) {
         this.ticketRepository = ticketRepository;
+        this.portabilityService = portabilityService;
         this.storageFactory = storageFactory;
         this.mapper = mapper;
         this.authUtils = authUtils;
@@ -44,9 +47,12 @@ public class TicketService {
 
 
         switch (saved.getType()) {
-            case PORTABILITY -> System.out.println("OK Portabilidade");
-            case DID -> System.out.println("OK DID");
-            case CANCELLATION -> System.out.println("OK Cancelamento");
+            case PORTABILITY ->
+                    portabilityService.createPortabilityNumbers(saved,ticketRequest.numeros());
+            case DID ->
+                    System.out.println("OK DID");
+            case CANCELLATION ->
+                    System.out.println("OK Cancelamento");
         }
 
         return saved;
@@ -83,8 +89,10 @@ public class TicketService {
 
         TicketModel saved = ticketRepository.save(ticket);
 
+        storageFactory.getStorage().delete(saved.getFatura());
+
         switch (saved.getType()) {
-            case PORTABILITY -> System.out.print("Ticket Portabilidade Cancelado!");
+            case PORTABILITY -> portabilityService.deleteByTicket(saved);
 
             case DID -> System.out.println("Ticket Did Cancelado!");
 

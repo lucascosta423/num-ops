@@ -46,7 +46,7 @@ public class OperatorsModel {
     private String status;
 
     public Integer getCnlArealocal(String areaLocal){
-        if (Objects.equals(this.areaLocal, areaLocal)){
+        if (Objects.equals(this.nomeLocalidade, areaLocal)){
             return codigoCnl;
         }
         return 0;

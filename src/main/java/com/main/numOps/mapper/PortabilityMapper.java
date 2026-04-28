@@ -5,14 +5,17 @@ import com.main.numOps.domain.Number.portability.PortabilityModel;
 import com.main.numOps.domain.operators.OperatorsService;
 import com.main.numOps.domain.operators.dtos.CarrierResponse;
 import com.main.numOps.domain.ticket.TicketModel;
+import com.main.numOps.utils.AuthUtils;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PortabilityMapper {
 
+    private final AuthUtils authUtils;
     private final OperatorsService operatorsService;
 
-    public PortabilityMapper(OperatorsService operatorsService) {
+    public PortabilityMapper(AuthUtils authUtils, OperatorsService operatorsService) {
+        this.authUtils = authUtils;
         this.operatorsService = operatorsService;
     }
 
@@ -25,12 +28,12 @@ public class PortabilityMapper {
         portabilityModel.setMunicipio(number.municipio());
         portabilityModel.setCnlMunicipo(number.cnlMunicipio());
         portabilityModel.setAreaLocal(number.areaLocal());
-        portabilityModel.setCnlAreLocal(number.cnlAreLocal());
+        portabilityModel.setCnlAreLocal(operatorsService.findCnlAreaLocal(number.areaLocal()));
         portabilityModel.setTicket(ticket);
+        portabilityModel.setProvider(authUtils.getCurrentUser().getProvider());
         portabilityModel.setStatus(StatusPortability.PENDING);
 
         return portabilityModel;
-
 
     }
 

@@ -20,5 +20,11 @@ public interface OperatorsRepository extends JpaRepository<OperatorsModel,Intege
             @Param("mcdu") String mcdu
     );
 
+    @Query(value = "SELECT o.codigo_cnl FROM operators o WHERE o.nome_localidade = :areaLocal LIMIT 1",
+            nativeQuery = true)
+    Optional<Integer> findCnlAreaLocal(
+            @Param("areaLocal") String areaLocal
+    );
+
 }
 
