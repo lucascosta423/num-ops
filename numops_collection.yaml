@@ -10,7 +10,7 @@ collection:
     meta:
       id: fld_2adda2f0af894e2d94be9aafd0cd2028
       created: 1776274527695
-      modified: 1776274527695
+      modified: 1777296649816
       sortKey: -1776274527695
       description: ""
     children:
@@ -151,16 +151,222 @@ collection:
             send: true
             store: true
           rebuildPath: true
+    environment:
+      url: "{{ _.host_dev }}/number"
+    environmentPropertyOrder:
+      "&":
+        - url
+  - name: AUTH
+    meta:
+      id: fld_19f5693c9ab544b99cb3677cf40eda34
+      created: 1777295544027
+      modified: 1777313900449
+      sortKey: -1777295544027
+      description: ""
+    children:
+      - url: "{{base_url}}/login"
+        name: login
+        meta:
+          id: req_2db8ed98d53f41f6ad5598a3f5eea6b9
+          created: 1777295552280
+          modified: 1777296447265
+          isPrivate: false
+          description: ""
+          sortKey: -1777295552280
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"login":"admin@ultracom.com",
+            	"password":"123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.0.0
+        scripts:
+          afterResponse: |
+            const res = insomnia.response.body;
+
+            const tk = JSON.parse(res);
+
+            insomnia.environment.set('token', tk.token);
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      base_url: "{{ _.host_dev }}/auth"
+    environmentPropertyOrder:
+      "&":
+        - base_url
+  - name: TICKET
+    meta:
+      id: fld_7302805db1384ab29db6630a5d579800
+      created: 1777296647108
+      modified: 1777296768406
+      sortKey: -1777296647108
+      description: ""
+    children:
+      - url: "{{url}}"
+        name: listAll
+        meta:
+          id: req_ed3b0c2a350b4430bedff370b70f09f9
+          created: 1777296684524
+          modified: 1777296728067
+          isPrivate: false
+          description: ""
+          sortKey: -1777296684524
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}"
+        name: created
+        meta:
+          id: req_89d060ac3d794518b3e915f2eaed5830
+          created: 1777296840652
+          modified: 1777297035612
+          isPrivate: false
+          description: ""
+          sortKey: -1777296840652
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_6d85c351d4b84460ab9c8e4f7571f3fb
+              name: razao
+              value: teste
+              description: ""
+              disabled: false
+            - id: pair_57c572b16139479db90e52e6a98e10e6
+              name: documento
+              value: "1234567890"
+              description: ""
+              disabled: false
+            - id: pair_6fe2edc2cff64853ba382eb6b041711b
+              name: cep
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_a3a353d589c54e88820bd1144f400598
+              name: logradouro
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_0a11d8294281489a949acd0bde6b98f3
+              name: numeroEndereco
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_52f45089267b48b698ee8ad0269c15df
+              name: complemento
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_33e51d7420074acb93e187591db6c626
+              name: bairro
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_4cdb5555fc6e426597c1296576c5f775
+              name: cidade
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_5dceccb4a6be49e285809a9e7d8777aa
+              name: uf
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_e1ab81b4f0924827984a59359ed3ea90
+              name: type
+              value: PORTABILITY
+              description: ""
+              disabled: false
+            - id: pair_a96caf07d9b442b1996c9b2eb0167a70
+              name: numeros
+              value: "123456789"
+              description: ""
+              disabled: false
+            - id: pair_5b82b79230c74716ad5b6094d4022667
+              name: fatura
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              fileName: /home/lucassantos/Downloads/Embratel 0800.pdf
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}/cancel/3"
+        name: cancel
+        meta:
+          id: req_365e24aa90154334bdad0002173cd72e
+          created: 1777297126320
+          modified: 1777313961533
+          isPrivate: false
+          description: ""
+          sortKey: -1777297126320
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+      prefix: Bearer
+    environment:
+      url: "{{host_dev}}/ticket"
+    environmentPropertyOrder:
+      "&":
+        - url
 cookieJar:
   name: Default Jar
   meta:
     id: jar_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1776274519111
+    modified: 1777313900445
 environments:
-  name: Base Environment
+  name: Base
   meta:
     id: env_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1776274519111
+    modified: 1777313900448
     isPrivate: false
+  data:
+    host_dev: http://localhost:8080
+    host_prod: http://localhost:8080
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQHVsdHJhY29tLmNvbSIsImFkbWluIjp0cnVlLCJ1c3VhcmlvIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTc3NzMyMTA5OX0.fUbwM0mqtqJFm0LAS20iEnB-X2TtITwndPevLkQL9vM
