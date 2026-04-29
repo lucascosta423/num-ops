@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.did;
+package com.main.numOps.domain.did;
 
 import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.providers.ProviderModel;
@@ -44,11 +44,11 @@ public class NumberModel {
     private LocalDateTime dataUpload;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id", nullable = false)
+    @JoinColumn(name = "ticket_id")
     private TicketModel ticket;
 
     @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
+    @JoinColumn(name = "provider_id")
     private ProviderModel provider;
 
     @Enumerated(EnumType.STRING)

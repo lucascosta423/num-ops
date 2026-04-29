@@ -1,18 +1,14 @@
-package com.main.numOps.domain.Number.did;
+package com.main.numOps.domain.did;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
-import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
-import com.main.numOps.domain.Number.did.dtos.NumberResponse;
-import com.main.numOps.domain.ticket.TicketModel;
+import com.main.numOps.domain.did.dtos.NumberAvailableResponse;
+import com.main.numOps.domain.did.dtos.NumberResponse;
 import com.main.numOps.exeptions.NotFoundException;
 import com.main.numOps.utils.AuthUtils;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class NumberService {

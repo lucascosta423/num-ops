@@ -1,7 +1,7 @@
-package com.main.numOps.domain.Number.portability;
+package com.main.numOps.domain.portability;
 
-import com.main.numOps.domain.Number.portability.dto.PortabilityDTO;
-import com.main.numOps.domain.Number.portability.dto.PortabilityUpdate;
+import com.main.numOps.domain.portability.dto.PortabilityDTO;
+import com.main.numOps.domain.portability.dto.PortabilityUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

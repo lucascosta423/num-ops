@@ -1,9 +1,7 @@
-package com.main.numOps.domain.Number.portability.dto;
+package com.main.numOps.domain.portability.dto;
 
 import com.main.numOps.Enuns.StatusPortability;
-import com.main.numOps.domain.Number.portability.PortabilityModel;
-
-import java.time.LocalDateTime;
+import com.main.numOps.domain.portability.PortabilityModel;
 
 public record PortabilityDTO (
         Integer id,

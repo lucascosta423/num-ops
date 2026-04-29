@@ -11,19 +11,29 @@ import java.util.List;
 public record TicketRequest(
         @NotBlank
         String razao,
+
         @NotBlank
         String documento,
+
         String cep,
+
         String logradouro,
+
         String numeroEndereco,
+
         String complemento,
+
         String bairro,
+
         String cidade,
+
         String uf,
+
         TicketType type,
+
         @NotEmpty
         List<String> numeros,
-        @NotNull
+
         MultipartFile fatura
 ) {
 }

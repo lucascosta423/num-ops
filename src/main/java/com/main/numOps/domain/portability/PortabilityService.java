@@ -1,7 +1,7 @@
-package com.main.numOps.domain.Number.portability;
+package com.main.numOps.domain.portability;
 
-import com.main.numOps.domain.Number.portability.dto.PortabilityDTO;
-import com.main.numOps.domain.Number.portability.dto.PortabilityUpdate;
+import com.main.numOps.domain.portability.dto.PortabilityDTO;
+import com.main.numOps.domain.portability.dto.PortabilityUpdate;
 import com.main.numOps.domain.ticket.TicketModel;
 import com.main.numOps.mapper.PortabilityMapper;
 import org.springframework.data.domain.Page;
@@ -39,21 +39,12 @@ public class PortabilityService {
         return portabilityMapper.toModel(numero,ticket);
     }
 
-    private void saveAll(List<PortabilityModel> listaNumeros){
-        portabilityRepository.saveAll(listaNumeros);
+    private void saveAll(List<PortabilityModel> listNumbers){
+        portabilityRepository.saveAll(listNumbers);
     }
 
     public void deleteByTicket(TicketModel ticketModel){
         portabilityRepository.deleteByTicket(ticketModel);
-    }
-
-
-    private void save(PortabilityModel model) {
-        try {
-            portabilityRepository.save(model);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao salvar atualização da portabilidade", e);
-        }
     }
 
     @Transactional

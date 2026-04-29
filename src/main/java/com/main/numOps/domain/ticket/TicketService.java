@@ -1,6 +1,6 @@
 package com.main.numOps.domain.ticket;
 
-import com.main.numOps.domain.Number.portability.PortabilityService;
+import com.main.numOps.domain.portability.PortabilityService;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
@@ -41,14 +41,11 @@ public class TicketService {
 
         TicketModel saved = ticketRepository.save(ticket);
 
-        String fileName = uploadFatura(ticketRequest, saved.getTicket());
-
-        saved.setFatura(fileName);
-
-
         switch (saved.getType()) {
-            case PORTABILITY ->
-                    portabilityService.createPortabilityNumbers(saved,ticketRequest.numeros());
+            case PORTABILITY -> {
+                saved.setFatura(uploadFatura(ticketRequest, saved.getTicket()));
+                portabilityService.createPortabilityNumbers(saved,ticketRequest.numeros());
+            }
             case DID ->
                     System.out.println("OK DID");
             case CANCELLATION ->

@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.did;
+package com.main.numOps.domain.did;
 
 import com.main.numOps.Enuns.StatusNumber;
 import com.main.numOps.domain.providers.ProviderModel;

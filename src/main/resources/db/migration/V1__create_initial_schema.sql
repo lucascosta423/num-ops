@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS numbers (
     date_created TIMESTAMP,
     date_finished TIMESTAMP,
     data_upload TIMESTAMP,
-    ticket_id INTEGER NOT NULL,
-    provider_id INTEGER NOT NULL,
+    ticket_id INTEGER ,
+    provider_id INTEGER ,
     status_number VARCHAR(255),
     CONSTRAINT fk_numbers_ticket FOREIGN KEY (ticket_id) REFERENCES tickets (id),
     CONSTRAINT fk_numbers_provider FOREIGN KEY (provider_id) REFERENCES provider (id)

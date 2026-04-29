@@ -1,7 +1,7 @@
 package com.main.numOps.mapper;
 
 import com.main.numOps.Enuns.StatusPortability;
-import com.main.numOps.domain.Number.portability.PortabilityModel;
+import com.main.numOps.domain.portability.PortabilityModel;
 import com.main.numOps.domain.operators.OperatorsService;
 import com.main.numOps.domain.operators.dtos.CarrierResponse;
 import com.main.numOps.domain.ticket.TicketModel;

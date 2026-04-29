@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.portability.dto;
+package com.main.numOps.domain.portability.dto;
 
 import com.main.numOps.Enuns.StatusPortability;
 

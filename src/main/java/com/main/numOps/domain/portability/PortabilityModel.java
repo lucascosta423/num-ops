@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.portability;
+package com.main.numOps.domain.portability;
 
 
 import com.main.numOps.Enuns.StatusPortability;
@@ -9,8 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @Getter
 @Setter

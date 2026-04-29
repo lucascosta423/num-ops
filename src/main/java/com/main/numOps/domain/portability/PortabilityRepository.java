@@ -1,4 +1,4 @@
-package com.main.numOps.domain.Number.portability;
+package com.main.numOps.domain.portability;
 
 import com.main.numOps.Enuns.StatusPortability;
 import com.main.numOps.domain.ticket.TicketModel;
@@ -22,17 +22,16 @@ public interface PortabilityRepository extends JpaRepository<PortabilityModel, I
         DELETE FROM portability p
         WHERE p.ticket = :ticket
     """)
-
     void deleteByTicket(@Param("ticket") TicketModel ticket);
 
     @Modifying
     @Transactional
     @Query("""
-        UPDATE portability o 
-        SET o.dataAgendamento = COALESCE(:dataAgendamento, o.dataAgendamento),
-            o.horaAgendamento = COALESCE(:horaAgendamento, o.horaAgendamento),
-            o.status = COALESCE(:status, o.status)
-        WHERE o.id IN :ids
+        UPDATE portability p
+        SET p.dataAgendamento = COALESCE(:dataAgendamento, p.dataAgendamento),
+            p.horaAgendamento = COALESCE(:horaAgendamento, p.horaAgendamento),
+            p.status = COALESCE(:status, p.status)
+        WHERE p.id IN :ids
     """)
     int updatePortability(
             @Param("ids") List<Integer> ids,

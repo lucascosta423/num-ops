@@ -1,12 +1,9 @@
-package com.main.numOps.domain.Number.did;
+package com.main.numOps.domain.did;
 
-import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
-import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
+import com.main.numOps.domain.did.dtos.NumberAvailableResponse;
 import com.main.numOps.services.FilesUpload.NumberFilesService;
 import com.main.numOps.utils.responseApi.SucessResponse;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,7 +1,7 @@
 package com.main.numOps.services.FilesUpload;
 
-import com.main.numOps.domain.Number.did.NumberModel;
-import com.main.numOps.domain.Number.did.NumberRepository;
+import com.main.numOps.domain.did.NumberModel;
+import com.main.numOps.domain.did.NumberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
