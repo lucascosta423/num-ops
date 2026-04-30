@@ -28,14 +28,42 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
 
-        String token = this.recoverToken(request);
+        String token = recoverToken(request);
+
 
         if (token != null) {
-            String usuario;
             try {
-                usuario = tokenService.validateToken(token);
+
+                String usuario = tokenService.validateToken(token);
+
+
+
+                if (usuario != null &&
+                        SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                    var userOpt = userRepository.findByEmail(usuario);
+
+                    if (userOpt.isEmpty()) {
+                        filterChain.doFilter(request, response);
+                        System.out.println("Usuario Vazoi");
+                        return;
+                    }
+
+                    UserDetails user = userOpt.get();
+
+                    var authentication = new UsernamePasswordAuthenticationToken(
+                            user,
+                            null,
+                            user.getAuthorities()
+                    );
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
 
             } catch (TokenExpiredException ex) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -49,11 +77,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 response.getWriter().write("{\"error\": \"Token invalido\"}");
                 return;
             }
-
-            UserDetails user = userRepository.findByEmail(usuario);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);

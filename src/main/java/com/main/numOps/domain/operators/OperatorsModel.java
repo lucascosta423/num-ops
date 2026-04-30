@@ -6,12 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
 
 
-
-
-@Entity
-@Table(name = "operadoras")
+@Entity(name = "operators")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -46,4 +44,11 @@ public class OperatorsModel {
     private Integer codigoArea;
 
     private String status;
+
+    public Integer getCnlArealocal(String areaLocal){
+        if (Objects.equals(this.areaLocal, areaLocal)){
+            return codigoCnl;
+        }
+        return 0;
+    }
 }

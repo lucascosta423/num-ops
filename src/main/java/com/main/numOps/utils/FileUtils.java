@@ -1,6 +1,6 @@
 package com.main.numOps.utils;
 
-import com.main.numOps.domain.Number.NumberModel;
+import com.main.numOps.domain.Number.did.NumberModel;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import org.springframework.web.multipart.MultipartFile;

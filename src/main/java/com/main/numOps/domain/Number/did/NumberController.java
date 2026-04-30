@@ -1,7 +1,7 @@
-package com.main.numOps.domain.Number;
+package com.main.numOps.domain.Number.did;
 
-import com.main.numOps.domain.Number.dtos.ActivateNumberRequest;
-import com.main.numOps.domain.Number.dtos.NumberAvailableResponse;
+import com.main.numOps.domain.Number.did.dtos.ActivateNumberRequest;
+import com.main.numOps.domain.Number.did.dtos.NumberAvailableResponse;
 import com.main.numOps.services.FilesUpload.NumberFilesService;
 import com.main.numOps.utils.responseApi.SucessResponse;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @Tag(name = "Numero", description = "API REST para gerenciamento de numeros")
 @RestController
-@RequestMapping("/numero")
+@RequestMapping("/number")
 public class NumberController {
     private final NumberService numberService;
     private final NumberFilesService numberFilesService;
@@ -41,9 +41,9 @@ public class NumberController {
     }
 
     @PostMapping("activate/{id}")
-    public ResponseEntity<SucessResponse> requestNumberActivate(@PathVariable Integer id, @RequestBody @Valid ActivateNumberRequest dto) {
+    public ResponseEntity<SucessResponse> requestNumberActivate(@PathVariable Integer id) {
 
-        var success = numberService.activateNumber(id, dto);
+        var success = numberService.activateNumber(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }
@@ -56,7 +56,6 @@ public class NumberController {
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }
 
-    @Hidden
     @PostMapping("upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {

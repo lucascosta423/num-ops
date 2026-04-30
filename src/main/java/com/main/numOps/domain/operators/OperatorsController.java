@@ -1,7 +1,7 @@
 package com.main.numOps.domain.operators;
 
-import com.main.numOps.dtos.operators.RequestNumeroOperadoraDTO;
-import com.main.numOps.dtos.operators.ResponseOperadorasDto;
+import com.main.numOps.domain.operators.dtos.NumberLookupDTO;
+import com.main.numOps.domain.operators.dtos.CarrierResponse;
 import com.main.numOps.services.FilesUpload.OperatorsFilesService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,15 +40,15 @@ public class OperatorsController {
         }
     }
     @GetMapping("/list")
-    public ResponseEntity<Page<ResponseOperadorasDto>> findAll(@PageableDefault(page = 0, size = 20,direction = Sort.Direction.ASC)Pageable pageable) {
-        Page<ResponseOperadorasDto> pageResult = operatorsService.findAll(pageable);
+    public ResponseEntity<Page<CarrierResponse>> findAll(@PageableDefault(page = 0, size = 20,direction = Sort.Direction.ASC)Pageable pageable) {
+        Page<CarrierResponse> pageResult = operatorsService.findAll(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(pageResult);
     }
 
     @GetMapping("/numero")
-    public ResponseEntity<OperatorsModel> getByNumero(@RequestBody RequestNumeroOperadoraDTO numeroOperadoraDTO){
+    public ResponseEntity<CarrierResponse> getByNumero(@RequestBody NumberLookupDTO numeroOperadoraDTO){
 
-        var operadoraDTO = operatorsService.findByNumeroPortabilidade(
+        var operadoraDTO = operatorsService.findByNumber(
                 numeroOperadoraDTO.prefixo(),
                 numeroOperadoraDTO.mcdu(),
                 numeroOperadoraDTO.codigoNacional()
