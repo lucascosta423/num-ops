@@ -1,8 +1,6 @@
 package com.main.numOps.domain.did;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.providers.ProviderModel;
-import com.main.numOps.domain.ticket.TicketModel;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,12 +10,12 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "numbers")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NumberModel {
+public class DidModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,19 +35,7 @@ public class NumberModel {
 
     private String ufArea;
 
-    private LocalDateTime dateCreated;
-
-    private LocalDateTime dateFinished;
-
     private LocalDateTime dataUpload;
-
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private TicketModel ticket;
-
-    @ManyToOne
-    @JoinColumn(name = "provider_id")
-    private ProviderModel provider;
 
     @Enumerated(EnumType.STRING)
     private StatusNumber statusNumber;
@@ -57,7 +43,6 @@ public class NumberModel {
     @PrePersist
     private void onCreate(){
         this.dataUpload = DateUtils.nowWithoutNanos();
-        this.dateCreated = DateUtils.nowWithoutNanos();
     }
 
 

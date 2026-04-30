@@ -1,6 +1,6 @@
 package com.main.numOps.utils;
 
-import com.main.numOps.domain.did.NumberModel;
+import com.main.numOps.domain.did.DidModel;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import org.springframework.web.multipart.MultipartFile;
@@ -108,8 +108,8 @@ public class FileUtils {
     }
 
     private static void validateRequiredFields(Object model) {
-        if (model instanceof NumberModel numberModel) {
-            if (numberModel.getCn() == null || numberModel.getPrefixo() == null || numberModel.getMcdu() == null) {
+        if (model instanceof DidModel didModel) {
+            if (didModel.getCn() == null || didModel.getPrefixo() == null || didModel.getMcdu() == null) {
                 throw new IllegalArgumentException("Campos obrigatórios não podem ser nulos (cn, prefixo, mcdu)");
             }
         }

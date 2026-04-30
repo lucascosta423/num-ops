@@ -1,7 +1,7 @@
 package com.main.numOps.services.FilesUpload;
 
 import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.did.NumberModel;
+import com.main.numOps.domain.did.DidModel;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +30,7 @@ public class NumberFilesService {
             String headerLine = reader.readLine();
             String[] headers = headerLine.split(";");
 
-            List<NumberModel> batch = new ArrayList<>();
+            List<DidModel> batch = new ArrayList<>();
             int batchSize = 1000;
 
             String line;
@@ -38,7 +38,7 @@ public class NumberFilesService {
             while ((line = reader.readLine()) != null) {
                 if (!line.isEmpty()) {
 
-                    NumberModel numero = mapLineToModel(line, headers, NumberModel::new, (model, header, value) -> {
+                    DidModel numero = mapLineToModel(line, headers, DidModel::new, (model, header, value) -> {
                         switch (header) {
                             case "cn" -> model.setCn(value);
                             case "prefixo" -> model.setPrefixo(value);

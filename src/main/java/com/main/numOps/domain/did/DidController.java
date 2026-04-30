@@ -18,12 +18,12 @@ import java.io.IOException;
 @Tag(name = "Numero", description = "API REST para gerenciamento de numeros")
 @RestController
 @RequestMapping("/number")
-public class NumberController {
-    private final NumberService numberService;
+public class DidController {
+    private final DidService didService;
     private final NumberFilesService numberFilesService;
 
-    public NumberController(NumberService numberService, NumberFilesService numberFilesService) {
-        this.numberService = numberService;
+    public DidController(DidService didService, NumberFilesService numberFilesService) {
+        this.didService = didService;
         this.numberFilesService = numberFilesService;
     }
 
@@ -34,13 +34,13 @@ public class NumberController {
             @RequestParam(value = "uf") String uf,
             @PageableDefault(page = 0,size = 10,direction = Sort.Direction.ASC) Pageable pageable){
 
-        return ResponseEntity.status(HttpStatus.OK).body(numberService.findByNumbersAvailable(area,uf,pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(didService.findByNumbersAvailable(area,uf,pageable));
     }
 
     @PostMapping("activate/{id}")
     public ResponseEntity<SucessResponse> requestNumberActivate(@PathVariable Integer id) {
 
-        var success = numberService.activateNumber(id);
+        var success = didService.activateNumber(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }
@@ -48,7 +48,7 @@ public class NumberController {
     @PostMapping("cancel/{id}")
     public ResponseEntity<SucessResponse> activateNumber(@PathVariable Integer id) {
 
-        var success = numberService.cancelNumber(id);
+        var success = didService.cancelNumber(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }

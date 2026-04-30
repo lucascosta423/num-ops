@@ -11,53 +11,53 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NumberService {
-    private final NumberRepository numberRepository;
+public class DidService {
+    private final DidRepository didRepository;
     private final AuthUtils authUtils;
 
-    public NumberService(NumberRepository numberRepository, AuthUtils authUtils) {
-        this.numberRepository = numberRepository;
+    public DidService(DidRepository didRepository, AuthUtils authUtils) {
+        this.didRepository = didRepository;
         this.authUtils = authUtils;
     }
 
     public SucessResponse activateNumber(Integer id) {
 
-        NumberModel numberModel = findById(id);
+        DidModel didModel = findById(id);
 
-        if (numberModel.getStatusNumber() != StatusNumber.AVAILABLE) {
+        if (didModel.getStatusNumber() != StatusNumber.AVAILABLE) {
             throw new IllegalStateException("Número não está disponível para ativação");
         }
 
-        numberModel.setStatusNumber(StatusNumber.ACTIVE);
+        didModel.setStatusNumber(StatusNumber.ACTIVE);
 
-        numberRepository.save(numberModel);
+        didRepository.save(didModel);
 
         return new SucessResponse("Solicitação de ativação criada com sucesso", "OK");
     }
 
     public SucessResponse cancelNumber(Integer id) {
 
-        NumberModel numberModel = findById(id);
+        DidModel didModel = findById(id);
 
-        if (numberModel.getStatusNumber() != StatusNumber.ACTIVE) {
+        if (didModel.getStatusNumber() != StatusNumber.ACTIVE) {
             throw new IllegalStateException("Número não está ativo para cancelamento");
         }
 
-        numberModel.setStatusNumber(StatusNumber.AVAILABLE);
+        didModel.setStatusNumber(StatusNumber.AVAILABLE);
 
-        numberRepository.save(numberModel);
+        didRepository.save(didModel);
 
         return new SucessResponse("Número cancelado com sucesso", "OK");
     }
 
-    public NumberModel findById(Integer id) {
-        return numberRepository.findById(id)
+    public DidModel findById(Integer id) {
+        return didRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Numero não encontrado"));
     }
 
     public Page<NumberAvailableResponse> findByNumbersAvailable(String area, String uf, Pageable pageable) {
 
-        return numberRepository.findWithFilters(
+        return didRepository.findWithFilters(
                         StatusNumber.AVAILABLE,
                         uf,
                         area,
@@ -68,10 +68,10 @@ public class NumberService {
 
     public Page<NumberResponse> findAll(Pageable pageable) {
         if (authUtils.isAdmin()) {
-            return numberRepository.findAll(pageable)
+            return didRepository.findAll(pageable)
                     .map(NumberResponse::fromEntity);
         } else {
-            return numberRepository.findByProvider(authUtils.getCurrentUser().getProvider(), pageable)
+            return didRepository.findByProvider(authUtils.getCurrentUser().getProvider(), pageable)
                     .map(NumberResponse::fromEntity);
         }
     }

@@ -10,9 +10,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface NumberRepository extends JpaRepository<NumberModel,Integer> {
+public interface DidRepository extends JpaRepository<DidModel,Integer> {
 
-    Page<NumberModel> findByProvider(ProviderModel provider, Pageable pageable);
+    Page<DidModel> findByProvider(ProviderModel provider, Pageable pageable);
 
     @Query("""
     SELECT n FROM numbers n
@@ -21,7 +21,7 @@ public interface NumberRepository extends JpaRepository<NumberModel,Integer> {
       AND (:area IS NULL OR n.area = :area)
     ORDER BY function('RANDOM')
 """)
-    Page<NumberModel> findWithFilters(
+    Page<DidModel> findWithFilters(
             @Param("status") StatusNumber status,
             @Param("ufArea") String ufArea,
             @Param("area") String area,
