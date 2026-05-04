@@ -1,4 +1,4 @@
-package com.main.numOps.domain.did.enuns;
+package com.main.numOps.Enuns;
 
 import lombok.Getter;
 
@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum DidStatus {
     AVAILABLE("AVAILABLE", "Did available"),
     UNAVAILABLE("UNAVAILABLE", "Did unavailable"),
-    RESERVED("RESERVED", "Did reserved");
+    RESERVED("RESERVED", "Did reserved"),
+    ACTIVE("ACTIVE", "Did Active");
 
     private final String code;
     private final String description;
