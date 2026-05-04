@@ -1,6 +1,9 @@
 package com.main.numOps.domain.did;
 
+import com.main.numOps.Enuns.DidStatus;
 import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.domain.didAvailable.DidAvailableModel;
+import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +13,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "did")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,32 +24,41 @@ public class DidModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false,length = 2)
-    private String cn;
+    private String razao;
 
-    @Column(nullable = false,length = 4)
-    private String prefixo;
+    private String documento;
 
-    @Column(nullable = false,length = 4)
-    private String mcdu;
+    private String cep;
 
-    @Column(nullable = false,length = 20)
-    private String area;
+    private String logradouro;
 
-    private String ufArea;
+    private String numeroEndereco;
 
-    private LocalDateTime dataUpload;
+    private String complemento;
+
+    private String bairro;
+
+    private String cidade;
+
+    private String uf;
+
+    @ManyToOne
+    @JoinColumn(name = "did",nullable = false)
+    private DidAvailableModel did;
+
+    @ManyToOne
+    @JoinColumn(name = "provider", nullable = false)
+    private ProviderModel provider;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
-    private StatusNumber statusNumber;
+    private DidStatus status;
 
     @PrePersist
     private void onCreate(){
-        this.dataUpload = DateUtils.nowWithoutNanos();
+        this.createdAt = DateUtils.nowWithoutNanos();
     }
 
-
-    public String getNumero(){
-        return this.cn + this.prefixo + this.mcdu;
-    }
 }

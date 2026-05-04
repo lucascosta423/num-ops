@@ -1,53 +1,54 @@
 package com.main.numOps.domain.did;
 
-import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.did.dtos.NumberAvailableResponse;
-import com.main.numOps.domain.did.dtos.NumberResponse;
+import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.did.dtos.ActivateDidRequest;
+import com.main.numOps.domain.didAvailable.DidAvailableService;
 import com.main.numOps.exeptions.NotFoundException;
+import com.main.numOps.mapper.DidMapper;
 import com.main.numOps.utils.AuthUtils;
-import com.main.numOps.utils.responseApi.SucessResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DidService {
     private final DidRepository didRepository;
+    private final DidAvailableService didAvailableService;
+    private final DidMapper mapper;
     private final AuthUtils authUtils;
 
-    public DidService(DidRepository didRepository, AuthUtils authUtils) {
+    public DidService(DidRepository didRepository, DidAvailableService didAvailableService, DidMapper mapper, AuthUtils authUtils) {
         this.didRepository = didRepository;
+        this.didAvailableService = didAvailableService;
+        this.mapper = mapper;
         this.authUtils = authUtils;
     }
 
-    public SucessResponse activateNumber(Integer id) {
+    @Transactional
+    public List<DidModel> save(ActivateDidRequest didRequest) {
 
-        DidModel didModel = findById(id);
+        var listDid = new ArrayList<DidModel>();
 
-        if (didModel.getStatusNumber() != StatusNumber.AVAILABLE) {
-            throw new IllegalStateException("Número não está disponível para ativação");
+        for (Integer idDid : didRequest.numeros()) {
+
+            var didModel = mapper.toModelList(didRequest);
+
+            didModel.setProvider(authUtils.getCurrentUser().getProvider());
+
+            var did = didAvailableService.findById(idDid);
+
+            didModel.setDid(did);
+
+            listDid.add(didModel);
         }
 
-        didModel.setStatusNumber(StatusNumber.ACTIVE);
+        var reult =  didRepository.saveAll(listDid);
 
-        didRepository.save(didModel);
+        didAvailableService.updateStatus(didRequest.numeros(), DidStatus.UNAVAILABLE);
 
-        return new SucessResponse("Solicitação de ativação criada com sucesso", "OK");
-    }
-
-    public SucessResponse cancelNumber(Integer id) {
-
-        DidModel didModel = findById(id);
-
-        if (didModel.getStatusNumber() != StatusNumber.ACTIVE) {
-            throw new IllegalStateException("Número não está ativo para cancelamento");
-        }
-
-        didModel.setStatusNumber(StatusNumber.AVAILABLE);
-
-        didRepository.save(didModel);
-
-        return new SucessResponse("Número cancelado com sucesso", "OK");
+        return reult;
     }
 
     public DidModel findById(Integer id) {
@@ -55,24 +56,13 @@ public class DidService {
                 .orElseThrow(() -> new NotFoundException("Numero não encontrado"));
     }
 
-    public Page<NumberAvailableResponse> findByNumbersAvailable(String area, String uf, Pageable pageable) {
-
-        return didRepository.findWithFilters(
-                        StatusNumber.AVAILABLE,
-                        uf,
-                        area,
-                        pageable)
-                .map(NumberAvailableResponse::fromEntity);
-
-    }
-
-    public Page<NumberResponse> findAll(Pageable pageable) {
-        if (authUtils.isAdmin()) {
-            return didRepository.findAll(pageable)
-                    .map(NumberResponse::fromEntity);
-        } else {
-            return didRepository.findByProvider(authUtils.getCurrentUser().getProvider(), pageable)
-                    .map(NumberResponse::fromEntity);
-        }
-    }
+//    public Page<NumberResponse> findAll(Pageable pageable) {
+//        if (authUtils.isAdmin()) {
+//            return didRepository.findAll(pageable)
+//                    .map(NumberResponse::fromEntity);
+//        } else {
+//            return didRepository.findByProvider(authUtils.getCurrentUser().getProvider(), pageable)
+//                    .map(NumberResponse::fromEntity);
+//        }
+//    }
 }

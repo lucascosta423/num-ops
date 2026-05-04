@@ -1,7 +1,7 @@
 package com.main.numOps.services.FilesUpload;
 
-import com.main.numOps.Enuns.StatusNumber;
-import com.main.numOps.domain.did.DidModel;
+import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.didAvailable.DidAvailableModel;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +30,7 @@ public class NumberFilesService {
             String headerLine = reader.readLine();
             String[] headers = headerLine.split(";");
 
-            List<DidModel> batch = new ArrayList<>();
+            List<DidAvailableModel> batch = new ArrayList<>();
             int batchSize = 1000;
 
             String line;
@@ -38,7 +38,7 @@ public class NumberFilesService {
             while ((line = reader.readLine()) != null) {
                 if (!line.isEmpty()) {
 
-                    DidModel numero = mapLineToModel(line, headers, DidModel::new, (model, header, value) -> {
+                    DidAvailableModel numero = mapLineToModel(line, headers, DidAvailableModel::new, (model, header, value) -> {
                         switch (header) {
                             case "cn" -> model.setCn(value);
                             case "prefixo" -> model.setPrefixo(value);
@@ -46,8 +46,8 @@ public class NumberFilesService {
                             case "area" -> model.setArea(value);
                             case "uf" -> model.setUfArea(value);
                         }
-                        if (model.getStatusNumber() == null) {
-                            model.setStatusNumber(StatusNumber.AVAILABLE);
+                        if (model.getStatus() == null) {
+                            model.setStatus(DidStatus.AVAILABLE);
                         }
 
                     });

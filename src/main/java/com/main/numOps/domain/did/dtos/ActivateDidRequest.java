@@ -1,10 +1,18 @@
 package com.main.numOps.domain.did.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
-public record ActivateNumberRequest(
+import java.util.List;
+
+public record ActivateDidRequest(
+
+        @NotEmpty(message = "A lista de números é obrigatória")
+        List<@NotNull(message = "Número inválido") Integer> numeros,
+
         @NotBlank(message = "Cliente não pode ser vazio")
-        String cliente,
+        String razao,
 
         @NotBlank(message = "Documento não pode ser vazio")
         String documento,
