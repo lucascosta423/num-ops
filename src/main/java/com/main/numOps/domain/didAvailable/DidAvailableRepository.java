@@ -50,7 +50,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
     @Query("""
         UPDATE did_available da
         SET  da.status = COALESCE(:status, da.status),
-            da.updatedAt = COALESCE(:updateAt, da.updatedAt)
+            da.updatedAt = COALESCE(:updatedAt, da.updatedAt)
         WHERE
            da.cn = :cn
         AND
@@ -58,18 +58,19 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
         AND
            da.mcdu BETWEEN :start AND :end
         """)
-    int updatedByRange(
+    int updateByRange(
             @Param("cn") String cn,
             @Param("prefixo")String prefixo,
             @Param("start") String start,
             @Param("end") String end,
-            @Param("status") DidStatus status
+            @Param("status") DidStatus status,
+            @Param("updatedAt") LocalDateTime updatedAt
     );
 
     @Query("""
-            SELECT 
-                da 
-            FROM 
+            SELECT
+                da
+            FROM
                 did_available da
             WHERE
                da.cn = :cn
@@ -78,10 +79,11 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
             AND
                da.mcdu BETWEEN :start AND :end
             """)
-    int listByRange(
+    Page<DidAvailableModel> listByRange(
             @Param("cn") String cn,
             @Param("prefixo")String prefixo,
             @Param("start") String start,
-            @Param("end") String end
+            @Param("end") String end,
+            Pageable pageable
     );
 }

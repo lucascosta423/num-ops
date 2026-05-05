@@ -12,7 +12,7 @@ public class DidMapper {
         var did = new DidModel();
 
         did.setRazao(didRequest.razao());
-        did.setDocumento(didRequest.documento());
+        did.setDocument(didRequest.document());
         did.setCep(didRequest.cep());
         did.setLogradouro(didRequest.logradouro());
         did.setNumeroEndereco(didRequest.numeroEndereco());

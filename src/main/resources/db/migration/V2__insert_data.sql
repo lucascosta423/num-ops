@@ -2,7 +2,7 @@
 INSERT INTO provider (
     nome,
     contato,
-    documento,
+    document,
     email,
     data_criado,
     data_atualizacao,

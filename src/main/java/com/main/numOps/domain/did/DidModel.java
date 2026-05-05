@@ -26,7 +26,7 @@ public class DidModel {
 
     private String razao;
 
-    private String documento;
+    private String document;
 
     private String cep;
 

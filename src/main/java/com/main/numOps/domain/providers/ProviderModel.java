@@ -28,7 +28,7 @@ public class ProviderModel {
     private String contato;
 
     @Column(nullable = false,unique = true,length = 15)
-    private String documento;
+    private String document;
 
     @Column(nullable = false,unique = true,length = 70)
     private String email;

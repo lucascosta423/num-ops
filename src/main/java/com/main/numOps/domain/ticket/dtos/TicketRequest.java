@@ -13,7 +13,7 @@ public record TicketRequest(
         String razao,
 
         @NotBlank
-        String documento,
+        String document,
 
         String cep,
 

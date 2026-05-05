@@ -6,20 +6,20 @@ meta:
   modified: 1776274519107
   description: ""
 collection:
-  - name: DID AVAILABLE
+  - name: NUMBER
     meta:
       id: fld_2adda2f0af894e2d94be9aafd0cd2028
       created: 1776274527695
-      modified: 1778013088202
+      modified: 1777549222013
       sortKey: -1777380140719.5
       description: ""
     children:
       - url: "{{url}}/upload"
-        name: UPLOAD
+        name: upload
         meta:
           id: req_5e604c33cce742139e78757c7691f0b7
           created: 1776274532471
-          modified: 1777901874372
+          modified: 1777488864485
           isPrivate: false
           description: ""
           sortKey: -1776274535479
@@ -53,12 +53,54 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: "{{url}}/available"
-        name: LIST AVAILABLE
+      - url: http://localhost:8080/numero/activate/1
+        name: ativar
+        meta:
+          id: req_47f811b0162d427097829b0bc8fd54e7
+          created: 1776275100250
+          modified: 1776281141446
+          isPrivate: false
+          description: ""
+          sortKey: -1776275100250
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "cliente": "João da Silva",
+              "documento": "12345678901",
+              "cep": "29100-000",
+              "logradouro": "Rua das Palmeiras",
+              "numeroEndereco": "123",
+              "complemento": "Apto 101",
+              "bairro": "Centro",
+              "cidade": "Vila Velha",
+              "uf": "ES"
+            }
+        parameters:
+          - name: ""
+            value: ""
+            disabled: true
+            id: pair_783399142b9b4f7ea1057e332d34ec24
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}/list"
+        name: list number AVAILABLE
         meta:
           id: req_7c1e5b95364343b88c1650c1b2ec04b0
           created: 1776280160740
-          modified: 1777926874318
+          modified: 1777488898636
           isPrivate: false
           description: ""
           sortKey: -1776274817864.5
@@ -75,40 +117,6 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/12.0.0
-        scripts:
-          afterResponse: >-
-            test1();
-
-
-            function test1(){
-            	const response = JSON.parse(insomnia.response.body);
-
-            	const list = response.content;
-
-            	// valida se é array
-            	if (!Array.isArray(list)) {
-            			throw new Error("content não é uma lista");
-            	}
-
-            	const numeros = list.map(item => item.numero);
-
-            	console.log(numeros);
-
-            	// detectar duplicados
-            	const repetidos = numeros.filter((item, index) => numeros.indexOf(item) !== index);
-
-            	// testes
-            	insomnia.test("Lista não deve estar vazia", () => {
-            			insomnia.expect(numeros.length).to.be.greaterThan(0);
-            	});
-
-            	insomnia.test("Não deve conter números duplicados", () => {
-            			insomnia.expect(repetidos.length).to.equal(0);
-            	});
-
-            	console.log("Total:", numeros.length);
-            	console.log("Repetidos:", repetidos);
-            }
         settings:
           renderRequestBody: true
           encodeUrl: true
@@ -117,82 +125,22 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: "{{url}}/list"
-        name: LIST ALL
+      - url: "{{url}}/cancel/1"
+        name: cancelar
         meta:
-          id: req_6b1991cc4e4041a39786cfec5eac64f7
-          created: 1777926877443
-          modified: 1777927089997
+          id: req_013462f3c3a94d9db5db2d393cbf1cda
+          created: 1776281148736
+          modified: 1777488921895
           isPrivate: false
           description: ""
-          sortKey: -1777926877443
-        method: GET
-        headers:
-          - name: User-Agent
-            value: insomnia/12.0.0
-        settings:
-          renderRequestBody: true
-          encodeUrl: true
-          followRedirects: global
-          cookies:
-            send: true
-            store: true
-          rebuildPath: true
-      - url: "{{ _.url }}/filter"
-        name: LIST BY RANGE
-        meta:
-          id: req_00b8a3f07af44a8dbe93f90e3e23356a
-          created: 1777979776045
-          modified: 1778013169465
-          isPrivate: false
-          description: ""
-          sortKey: -1777979776045
+          sortKey: -1776274959057.25
         method: POST
-        body:
-          mimeType: application/json
-          text: |-
-            {
-            	"cn":"27",
-            	"prefixo":"2888",
-            	"start":"4000",
-            	"end":"4010"
-            }
+        parameters:
+          - name: ""
+            value: ""
+            disabled: true
+            id: pair_783399142b9b4f7ea1057e332d34ec24
         headers:
-          - name: Content-Type
-            value: application/json
-          - name: User-Agent
-            value: insomnia/12.0.0
-        settings:
-          renderRequestBody: true
-          encodeUrl: true
-          followRedirects: global
-          cookies:
-            send: true
-            store: true
-          rebuildPath: true
-      - url: "{{url}}"
-        name: UPDATE BY RANGE
-        meta:
-          id: req_03678c1f99e34d069d2489827cbf130b
-          created: 1777982518944
-          modified: 1778013221412
-          isPrivate: false
-          description: ""
-          sortKey: -1777982518944
-        method: PATCH
-        body:
-          mimeType: application/json
-          text: |-
-            {
-            	"cn":"27",
-            	"prefixo":"2888",
-            	"start":"4000",
-            	"end":"4010",
-            	"status": "RESERVED"
-            }
-        headers:
-          - name: Content-Type
-            value: application/json
           - name: User-Agent
             value: insomnia/12.0.0
         settings:
@@ -208,7 +156,7 @@ collection:
       token: "{{token}}"
       prefix: Bearer
     environment:
-      url: "{{ _.host_dev }}/dids"
+      url: "{{ _.host_dev }}/number"
     environmentPropertyOrder:
       "&":
         - url
@@ -216,7 +164,7 @@ collection:
     meta:
       id: fld_19f5693c9ab544b99cb3677cf40eda34
       created: 1777295544027
-      modified: 1778006397483
+      modified: 1777549217399
       sortKey: -1777380140807
       description: ""
     children:
@@ -275,7 +223,7 @@ collection:
         meta:
           id: req_ed3b0c2a350b4430bedff370b70f09f9
           created: 1777296684524
-          modified: 1777898736114
+          modified: 1777384803799
           isPrivate: false
           description: ""
           sortKey: -1777296684524
@@ -304,63 +252,63 @@ collection:
         body:
           mimeType: multipart/form-data
           params:
-            - name: razao
+            - id: pair_6d85c351d4b84460ab9c8e4f7571f3fb
+              name: razao
               value: teste
               description: ""
               disabled: false
-              id: pair_6d85c351d4b84460ab9c8e4f7571f3fb
-            - name: documento
+            - id: pair_57c572b16139479db90e52e6a98e10e6
+              name: documento
               value: "1234567890"
               description: ""
               disabled: false
-              id: pair_57c572b16139479db90e52e6a98e10e6
-            - name: cep
+            - id: pair_6fe2edc2cff64853ba382eb6b041711b
+              name: cep
               value: ""
               description: ""
               disabled: false
-              id: pair_6fe2edc2cff64853ba382eb6b041711b
-            - name: logradouro
+            - id: pair_a3a353d589c54e88820bd1144f400598
+              name: logradouro
               value: ""
               description: ""
               disabled: false
-              id: pair_a3a353d589c54e88820bd1144f400598
-            - name: numeroEndereco
+            - id: pair_0a11d8294281489a949acd0bde6b98f3
+              name: numeroEndereco
               value: ""
               description: ""
               disabled: false
-              id: pair_0a11d8294281489a949acd0bde6b98f3
-            - name: complemento
+            - id: pair_52f45089267b48b698ee8ad0269c15df
+              name: complemento
               value: ""
               description: ""
               disabled: false
-              id: pair_52f45089267b48b698ee8ad0269c15df
-            - name: bairro
+            - id: pair_33e51d7420074acb93e187591db6c626
+              name: bairro
               value: ""
               description: ""
               disabled: false
-              id: pair_33e51d7420074acb93e187591db6c626
-            - name: cidade
+            - id: pair_4cdb5555fc6e426597c1296576c5f775
+              name: cidade
               value: ""
               description: ""
               disabled: false
-              id: pair_4cdb5555fc6e426597c1296576c5f775
-            - name: uf
+            - id: pair_5dceccb4a6be49e285809a9e7d8777aa
+              name: uf
               value: ""
               description: ""
               disabled: false
-              id: pair_5dceccb4a6be49e285809a9e7d8777aa
-            - name: type
+            - id: pair_e1ab81b4f0924827984a59359ed3ea90
+              name: type
               value: DID
               description: ""
               disabled: false
-              id: pair_e1ab81b4f0924827984a59359ed3ea90
-            - name: numeros
+            - id: pair_a96caf07d9b442b1996c9b2eb0167a70
+              name: numeros
               value: 2728880000,2728880001
               description: ""
               disabled: false
-              multiline: false
-              id: pair_a96caf07d9b442b1996c9b2eb0167a70
               type: text
+              multiline: false
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -493,18 +441,19 @@ collection:
         body:
           mimeType: multipart/form-data
           params:
-            - name: file
+            - id: pair_b7d642a256c74de0a28ac981bd47e5ec
+              name: file
               value: ""
               description: ""
               disabled: false
-              id: pair_b7d642a256c74de0a28ac981bd47e5ec
-              fileName: /home/lucassantos/Downloads/STFC_20260404_GERAL.txt
               type: file
+              fileName: /home/lucassantos/Downloads/STFC_20260404_GERAL.txt
         parameters:
-          - name: ""
+          - id: pair_3eba424cacc2431d8abe0c76b9bf71d9
+            name: ""
             value: ""
+            description: ""
             disabled: true
-            id: pair_3eba424cacc2431d8abe0c76b9bf71d9
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -527,114 +476,20 @@ collection:
     environmentPropertyOrder:
       "&":
         - url
-  - name: DID
-    meta:
-      id: fld_b3de7a6176594e76bd887ad7fa377f49
-      created: 1777917296039
-      modified: 1777997266050
-      sortKey: -1777380140725.75
-      description: ""
-    children:
-      - url: "{{url}}/activate"
-        name: CREATED
-        meta:
-          id: req_b2ea1a64d6f44006a18914c01d097bec
-          created: 1777917356674
-          modified: 1778008304126
-          isPrivate: false
-          description: ""
-          sortKey: -1777917356674
-        method: POST
-        body:
-          mimeType: application/json
-          text: |-
-            {
-              "numeros": [1,2,3,4],
-              "razao": "Empresa Load Test LTDA",
-              "document": "12345678000199",
-              "cep": "29100-000",
-              "logradouro": "Rua de Teste",
-              "numeroEndereco": "123",
-              "complemento": "Sala 1",
-              "bairro": "Centro",
-              "cidade": "Vila Velha",
-              "uf": "ES"
-            }
-        headers:
-          - name: Content-Type
-            value: application/json
-          - name: User-Agent
-            value: insomnia/12.0.0
-        settings:
-          renderRequestBody: true
-          encodeUrl: true
-          followRedirects: global
-          cookies:
-            send: true
-            store: true
-          rebuildPath: true
-      - url: "{{url}}"
-        name: LIST ALL
-        meta:
-          id: req_0615d72c298e48158969bb1671fc5829
-          created: 1777984265809
-          modified: 1777984275731
-          isPrivate: false
-          description: ""
-          sortKey: -1777984265809
-        method: GET
-        headers:
-          - name: User-Agent
-            value: insomnia/12.0.0
-        settings:
-          renderRequestBody: true
-          encodeUrl: true
-          followRedirects: global
-          cookies:
-            send: true
-            store: true
-          rebuildPath: true
-      - url: "{{url}}/12345678000199"
-        name: FIND BY DOCUMENTO
-        meta:
-          id: req_c67d71719d64403f874743e1db7d5649
-          created: 1777997117756
-          modified: 1777997298291
-          isPrivate: false
-          description: ""
-          sortKey: -1777997117756
-        method: GET
-        headers:
-          - name: User-Agent
-            value: insomnia/12.0.0
-        settings:
-          renderRequestBody: true
-          encodeUrl: true
-          followRedirects: global
-          cookies:
-            send: true
-            store: true
-          rebuildPath: true
-    authentication:
-      type: bearer
-      token: "{{token}}"
-      prefix: Bearer
-    environment:
-      url: "{{ _.host_dev }}/did"
 cookieJar:
   name: Default Jar
   meta:
     id: jar_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1778013088197
+    modified: 1777488736024
 environments:
   name: Base
   meta:
     id: env_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1778013088199
+    modified: 1777488736027
     isPrivate: false
   data:
     host_dev: http://localhost:8080
     host_prod: http://localhost:8080
-    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQHVsdHJhY29tLmNvbSIsImFkbWluIjp0cnVlLCJ1c3VhcmlvIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTc3ODAxMzU5N30.OVDYH0Zt1Ml1t5ap8eDYRW0oXPdIMMrob0nL63LH5z0
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQHVsdHJhY29tLmNvbSIsImFkbWluIjp0cnVlLCJ1c3VhcmlvIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTc3NzQ5NTkzNX0.K-xrbB05BoJkHBqc2v2vzkdTqiGyrpiIvS8bEBst0-8

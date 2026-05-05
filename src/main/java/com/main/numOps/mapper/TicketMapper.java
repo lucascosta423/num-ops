@@ -19,7 +19,7 @@ public class TicketMapper {
         TicketModel model = new TicketModel();
 
         model.setRazao(request.razao());
-        model.setDocumento(request.documento());
+        model.setDocument(request.document());
         model.setCep(request.cep());
         model.setLogradouro(request.logradouro());
         model.setNumeroEndereco(request.numeroEndereco());

@@ -29,7 +29,7 @@ public class TicketModel {
 
     private String razao;
 
-    private String documento;
+    private String document;
 
     private String cep;
 

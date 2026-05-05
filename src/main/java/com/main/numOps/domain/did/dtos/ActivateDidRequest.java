@@ -14,8 +14,8 @@ public record ActivateDidRequest(
         @NotBlank(message = "Cliente não pode ser vazio")
         String razao,
 
-        @NotBlank(message = "Documento não pode ser vazio")
-        String documento,
+        @NotBlank(message = "document não pode ser vazio")
+        String document,
 
         String cep,
 

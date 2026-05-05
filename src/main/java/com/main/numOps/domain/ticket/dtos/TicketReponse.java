@@ -13,7 +13,7 @@ public record TicketReponse(
 
         String razao,
 
-        String documento,
+        String document,
 
         String cep,
 
@@ -54,7 +54,7 @@ public record TicketReponse(
                 model.getId(),
                 model.getTicket(),
                 model.getRazao(),
-                model.getDocumento(),
+                model.getDocument(),
                 model.getCep(),
                 model.getLogradouro(),
                 model.getNumeroEndereco(),
