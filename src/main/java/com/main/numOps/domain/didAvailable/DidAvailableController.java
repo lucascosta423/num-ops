@@ -40,7 +40,7 @@ public class DidAvailableController {
     @Operation(summary = "List of available DIDs")
     @GetMapping("/available")
     public ResponseEntity<Page<DidAvailable>> listByNumbersAvailable(
-            @Parameter(description = "DDD", example = "27")
+            @Parameter(description = "Area", example = "Vila Velha")
             @RequestParam String area,
 
             @Parameter(description = "UF", example = "ES")
