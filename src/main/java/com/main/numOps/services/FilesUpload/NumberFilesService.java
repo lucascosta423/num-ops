@@ -2,6 +2,7 @@ package com.main.numOps.services.FilesUpload;
 
 import com.main.numOps.Enuns.DidStatus;
 import com.main.numOps.domain.didAvailable.DidAvailableModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static com.main.numOps.utils.FileUtils.mapLineToModel;
 
+@Slf4j
 @Service
 public class NumberFilesService {
 
@@ -25,7 +27,7 @@ public class NumberFilesService {
     }
 
     @Async
-    public void processFile(MultipartFile file) throws IOException {
+    public void processFile(MultipartFile file) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
             String headerLine = reader.readLine();
             String[] headers = headerLine.split(";");
@@ -64,6 +66,9 @@ public class NumberFilesService {
             if (!batch.isEmpty()) {
                 numberBatchService.saveBatch(batch);
             }
+
+        } catch (IOException ex) {
+            log.error("error: ", ex);
         }
     }
 

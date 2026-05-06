@@ -39,7 +39,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
             WHERE da.id IN :ids
             """
     )
-    int updateStatusDidAvailable(
+    Integer updateStatusDidAvailable(
             @Param("ids") List<Integer> ids,
             @Param("status") DidStatus status,
             @Param("updateAt")LocalDateTime updateAt

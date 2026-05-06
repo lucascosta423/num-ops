@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "DIDs Configured", description = "REST API for managing configured dids.")
+@Tag(name = "DIDs CONFIGURED")
 @RestController
 @RequestMapping("/did")
 public class DidController {

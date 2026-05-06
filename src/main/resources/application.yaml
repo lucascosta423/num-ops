@@ -30,6 +30,11 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+springdoc:
+  swagger-ui:
+    apisSorter : alpha
+    operationsSorter: method
+
 token:
   secret: ${JWT_SECRET:my-secret-key}
 

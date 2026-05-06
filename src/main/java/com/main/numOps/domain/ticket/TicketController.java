@@ -2,6 +2,7 @@ package com.main.numOps.domain.ticket;
 
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.InputStream;
 
 @RestController
+@Tag(name = "TICKET")
 @RequestMapping("/ticket")
 public class TicketController {
     private final TicketService ticketService;

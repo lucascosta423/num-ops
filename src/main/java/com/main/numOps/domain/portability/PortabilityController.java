@@ -2,6 +2,7 @@ package com.main.numOps.domain.portability;
 
 import com.main.numOps.domain.portability.dto.PortabilityDTO;
 import com.main.numOps.domain.portability.dto.PortabilityUpdate;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
+@Tag(name = "PORTABILITY")
 @RequestMapping("/portability")
 public class PortabilityController {
     private final PortabilityService portabilityService;

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Provedor", description = "API REST para gerenciamento de provedores")
+@Tag(name = "PROVIDER")
 @RestController
 @RequestMapping("/provedor")
 public class ProviderController {

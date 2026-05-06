@@ -4,60 +4,91 @@ import com.main.numOps.Enuns.DidStatus;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailable;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeFilterDTO;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeUpdateRequest;
+import com.main.numOps.exeptions.BusinessException;
 import com.main.numOps.exeptions.NotFoundException;
+import com.main.numOps.services.FilesUpload.NumberFilesService;
 import com.main.numOps.utils.DateUtils;
+import com.main.numOps.utils.responseApi.SucessResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class DidAvailableService {
     private final DidAvailableRepository didAvailableRepository;
+    private final NumberFilesService numberFilesService;
 
-    public DidAvailableService(DidAvailableRepository didAvailableRepository) {
+    public DidAvailableService(DidAvailableRepository didAvailableRepository, NumberFilesService numberFilesService) {
         this.didAvailableRepository = didAvailableRepository;
+        this.numberFilesService = numberFilesService;
     }
 
+    public Page<DidAvailableModel> findAll(Pageable pageable) {
+        return didAvailableRepository.findAll(pageable);
+    }
 
     public DidAvailableModel findById(Integer id) {
         return didAvailableRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Numero não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Number not found"));
     }
 
     public Page<DidAvailable> findByNumbersAvailable(String area, String uf, Pageable pageable) {
-        return didAvailableRepository.findWithFilters(
+        var dids = didAvailableRepository.findWithFilters(
                         DidStatus.AVAILABLE,
                         uf,
                         area,
                         pageable)
                 .map(DidAvailable::fromEntity);
+
+        if (dids.getTotalElements() == 0) {
+            throw new NotFoundException("No DID available for the region.");
+        }
+
+        return dids;
     }
 
     @Transactional
-    public void updateStatus(List<Integer> ids, DidStatus status){
-        didAvailableRepository.updateStatusDidAvailable(
+    public void updateStatus(List<Integer> ids, DidStatus status) {
+        Integer updated = didAvailableRepository.updateStatusDidAvailable(
                 ids,
                 status,
                 DateUtils.nowWithoutNanos()
         );
+
+        if (updated == 0) {
+            throw new NotFoundException("None found to update.");
+        }
     }
 
-    public Page<DidAvailableModel> listByRange(DidAvailableRangeFilterDTO filterDTO, Pageable pageable){
-        return didAvailableRepository.listByRange(
+    public Page<DidAvailableModel> listByRange(DidAvailableRangeFilterDTO filterDTO, Pageable pageable) {
+
+        if (Integer.parseInt(filterDTO.end()) < Integer.parseInt(filterDTO.start())) {
+            throw new BusinessException("End cannot be less than Start.");
+        }
+
+        Page<DidAvailableModel> listed = didAvailableRepository.listByRange(
                 filterDTO.cn(),
                 filterDTO.prefixo(),
                 filterDTO.start(),
                 filterDTO.end(),
                 pageable
         );
+
+        if (listed.getTotalElements() == 0) {
+            throw new NotFoundException("Not a single 'did' found for the chosen range.");
+        }
+
+        return listed;
     }
 
     @Transactional
     public int updateByRange(DidAvailableRangeUpdateRequest request) {
-        return didAvailableRepository.updateByRange(
+        int updated = didAvailableRepository.updateByRange(
                 request.cn(),
                 request.prefixo(),
                 request.start(),
@@ -65,9 +96,23 @@ public class DidAvailableService {
                 request.status(),
                 DateUtils.nowWithoutNanos()
         );
+
+        if (updated == 0) {
+            throw new NotFoundException("None found to update.");
+        }
+
+        return updated;
     }
 
-    public Page<DidAvailableModel> findAll(Pageable pageable) {
-        return didAvailableRepository.findAll(pageable);
+    public SucessResponse uploadFile(MultipartFile file) {
+
+        numberFilesService.processFile(file);
+
+        return new SucessResponse(
+                "Upload received. Processing in progress.",
+                "202"
+        );
+
     }
+
 }
