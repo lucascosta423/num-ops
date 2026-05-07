@@ -1,7 +1,7 @@
 package com.main.numOps.utils;
 
-import com.main.numOps.domain.did.DidModel;
 import com.main.numOps.domain.didAvailable.DidAvailableModel;
+import com.main.numOps.mapper.FileMapper;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import org.springframework.web.multipart.MultipartFile;

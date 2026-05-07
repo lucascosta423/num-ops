@@ -1,4 +1,4 @@
-package com.main.numOps.utils;
+package com.main.numOps.mapper;
 
 @FunctionalInterface
 public interface FileMapper<T> {
