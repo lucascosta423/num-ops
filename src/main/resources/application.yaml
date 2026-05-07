@@ -32,8 +32,8 @@ spring:
 
 springdoc:
   swagger-ui:
-    apisSorter : alpha
-    operationsSorter: method
+    operationsSorter: none
+    doc-expansion: none
 
 token:
   secret: ${JWT_SECRET:my-secret-key}
