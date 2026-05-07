@@ -2,6 +2,7 @@ package com.main.numOps.domain.didAvailable;
 
 import com.main.numOps.Enuns.DidStatus;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailable;
+import com.main.numOps.domain.didAvailable.dtos.DidAvailableFilter;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeFilterDTO;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeUpdateRequest;
 import com.main.numOps.exeptions.BusinessException;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -37,11 +37,11 @@ public class DidAvailableService {
                 .orElseThrow(() -> new NotFoundException("Number not found"));
     }
 
-    public Page<DidAvailable> findByNumbersAvailable(String area, String uf, Pageable pageable) {
+    public Page<DidAvailable> findAllAvailable(DidAvailableFilter filter, Pageable pageable) {
         var dids = didAvailableRepository.findWithFilters(
                         DidStatus.AVAILABLE,
-                        uf,
-                        area,
+                        filter.uf(),
+                        filter.area(),
                         pageable)
                 .map(DidAvailable::fromEntity);
 
@@ -104,15 +104,11 @@ public class DidAvailableService {
         return updated;
     }
 
-    public SucessResponse uploadFile(MultipartFile file) {
+    public Void uploadFile(MultipartFile file) {
 
         numberFilesService.processFile(file);
 
-        return new SucessResponse(
-                "Upload received. Processing in progress.",
-                "202"
-        );
-
+        return null;
     }
 
 }
