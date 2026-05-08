@@ -1,6 +1,7 @@
 package com.main.numOps.domain.customer;
 
 import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.customer.enums.TypeDocument;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
@@ -25,6 +26,8 @@ public class CustomerModel {
     private String razao;
 
     private String document;
+
+    private TypeDocument typeDocument;
 
     private String cep;
 
