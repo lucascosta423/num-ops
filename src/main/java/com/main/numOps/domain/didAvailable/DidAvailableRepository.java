@@ -1,6 +1,6 @@
 package com.main.numOps.domain.didAvailable;
 
-import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.did.enums.DidStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface DidAvailableRepository extends JpaRepository<DidAvailableModel, Integer> {
+public interface DidAvailableRepository extends JpaRepository<DidAvailableModel, Long> {
 
     @Query("""
                 SELECT da FROM did_available da
@@ -40,7 +40,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
             """
     )
     Integer updateStatusDidAvailable(
-            @Param("ids") List<Integer> ids,
+            @Param("ids") List<Long> ids,
             @Param("status") DidStatus status,
             @Param("updateAt")LocalDateTime updateAt
             );

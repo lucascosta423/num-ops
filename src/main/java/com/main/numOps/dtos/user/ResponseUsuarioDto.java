@@ -1,6 +1,6 @@
 package com.main.numOps.dtos.user;
 
-import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.Enuns.Status;
 import com.main.numOps.domain.user.UserModel;
 
 import java.util.UUID;
@@ -10,7 +10,7 @@ public record ResponseUsuarioDto(
         String nome,
         String email,
         String role,
-        StatusNumber statusNumber,
+        Status status,
         String provider
 ) {
     public static ResponseUsuarioDto fromEntity(UserModel usuario) {
@@ -19,7 +19,7 @@ public record ResponseUsuarioDto(
                 usuario.getName(),
                 usuario.getEmail(),
                 usuario.getRole().name(),
-                usuario.getStatusNumber(),
+                usuario.getStatus(),
                 usuario.getProvider()  != null ? usuario.getProvider().getNome() : ""
         );
     }

@@ -1,6 +1,6 @@
 package com.main.numOps.domain.providers;
 
-import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.Enuns.Status;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ProviderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false,unique = true,length = 150)
     private String nome;
@@ -38,10 +38,10 @@ public class ProviderModel {
     private LocalDateTime dataAtualizacao;
 
     @Enumerated(EnumType.STRING)
-    private StatusNumber statusNumber;
+    private Status status;
 
     public boolean verifyStatus(){
-        return this.statusNumber == StatusNumber.ACTIVE;
+        return this.status == Status.ACTIVE;
     }
 
     @PrePersist

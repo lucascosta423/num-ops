@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PortabilityRepository extends JpaRepository<PortabilityModel, Integer> {
+public interface PortabilityRepository extends JpaRepository<PortabilityModel, Long> {
 
     List<PortabilityModel> findByTicket(TicketModel ticketModel);
 

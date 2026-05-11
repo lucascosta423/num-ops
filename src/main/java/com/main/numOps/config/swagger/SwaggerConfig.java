@@ -17,6 +17,7 @@ public class SwaggerConfig {
                         new Tag().name("AUTH").description("Authentication"),
                         new Tag().name("USER").description("Management Users"),
                         new Tag().name("PROVIDER").description("Management Providers"),
+                        new Tag().name("CUSTOMER").description("Management Customer"),
                         new Tag().name("TICKET").description("Management Tickets"),
                         new Tag().name("DIDs CONFIGURED").description("Active DIDs management"),
                         new Tag().name("PORTABILITY").description("Management Providers"),

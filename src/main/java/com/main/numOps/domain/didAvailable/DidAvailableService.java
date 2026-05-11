@@ -1,15 +1,14 @@
 package com.main.numOps.domain.didAvailable;
 
-import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailable;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableFilter;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeFilterDTO;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeUpdateRequest;
 import com.main.numOps.exeptions.BusinessException;
 import com.main.numOps.exeptions.NotFoundException;
-import com.main.numOps.services.FilesUpload.NumberFilesService;
+import com.main.numOps.Files.NumberFilesService;
 import com.main.numOps.utils.DateUtils;
-import com.main.numOps.utils.responseApi.SucessResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class DidAvailableService {
         return didAvailableRepository.findAll(pageable);
     }
 
-    public DidAvailableModel findById(Integer id) {
+    public DidAvailableModel findById(Long id) {
         return didAvailableRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Number not found"));
     }
@@ -53,7 +52,7 @@ public class DidAvailableService {
     }
 
     @Transactional
-    public void updateStatus(List<Integer> ids, DidStatus status) {
+    public void updateStatus(List<Long> ids, DidStatus status) {
         Integer updated = didAvailableRepository.updateStatusDidAvailable(
                 ids,
                 status,

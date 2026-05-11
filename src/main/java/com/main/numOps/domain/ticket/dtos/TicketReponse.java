@@ -7,7 +7,7 @@ import com.main.numOps.domain.ticket.enuns.TicketType;
 import java.time.LocalDateTime;
 
 public record TicketReponse(
-        Integer id,
+        Long id,
 
         String ticket,
 

@@ -1,8 +1,7 @@
-package com.main.numOps.services.FilesUpload;
+package com.main.numOps.Files;
 
 import com.main.numOps.domain.operators.OperatorsModel;
 import com.main.numOps.domain.operators.OperatorsRepository;
-import com.main.numOps.services.serviceImpl.FileHandlingImp;
 import com.main.numOps.utils.FileUtils;
 import com.main.numOps.utils.StringUtils;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,7 @@ import com.main.numOps.Enuns.StatusPortability;
 import com.main.numOps.domain.portability.PortabilityModel;
 
 public record PortabilityDTO (
-        Integer id,
+        Long id,
         String numero,
         String municipio,
         Integer cnlMunicipo,

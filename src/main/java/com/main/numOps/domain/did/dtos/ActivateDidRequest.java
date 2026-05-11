@@ -9,7 +9,7 @@ import java.util.List;
 public record ActivateDidRequest(
 
         @NotEmpty(message = "A lista de números é obrigatória")
-        List<@NotNull(message = "Número inválido") Integer> numeros,
+        List<@NotNull(message = "Número inválido") Long> numeros,
 
         @NotBlank(message = "Cliente não pode ser vazio")
         String razao,

@@ -1,6 +1,6 @@
 package com.main.numOps.domain.user;
 
-import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.Enuns.Status;
 import com.main.numOps.Enuns.UserRole;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
@@ -47,7 +47,7 @@ public class UserModel implements UserDetails {
     private LocalDateTime dataCriado;
 
     @Enumerated(EnumType.STRING)
-    private StatusNumber statusNumber;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
@@ -99,7 +99,7 @@ public class UserModel implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.statusNumber == StatusNumber.ACTIVE;
+        return this.status == Status.ACTIVE;
     }
 
 

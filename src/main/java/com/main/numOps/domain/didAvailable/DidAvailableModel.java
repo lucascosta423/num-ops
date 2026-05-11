@@ -1,6 +1,6 @@
 package com.main.numOps.domain.didAvailable;
 
-import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ public class DidAvailableModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false,length = 2)
     private String cn;
@@ -42,7 +42,7 @@ public class DidAvailableModel {
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
-    private DidStatus status;
+    private DidAvailableStatus status;
 
     public String getNumero(){
         return this.cn + this.prefixo + this.mcdu;

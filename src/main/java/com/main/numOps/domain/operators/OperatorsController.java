@@ -2,7 +2,7 @@ package com.main.numOps.domain.operators;
 
 import com.main.numOps.domain.operators.dtos.NumberLookupDTO;
 import com.main.numOps.domain.operators.dtos.CarrierResponse;
-import com.main.numOps.services.FilesUpload.OperatorsFilesService;
+import com.main.numOps.Files.OperatorsFilesService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

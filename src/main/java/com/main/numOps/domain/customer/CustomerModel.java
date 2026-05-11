@@ -1,6 +1,6 @@
 package com.main.numOps.domain.customer;
 
-import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.customer.enums.StatusCustomer;
 import com.main.numOps.domain.customer.enums.TypeDocument;
 import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
@@ -12,7 +12,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "Customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -21,12 +21,13 @@ public class CustomerModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String razao;
 
     private String document;
 
+    @Enumerated(EnumType.STRING)
     private TypeDocument typeDocument;
 
     private String cep;
@@ -51,10 +52,11 @@ public class CustomerModel {
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
-    private DidStatus status;
+    private StatusCustomer status;
 
     @PrePersist
     private void onCreate(){
         this.createdAt = DateUtils.nowWithoutNanos();
+        this.status = StatusCustomer.ACTIVE;
     }
 }

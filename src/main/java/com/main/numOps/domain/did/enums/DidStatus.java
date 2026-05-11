@@ -1,4 +1,4 @@
-package com.main.numOps.Enuns;
+package com.main.numOps.domain.did.enums;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.main.numOps.controllers;
+package com.main.numOps.domain.auth;
 
 import com.main.numOps.config.TokenService;
 import com.main.numOps.dtos.user.AuthenticationDTO;

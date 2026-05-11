@@ -41,12 +41,12 @@ public class ProviderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProviderModel> getById(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<ProviderModel> getById(@PathVariable(value = "id") Long id){
         return ResponseEntity.status(HttpStatus.OK).body(providerService.findById(id));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<SucessResponse> updateProvedor(@PathVariable(value = "id") Integer id,
+    public ResponseEntity<SucessResponse> updateProvedor(@PathVariable(value = "id") Long id,
                                                  @RequestBody @Valid RequestProviderDTO requestProviderDTO){
         var success = providerService.updateProvedor(id, requestProviderDTO);
 
@@ -54,7 +54,7 @@ public class ProviderController {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<SucessResponse> changeProviderStatus(@PathVariable(value = "id") Integer id){
+    public ResponseEntity<SucessResponse> changeProviderStatus(@PathVariable(value = "id") Long id){
         var success = providerService.changeProviderStatus(id);
         return ResponseEntity.status(HttpStatus.OK).body(success);
     }

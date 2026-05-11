@@ -31,15 +31,15 @@ public class DidController {
         return didService.save(request);
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Page<DidWithoutDidDTO> listAll(@PageableDefault()Pageable pageable){
-        return didService.findAll(pageable);
-    }
+//    @GetMapping
+//    @ResponseStatus(HttpStatus.OK)
+//    public Page<DidWithoutDidDTO> listAll(@PageableDefault()Pageable pageable){
+//        return didService.findAll(pageable);
+//    }
 
-    @GetMapping("/{document}")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<DidAvailableModel> listBydocument(@PathVariable @Valid String document, Pageable pageable){
-        return didService.findByDiddocument(document,pageable);
-    }
+//    @GetMapping("/{document}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Page<DidAvailableModel> listBydocument(@PathVariable @Valid String document, Pageable pageable){
+//        return didService.findByDiddocument(document,pageable);
+//    }
 }

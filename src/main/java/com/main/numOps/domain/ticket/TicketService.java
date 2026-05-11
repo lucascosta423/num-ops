@@ -55,7 +55,7 @@ public class TicketService {
         return saved;
     }
 
-    public TicketReponse findById(Integer id) {
+    public TicketReponse findById(Long id) {
         return ticketRepository.findById(id)
                 .map(TicketReponse::fromEntity)
                 .orElseThrow();
@@ -71,7 +71,7 @@ public class TicketService {
         return findByProvider(provider, pageable);
     }
 
-    public void cancel(Integer id) {
+    public void cancel(Long id) {
 
         var ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket não encontrado"));
@@ -127,7 +127,7 @@ public class TicketService {
         }
     }
 
-    public InputStream downloadFatura(Integer ticketId) {
+    public InputStream downloadFatura(Long ticketId) {
         TicketModel ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new RuntimeException("Ticket não encontrado"));
 

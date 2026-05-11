@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface OperatorsRepository extends JpaRepository<OperatorsModel,Integer> {
+public interface OperatorsRepository extends JpaRepository<OperatorsModel,Long> {
 
     @Query("SELECT b FROM operators b WHERE " +
             "b.prefixo = :prefixo " +

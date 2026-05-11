@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TicketRepository extends JpaRepository<TicketModel,Integer> {
+public interface TicketRepository extends JpaRepository<TicketModel,Long> {
 
     Page<TicketModel> findByProvider(ProviderModel provider, Pageable pageable);
 }

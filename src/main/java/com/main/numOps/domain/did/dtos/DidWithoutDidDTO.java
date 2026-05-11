@@ -1,7 +1,6 @@
 package com.main.numOps.domain.did.dtos;
 
-import com.main.numOps.Enuns.DidStatus;
-import com.main.numOps.domain.did.DidModel;
+import com.main.numOps.domain.did.enums.DidStatus;
 
 import java.time.LocalDateTime;
 
@@ -19,22 +18,4 @@ public record DidWithoutDidDTO(
         String providerNome,
         LocalDateTime createdAt,
         DidStatus status
-) {
-    public static DidWithoutDidDTO fromEntity(DidModel model){
-        return new DidWithoutDidDTO(
-                model.getId(),
-                model.getRazao(),
-                model.getDocument(),
-                model.getCep(),
-                model.getLogradouro(),
-                model.getNumeroEndereco(),
-                model.getComplemento(),
-                model.getBairro(),
-                model.getCidade(),
-                model.getUf(),
-                model.getProvider().getNome(),
-                model.getCreatedAt(),
-                model.getStatus()
-        );
-    }
-}
+) {}

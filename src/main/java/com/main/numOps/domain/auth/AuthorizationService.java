@@ -1,4 +1,4 @@
-package com.main.numOps.services;
+package com.main.numOps.domain.auth;
 
 
 import com.main.numOps.domain.user.UserRepository;

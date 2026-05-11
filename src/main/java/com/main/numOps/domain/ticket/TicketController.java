@@ -39,12 +39,12 @@ public class TicketController {
     }
 
     @PatchMapping("/cancel/{id}")
-    public void cancelTicket(@PathVariable Integer id){
+    public void cancelTicket(@PathVariable Long id){
         ticketService.cancel(id);
     }
 
     @GetMapping("/{id}/fatura")
-    public ResponseEntity<InputStreamResource> downloadFatura(@PathVariable Integer id) {
+    public ResponseEntity<InputStreamResource> downloadFatura(@PathVariable Long id) {
 
         InputStream inputStream = ticketService.downloadFatura(id);
 

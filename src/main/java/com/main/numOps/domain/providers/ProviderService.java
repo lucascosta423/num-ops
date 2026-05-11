@@ -1,6 +1,6 @@
 package com.main.numOps.domain.providers;
 
-import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.Enuns.Status;
 import com.main.numOps.dtos.provider.RequestProviderDTO;
 import com.main.numOps.exeptions.NotFoundException;
 import com.main.numOps.utils.responseApi.SucessResponse;
@@ -23,26 +23,26 @@ public class ProviderService {
         var model = new ProviderModel();
         BeanUtils.copyProperties(dto, model);
 
-        model.setStatusNumber(StatusNumber.ACTIVE);
+        model.setStatus(Status.ACTIVE);
 
         providerRepository.save(model);
 
         return new SucessResponse("Provedor Criado Com Sucesso", "OK");
     }
 
-    public SucessResponse changeProviderStatus(Integer id){
+    public SucessResponse changeProviderStatus(Long id){
         ProviderModel providerModel = findById(id);
 
-        switch (providerModel.getStatusNumber()){
-            case ACTIVE -> providerModel.setStatusNumber(StatusNumber.INACTIVE);
-            case INACTIVE -> providerModel.setStatusNumber(StatusNumber.ACTIVE);
+        switch (providerModel.getStatus()){
+            case ACTIVE -> providerModel.setStatus(Status.INACTIVE);
+            case INACTIVE -> providerModel.setStatus(Status.ACTIVE);
         }
 
         providerRepository.save(providerModel);
         return new SucessResponse("Provedor Deletado ou Reativado com sucesso","OK");
     }
 
-    public SucessResponse updateProvedor(Integer id, RequestProviderDTO dto){
+    public SucessResponse updateProvedor(Long id, RequestProviderDTO dto){
 
         ProviderModel providerModel = findById(id);
 
@@ -57,7 +57,7 @@ public class ProviderService {
         return providerRepository.findAll(pageable);
     }
 
-    public ProviderModel findById(Integer id) {
+    public ProviderModel findById(Long id) {
         return providerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Provedor não encontrado"));
 

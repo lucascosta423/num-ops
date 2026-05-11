@@ -1,6 +1,6 @@
 package com.main.numOps.domain.didAvailable.dtos;
 
-import com.main.numOps.Enuns.DidStatus;
+import com.main.numOps.domain.did.enums.DidStatus;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

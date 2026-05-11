@@ -1,10 +1,8 @@
 package com.main.numOps.domain.did;
 
-import com.main.numOps.Enuns.DidStatus;
-import com.main.numOps.Enuns.StatusNumber;
+import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.customer.CustomerModel;
 import com.main.numOps.domain.didAvailable.DidAvailableModel;
-import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,14 +21,14 @@ public class DidModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "did",nullable = false)
     private DidAvailableModel did;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "customer",nullable = false)
     private CustomerModel customer;
 
     @Column(name = "created_at")
