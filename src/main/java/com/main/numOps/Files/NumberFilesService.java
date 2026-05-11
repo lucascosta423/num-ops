@@ -1,7 +1,7 @@
 package com.main.numOps.Files;
 
-import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.didAvailable.DidAvailableModel;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public class NumberFilesService {
                             case "uf" -> model.setUfArea(value);
                         }
                         if (model.getStatus() == null) {
-                            model.setStatus(DidStatus.AVAILABLE);
+                            model.setStatus(DidAvailableStatus.AVAILABLE);
                         }
 
                     });

@@ -1,8 +1,10 @@
 package com.main.numOps.domain.customer.dtos;
 
+import com.main.numOps.domain.customer.enums.StatusCustomer;
 import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.customer.CustomerModel;
 import com.main.numOps.domain.customer.enums.TypeDocument;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +22,7 @@ public record CustomerResponseDTO(
         String uf,
         String provider,
         LocalDateTime createdAt,
-        DidStatus status
+        StatusCustomer status
 ) {
     public static CustomerResponseDTO fromEntity(CustomerModel model){
         return new CustomerResponseDTO(

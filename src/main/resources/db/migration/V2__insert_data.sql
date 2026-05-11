@@ -6,7 +6,7 @@ INSERT INTO provider (
     email,
     data_criado,
     data_atualizacao,
-    status_number
+    status
 ) VALUES (
              'Ultracom',
              '27999999999',
@@ -25,7 +25,7 @@ INSERT INTO usuario (
     password,
     role,
     data_criado,
-    status_number,
+    status,
     provider_id
 ) VALUES (
              gen_random_uuid(), -- se estiver usando PostgreSQL com pgcrypto
