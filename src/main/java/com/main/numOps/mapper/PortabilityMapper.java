@@ -1,6 +1,7 @@
 package com.main.numOps.mapper;
 
 import com.main.numOps.Enuns.StatusPortability;
+import com.main.numOps.domain.operators.dtos.NumberLookupDTO;
 import com.main.numOps.domain.portability.PortabilityModel;
 import com.main.numOps.domain.operators.OperatorsService;
 import com.main.numOps.domain.operators.dtos.CarrierResponse;
@@ -19,7 +20,7 @@ public class PortabilityMapper {
         this.operatorsService = operatorsService;
     }
 
-    public PortabilityModel toModel(String numero, TicketModel ticket){
+    public PortabilityModel toModel(String numero, TicketModel ticket) {
         PortabilityModel portabilityModel = new PortabilityModel();
 
         var number = findByNumber(numero);
@@ -39,9 +40,11 @@ public class PortabilityMapper {
 
     private CarrierResponse findByNumber(String numero) {
         return operatorsService.findByNumber(
-                numero.substring(0, 2),
-                numero.substring(2, 6),
-                numero.substring(6)
+                new NumberLookupDTO(
+                        numero.substring(0, 2),
+                        numero.substring(2, 6),
+                        numero.substring(6)
+                )
         );
     }
 }
