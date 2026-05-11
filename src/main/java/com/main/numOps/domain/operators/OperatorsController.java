@@ -53,13 +53,9 @@ public class OperatorsController {
     }
 
     @GetMapping("/numero")
-    public ResponseEntity<CarrierResponse> getByNumero(@RequestBody NumberLookupDTO numeroOperadoraDTO){
+    public ResponseEntity<CarrierResponse> getByNumero(@RequestBody NumberLookupDTO lookupDTO){
 
-        var operadoraDTO = operatorsService.findByNumber(
-                numeroOperadoraDTO.prefixo(),
-                numeroOperadoraDTO.mcdu(),
-                numeroOperadoraDTO.codigoNacional()
-        );
+        var operadoraDTO = operatorsService.findByNumber(lookupDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(operadoraDTO);
     }
