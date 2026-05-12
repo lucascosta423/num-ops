@@ -1,46 +1,58 @@
 package com.main.numOps.domain.did;
 
+import com.main.numOps.domain.customer.CustomerModel;
+import com.main.numOps.domain.customer.CustomerService;
 import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.did.dtos.ActivateDidRequest;
+import com.main.numOps.domain.didAvailable.DidAvailableModel;
 import com.main.numOps.domain.didAvailable.DidAvailableService;
 import com.main.numOps.exeptions.NotFoundException;
-import com.main.numOps.mapper.DidMapper;
-import com.main.numOps.utils.AuthUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class DidService {
     private final DidRepository didRepository;
     private final DidAvailableService didAvailableService;
-    private final DidMapper mapper;
-    private final AuthUtils authUtils;
+    private final CustomerService customerService;
 
-    public DidService(DidRepository didRepository, DidAvailableService didAvailableService, DidMapper mapper, AuthUtils authUtils) {
+    public DidService(DidRepository didRepository, DidAvailableService didAvailableService, CustomerService customerService) {
         this.didRepository = didRepository;
         this.didAvailableService = didAvailableService;
-        this.mapper = mapper;
-        this.authUtils = authUtils;
+        this.customerService = customerService;
     }
 
     @Transactional
     public List<DidModel> save(ActivateDidRequest didRequest) {
 
-        var listDid = new ArrayList<DidModel>();
+        CustomerModel customer = customerService.findById(didRequest.idCustomer());
 
-        for (Long idDid : didRequest.numeros()) {
+        Map<Long, DidAvailableModel> didMap = didAvailableService
+                .findAllByIds(didRequest.numeros())
+                .stream()
+                .collect(Collectors.toMap(DidAvailableModel::getId, Function.identity()));
 
-            var didModel = mapper.toModelList(didRequest);
-
-            var did = didAvailableService.findById(idDid);
-
-            didModel.setDid(did);
-
-            listDid.add(didModel);
+        if (didMap.size() != didRequest.numeros().size()) {
+            List<Long> notFound = didRequest.numeros().stream()
+                    .filter(id -> !didMap.containsKey(id))
+                    .toList();
+            throw new NotFoundException("DIDs not found: " + notFound);
         }
+
+        List<DidModel> listDid = didRequest.numeros().stream()
+                .map(idDid -> {
+                    DidModel didModel = new DidModel();
+                    didModel.setDid(didMap.get(idDid));
+                    didModel.setCustomer(customer);
+                    didModel.setStatus(DidStatus.ACTIVE);
+                    return didModel;
+                })
+                .toList();
 
         didAvailableService.updateStatus(didRequest.numeros(), DidStatus.UNAVAILABLE);
 
@@ -49,7 +61,7 @@ public class DidService {
 
     public DidModel findById(Long id) {
         return didRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Numero não encontrado"));
+                .orElseThrow(() -> new NotFoundException("Did Not Found"));
     }
 
 //    public Page<DidAvailableModel> findByDiddocument(String document, Pageable pageable){

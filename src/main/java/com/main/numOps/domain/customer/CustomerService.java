@@ -103,4 +103,9 @@ public class CustomerService {
     public void delete(Long id){
         customerRepository.deleteById(id);
     }
+
+    public CustomerModel findById(Long id){
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer NotFound"));
+    }
 }

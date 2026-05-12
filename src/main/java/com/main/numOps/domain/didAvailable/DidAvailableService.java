@@ -110,4 +110,8 @@ public class DidAvailableService {
         return null;
     }
 
+    public List<DidAvailableModel> findAllByIds(List<Long> ids){
+        return didAvailableRepository.findAllById(ids);
+    }
+
 }

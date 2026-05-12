@@ -5,15 +5,12 @@ import com.main.numOps.domain.operators.OperatorsModel;
 public record CarrierResponse(
     String municipio,
     Integer cnlMunicipio,
-    String areaLocal,
-    Integer cnlAreLocal
-){
+    String areaLocal){
     public static CarrierResponse fromEntity(OperatorsModel operadora) {
         return new CarrierResponse(
                 operadora.getNomeLocalidade(),
                 operadora.getCodigoCnl(),
-                operadora.getAreaLocal(),
-                operadora.getCnlArealocal(operadora.getAreaLocal())
+                operadora.getAreaLocal()
         );
     }
 }
