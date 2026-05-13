@@ -3,6 +3,7 @@ package com.main.numOps.domain.did;
 import com.main.numOps.domain.did.enums.DidStatus;
 import com.main.numOps.domain.customer.CustomerModel;
 import com.main.numOps.domain.didAvailable.DidAvailableModel;
+import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,10 @@ public class DidModel {
     @ManyToOne
     @JoinColumn(name = "customer",nullable = false)
     private CustomerModel customer;
+
+    @ManyToOne
+    @JoinColumn(name = "provider",nullable = false)
+    private ProviderModel provider;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

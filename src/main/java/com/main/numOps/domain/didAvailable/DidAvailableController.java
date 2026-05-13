@@ -5,10 +5,8 @@ import com.main.numOps.domain.didAvailable.dtos.DidAvailableFilter;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeFilterDTO;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeUpdateRequest;
 import com.main.numOps.dtos.ApiResponse;
-import com.main.numOps.utils.responseApi.SucessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -37,7 +35,10 @@ public class DidAvailableController {
     @GetMapping("/available")
     public ResponseEntity<ApiResponse<Page<DidAvailable>>> findAllAvailable(
             @Valid @ParameterObject DidAvailableFilter filter,
-            @PageableDefault(size = 10) Pageable pageable
+            @PageableDefault(
+                    sort = "id",
+                    direction = Sort.Direction.ASC
+            ) Pageable pageable
     ) {
         return ResponseEntity.ok().body(
                 ApiResponse.success(

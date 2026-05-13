@@ -1,6 +1,6 @@
 package com.main.numOps.domain.didAvailable;
 
-import com.main.numOps.domain.did.enums.DidStatus;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +24,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
                 ORDER BY function('RANDOM')
             """)
     Page<DidAvailableModel> findWithFilters(
-            @Param("status") DidStatus status,
+            @Param("status") DidAvailableStatus status,
             @Param("ufArea") String ufArea,
             @Param("area") String area,
             Pageable pageable
@@ -41,7 +41,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
     )
     Integer updateStatusDidAvailable(
             @Param("ids") List<Long> ids,
-            @Param("status") DidStatus status,
+            @Param("status") DidAvailableStatus status,
             @Param("updateAt")LocalDateTime updateAt
             );
 
@@ -63,7 +63,7 @@ public interface DidAvailableRepository extends JpaRepository<DidAvailableModel,
             @Param("prefixo")String prefixo,
             @Param("start") String start,
             @Param("end") String end,
-            @Param("status") DidStatus status,
+            @Param("status") DidAvailableStatus status,
             @Param("updatedAt") LocalDateTime updatedAt
     );
 

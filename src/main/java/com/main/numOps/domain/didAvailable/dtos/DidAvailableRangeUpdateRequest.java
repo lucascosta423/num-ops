@@ -1,6 +1,7 @@
 package com.main.numOps.domain.didAvailable.dtos;
 
 import com.main.numOps.domain.did.enums.DidStatus;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,6 +24,6 @@ public record DidAvailableRangeUpdateRequest(
         String end,
 
         @NotNull
-        DidStatus status
+        DidAvailableStatus status
 ) {
 }

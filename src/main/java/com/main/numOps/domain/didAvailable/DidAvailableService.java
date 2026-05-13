@@ -1,13 +1,13 @@
 package com.main.numOps.domain.didAvailable;
 
-import com.main.numOps.domain.did.enums.DidStatus;
+import com.main.numOps.Files.NumberFilesService;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailable;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableFilter;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeFilterDTO;
 import com.main.numOps.domain.didAvailable.dtos.DidAvailableRangeUpdateRequest;
+import com.main.numOps.domain.didAvailable.enums.DidAvailableStatus;
 import com.main.numOps.exeptions.BusinessException;
 import com.main.numOps.exeptions.NotFoundException;
-import com.main.numOps.Files.NumberFilesService;
 import com.main.numOps.utils.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,22 +37,16 @@ public class DidAvailableService {
     }
 
     public Page<DidAvailable> findAllAvailable(DidAvailableFilter filter, Pageable pageable) {
-        var dids = didAvailableRepository.findWithFilters(
-                        DidStatus.AVAILABLE,
+        return didAvailableRepository.findWithFilters(
+                        DidAvailableStatus.AVAILABLE,
                         filter.uf(),
                         filter.area(),
                         pageable)
                 .map(DidAvailable::fromEntity);
-
-        if (dids.getTotalElements() == 0) {
-            throw new NotFoundException("No DID available for the region.");
-        }
-
-        return dids;
     }
 
     @Transactional
-    public void updateStatus(List<Long> ids, DidStatus status) {
+    public void updateStatus(List<Long> ids, DidAvailableStatus status) {
         Integer updated = didAvailableRepository.updateStatusDidAvailable(
                 ids,
                 status,
@@ -70,7 +64,7 @@ public class DidAvailableService {
             throw new BusinessException("End cannot be less than Start.");
         }
 
-        Page<DidAvailableModel> listed = didAvailableRepository.listByRange(
+        return didAvailableRepository.listByRange(
                 filterDTO.cn(),
                 filterDTO.prefixo(),
                 filterDTO.start(),
@@ -78,11 +72,6 @@ public class DidAvailableService {
                 pageable
         );
 
-        if (listed.getTotalElements() == 0) {
-            throw new NotFoundException("Not a single 'did' found for the chosen range.");
-        }
-
-        return listed;
     }
 
     @Transactional
