@@ -45,4 +45,16 @@ public class DidController {
                 );
     }
 
+    @GetMapping("/customer/{id}")
+    @Operation(summary = "List from dids by customer")
+    public ResponseEntity<ApiResponse<Page<DidWithoutDidDTO>>> listByCustomer(@PathVariable(value = "id") Long id,Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.success(
+                                didService.findByCustomer(id,pageable),
+                                "Dids found",
+                                HttpStatus.OK.value()
+                        )
+                );
+    }
+
 }
