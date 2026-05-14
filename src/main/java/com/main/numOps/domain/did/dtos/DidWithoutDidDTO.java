@@ -9,6 +9,7 @@ public record DidWithoutDidDTO(
         Long id,
         String numero,
         String razao,
+        String document,
         LocalDateTime createdAt,
         DidStatus status
 ) {
@@ -17,6 +18,7 @@ public record DidWithoutDidDTO(
                 model.getId(),
                 model.getDid().getNumero(),
                 model.getCustomer().getRazao(),
+                model.getCustomer().getDocument(),
                 model.getCreatedAt(),
                 model.getStatus()
 
