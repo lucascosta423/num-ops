@@ -27,7 +27,7 @@ public class DidAvailableModel {
     @Column(nullable = false,length = 4)
     private String prefixo;
 
-    @Column(nullable = false,length = 4)
+    @Column(nullable = false,length = 4,unique = true)
     private String mcdu;
 
     @Column(nullable = false,length = 20)
