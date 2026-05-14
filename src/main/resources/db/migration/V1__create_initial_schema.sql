@@ -61,7 +61,8 @@ CREATE TABLE IF NOT EXISTS did_available (
     uf_area VARCHAR(255),
     updated_at TIMESTAMP,
     upload_at TIMESTAMP,
-    status VARCHAR(255)
+    status VARCHAR(255),
+    CONSTRAINT unique_mcdu UNIQUE (mcdu)
 );
 
 CREATE TABLE IF NOT EXISTS customer(
@@ -79,7 +80,8 @@ CREATE TABLE IF NOT EXISTS customer(
     provider BIGINT NOT NULL,
     created_at TIMESTAMP,
     status VARCHAR(50),
-    CONSTRAINT fk_provider FOREIGN KEY (provider) REFERENCES provider (id)
+    CONSTRAINT fk_provider FOREIGN KEY (provider) REFERENCES provider (id),
+    CONSTRAINT uk_customer_provider_document UNIQUE (document, provider)
     );
 
 CREATE TABLE IF NOT EXISTS did(
