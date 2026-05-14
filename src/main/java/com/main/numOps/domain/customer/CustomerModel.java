@@ -12,7 +12,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "Customer")
+@Entity(name = "customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
