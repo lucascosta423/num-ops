@@ -8,6 +8,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,10 +29,12 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
+            throws ServletException, IOException
+    {
 
         String token = recoverToken(request);
 
@@ -39,14 +42,14 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             try {
 
-                String usuario = tokenService.validateToken(token);
+                String user = tokenService.validateToken(token);
 
 
 
-                if (usuario != null &&
+                if (user != null &&
                         SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                    var userOpt = userRepository.findByEmail(usuario);
+                    var userOpt = userRepository.findByEmail(user);
 
                     if (userOpt.isEmpty()) {
                         filterChain.doFilter(request, response);
@@ -54,12 +57,12 @@ public class SecurityFilter extends OncePerRequestFilter {
                         return;
                     }
 
-                    UserDetails user = userOpt.get();
+                    UserDetails userDetails = userOpt.get();
 
                     var authentication = new UsernamePasswordAuthenticationToken(
-                            user,
+                            userDetails,
                             null,
-                            user.getAuthorities()
+                            userDetails.getAuthorities()
                     );
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);

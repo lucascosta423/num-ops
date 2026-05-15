@@ -7,7 +7,8 @@ public enum DidStatus {
     AVAILABLE("AVAILABLE", "Did available"),
     UNAVAILABLE("UNAVAILABLE", "Did unavailable"),
     RESERVED("RESERVED", "Did reserved"),
-    ACTIVE("ACTIVE", "Did Active");
+    ACTIVE("ACTIVE", "Did Active"),
+    CANCEL("CANCEL", "Did cancel");
 
     private final String code;
     private final String description;
