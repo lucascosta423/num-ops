@@ -6,12 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
 
 
-
-
-@Entity
-@Table(name = "operadoras")
+@Entity(name = "operators")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +17,7 @@ import lombok.Setter;
 public class OperatorsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String nomePrestadora;
 
@@ -46,4 +44,5 @@ public class OperatorsModel {
     private Integer codigoArea;
 
     private String status;
+
 }

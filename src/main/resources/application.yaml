@@ -14,9 +14,9 @@ spring:
       idle-timeout: 30000
       pool-name: MeuPoolPostgres
 
-  Jackson:
-    deserialization:
-      fail-on-unknown-properties: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
   servlet:
     multipart:
@@ -24,15 +24,21 @@ spring:
       max-request-size: 50MB
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: update
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+springdoc:
+  swagger-ui:
+    operationsSorter: none
+    doc-expansion: none
 
 token:
   secret: ${JWT_SECRET:my-secret-key}
 
-
-gcp:
-  project-id: ferrous-module-408518
-  bucket-name: filesrequestportability
-  credentials:
-    location: classpath:google-credentials.json
-
+app:
+  storage:
+    type: local
+    local-path: ./storage/faturas

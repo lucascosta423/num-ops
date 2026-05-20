@@ -24,27 +24,40 @@ public class SecurityConfigurations {
         this.securityFilter = securityFilter;
     }
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+//        return httpSecurity
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .anyRequest().permitAll()
+//                )
+//                .build();
+//    }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
+                .authorizeHttpRequests(auth -> auth
 
+                        // 🔓 públicas
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/provedor/**", "/usuario/**", "/numero/**", "/operadoras/**").hasRole("ADMIN")
+                        // 🔐 ADMIN
+                        .requestMatchers(HttpMethod.POST, "/provedor/**", "/usuario/**", "/numero/**", "/operadoras/**","/ticket/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/usuario/**", "/provedor/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/usuario/**", "/provedor/**", "/portabilidade/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/usuario/**").hasRole("ADMIN")
 
+                        // 🔐 USER + ADMIN
                         .requestMatchers(HttpMethod.POST, "/portabilidade/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET, "/numero/**", "/portabilidade/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.PUT, "/numero/update/*","portabilidade/update/").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/numero/update/*", "/portabilidade/update/**").hasAnyRole("ADMIN", "USER")
 
-                        .requestMatchers("/**").hasRole("SUPER_ADMIN")
-
+                        // 🔒 resto precisa estar autenticado
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

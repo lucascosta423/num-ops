@@ -6,20 +6,20 @@ meta:
   modified: 1776274519107
   description: ""
 collection:
-  - name: Number
+  - name: NUMBER
     meta:
       id: fld_2adda2f0af894e2d94be9aafd0cd2028
       created: 1776274527695
-      modified: 1776274527695
-      sortKey: -1776274527695
+      modified: 1777549222013
+      sortKey: -1777380140719.5
       description: ""
     children:
-      - url: http://localhost:8080/numero/upload
+      - url: "{{url}}/upload"
         name: upload
         meta:
           id: req_5e604c33cce742139e78757c7691f0b7
           created: 1776274532471
-          modified: 1776275097474
+          modified: 1777488864485
           isPrivate: false
           description: ""
           sortKey: -1776274535479
@@ -27,22 +27,19 @@ collection:
         body:
           mimeType: multipart/form-data
           params:
-            - id: pair_6421722d643f4eed9afbb40b4a29758f
-              name: file
+            - name: file
               value: ""
               description: ""
               disabled: false
-              type: file
               multiline: true
+              id: pair_6421722d643f4eed9afbb40b4a29758f
               fileName: /home/lucassantos/Downloads/fileNumOps.csv
+              type: file
         parameters:
-          - id: pair_58b2ac9a6ce044779138108988a573c5
-            name: ""
+          - name: ""
             value: ""
-            description: ""
             disabled: true
-            type: text
-            multiline: true
+            id: pair_58b2ac9a6ce044779138108988a573c5
         headers:
           - name: Content-Type
             value: multipart/form-data
@@ -81,11 +78,10 @@ collection:
               "uf": "ES"
             }
         parameters:
-          - id: pair_783399142b9b4f7ea1057e332d34ec24
-            name: ""
+          - name: ""
             value: ""
-            description: ""
             disabled: true
+            id: pair_783399142b9b4f7ea1057e332d34ec24
         headers:
           - name: Content-Type
             value: application/json
@@ -99,27 +95,25 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/numero/list
+      - url: "{{url}}/list"
         name: list number AVAILABLE
         meta:
           id: req_7c1e5b95364343b88c1650c1b2ec04b0
           created: 1776280160740
-          modified: 1776280350593
+          modified: 1777488898636
           isPrivate: false
           description: ""
           sortKey: -1776274817864.5
         method: GET
         parameters:
-          - id: pair_6206aa6602854033aa350655e6e2b1f5
-            name: area
+          - name: area
             value: Serra
-            description: ""
             disabled: false
-          - id: pair_242c82e8c729409a93066494748d8b4f
-            name: uf
+            id: pair_6206aa6602854033aa350655e6e2b1f5
+          - name: uf
             value: ES
-            description: ""
             disabled: false
+            id: pair_242c82e8c729409a93066494748d8b4f
         headers:
           - name: User-Agent
             value: insomnia/12.0.0
@@ -131,22 +125,21 @@ collection:
             send: true
             store: true
           rebuildPath: true
-      - url: http://localhost:8080/numero/cancel/1
+      - url: "{{url}}/cancel/1"
         name: cancelar
         meta:
           id: req_013462f3c3a94d9db5db2d393cbf1cda
           created: 1776281148736
-          modified: 1776281171919
+          modified: 1777488921895
           isPrivate: false
           description: ""
           sortKey: -1776274959057.25
         method: POST
         parameters:
-          - id: pair_783399142b9b4f7ea1057e332d34ec24
-            name: ""
+          - name: ""
             value: ""
-            description: ""
             disabled: true
+            id: pair_783399142b9b4f7ea1057e332d34ec24
         headers:
           - name: User-Agent
             value: insomnia/12.0.0
@@ -158,16 +151,345 @@ collection:
             send: true
             store: true
           rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+      prefix: Bearer
+    environment:
+      url: "{{ _.host_dev }}/number"
+    environmentPropertyOrder:
+      "&":
+        - url
+  - name: AUTH
+    meta:
+      id: fld_19f5693c9ab544b99cb3677cf40eda34
+      created: 1777295544027
+      modified: 1777549217399
+      sortKey: -1777380140807
+      description: ""
+    children:
+      - url: "{{base_url}}/login"
+        name: login
+        meta:
+          id: req_2db8ed98d53f41f6ad5598a3f5eea6b9
+          created: 1777295552280
+          modified: 1777296447265
+          isPrivate: false
+          description: ""
+          sortKey: -1777295552280
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"login":"admin@ultracom.com",
+            	"password":"123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.0.0
+        scripts:
+          afterResponse: |
+            const res = insomnia.response.body;
+
+            const tk = JSON.parse(res);
+
+            insomnia.environment.set('token', tk.token);
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      base_url: "{{ _.host_dev }}/auth"
+    environmentPropertyOrder:
+      "&":
+        - base_url
+  - name: TICKET
+    meta:
+      id: fld_7302805db1384ab29db6630a5d579800
+      created: 1777296647108
+      modified: 1777549219339
+      sortKey: -1777380140757
+      description: ""
+    children:
+      - url: "{{url}}"
+        name: listAll
+        meta:
+          id: req_ed3b0c2a350b4430bedff370b70f09f9
+          created: 1777296684524
+          modified: 1777384803799
+          isPrivate: false
+          description: ""
+          sortKey: -1777296684524
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}"
+        name: created
+        meta:
+          id: req_89d060ac3d794518b3e915f2eaed5830
+          created: 1777296840652
+          modified: 1777487905832
+          isPrivate: false
+          description: ""
+          sortKey: -1777296840652
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_6d85c351d4b84460ab9c8e4f7571f3fb
+              name: razao
+              value: teste
+              description: ""
+              disabled: false
+            - id: pair_57c572b16139479db90e52e6a98e10e6
+              name: documento
+              value: "1234567890"
+              description: ""
+              disabled: false
+            - id: pair_6fe2edc2cff64853ba382eb6b041711b
+              name: cep
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_a3a353d589c54e88820bd1144f400598
+              name: logradouro
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_0a11d8294281489a949acd0bde6b98f3
+              name: numeroEndereco
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_52f45089267b48b698ee8ad0269c15df
+              name: complemento
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_33e51d7420074acb93e187591db6c626
+              name: bairro
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_4cdb5555fc6e426597c1296576c5f775
+              name: cidade
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_5dceccb4a6be49e285809a9e7d8777aa
+              name: uf
+              value: ""
+              description: ""
+              disabled: false
+            - id: pair_e1ab81b4f0924827984a59359ed3ea90
+              name: type
+              value: DID
+              description: ""
+              disabled: false
+            - id: pair_a96caf07d9b442b1996c9b2eb0167a70
+              name: numeros
+              value: 2728880000,2728880001
+              description: ""
+              disabled: false
+              type: text
+              multiline: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}/cancel/16"
+        name: cancel
+        meta:
+          id: req_365e24aa90154334bdad0002173cd72e
+          created: 1777297126320
+          modified: 1777385667906
+          isPrivate: false
+          description: ""
+          sortKey: -1777297126320
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+      prefix: Bearer
+    environment:
+      url: "{{host_dev}}/ticket"
+    environmentPropertyOrder:
+      "&":
+        - url
+  - name: PORTABILIYT
+    meta:
+      id: fld_9957e0b59cda41e596a3bdd683f6eea4
+      created: 1777379966775
+      modified: 1777549220816
+      sortKey: -1777380140732
+      description: ""
+    children:
+      - url: "{{url}}"
+        name: listAll
+        meta:
+          id: req_84ff23afece94af6ad02241eb38cef50
+          created: 1777397975046
+          modified: 1777398021718
+          isPrivate: false
+          description: ""
+          sortKey: -1777397975046
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{url}}/update"
+        name: update
+        meta:
+          id: req_9c21b75d31cf4bfa82296bdc06767d37
+          created: 1777403022198
+          modified: 1777404213953
+          isPrivate: false
+          description: ""
+          sortKey: -1777403022198
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "numerosId": [10, 11],
+              "status": "PORTED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+      prefix: Bearer
+    environment:
+      url: "{{ _.host_dev }}/portability"
+    environmentPropertyOrder:
+      "&":
+        - url
+  - name: OPERATORS
+    meta:
+      id: fld_4789835d14c542b8af0e3b56369e1343
+      created: 1777380140707
+      modified: 1777380341378
+      sortKey: -1777380140707
+      description: ""
+    children:
+      - url: "{{url}}/upload"
+        name: upload
+        meta:
+          id: req_25754cd841ff407d82762eccf6c9d504
+          created: 1777380154993
+          modified: 1777380371150
+          isPrivate: false
+          description: ""
+          sortKey: -1777380154993
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_b7d642a256c74de0a28ac981bd47e5ec
+              name: file
+              value: ""
+              description: ""
+              disabled: false
+              type: file
+              fileName: /home/lucassantos/Downloads/STFC_20260404_GERAL.txt
+        parameters:
+          - id: pair_3eba424cacc2431d8abe0c76b9bf71d9
+            name: ""
+            value: ""
+            description: ""
+            disabled: true
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/12.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: bearer
+      token: "{{token}}"
+      prefix: Bearer
+    environment:
+      url: "{{ _.host_dev }}/operadoras"
+    environmentPropertyOrder:
+      "&":
+        - url
 cookieJar:
   name: Default Jar
   meta:
     id: jar_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1776274519111
+    modified: 1777488736024
 environments:
-  name: Base Environment
+  name: Base
   meta:
     id: env_189884d7f404b62156d89461c003c25f1670150d
     created: 1776274519111
-    modified: 1776274519111
+    modified: 1777488736027
     isPrivate: false
+  data:
+    host_dev: http://localhost:8080
+    host_prod: http://localhost:8080
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQHVsdHJhY29tLmNvbSIsImFkbWluIjp0cnVlLCJ1c3VhcmlvIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTc3NzQ5NTkzNX0.K-xrbB05BoJkHBqc2v2vzkdTqiGyrpiIvS8bEBst0-8

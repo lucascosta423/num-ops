@@ -9,17 +9,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class StorageFactory {
 
-    @Value("${app.storage.type}")
+    @Value("${app.storage.type:local}")
     private String type;
 
     private final LocalStorageService local;
 
     public StorageFactory(LocalStorageService local) {
         this.local = local;
-
     }
 
     public StorageService getStorage() {
-        return local;
+        if ("local".equalsIgnoreCase(type)) {
+            return local;
+        }
+
+        throw new RuntimeException("Tipo de storage não suportado: " + type);
     }
 }

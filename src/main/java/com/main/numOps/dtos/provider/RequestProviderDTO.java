@@ -21,7 +21,7 @@ public class RequestProviderDTO {
 
     @CNPJ
     @NotBlank(message = "Cnpj não pode ser vazio")
-    private String documento;
+    private String document;
 
     @Email(message = "O e-mail deve ser válido")
     @NotBlank(message = "Email não pode ser vazio")

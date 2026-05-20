@@ -1,6 +1,7 @@
 package com.main.numOps.domain.providers;
 
 import com.main.numOps.Enuns.Status;
+import com.main.numOps.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +11,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 
-@Entity(name = "provedor")
-@Table(name = "provedor")
+@Entity(name = "Provider")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ProviderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false,unique = true,length = 150)
     private String nome;
@@ -28,28 +28,29 @@ public class ProviderModel {
     private String contato;
 
     @Column(nullable = false,unique = true,length = 15)
-    private String documento;
+    private String document;
 
     @Column(nullable = false,unique = true,length = 70)
     private String email;
 
     private LocalDateTime dataCriado;
-    @PrePersist
-    protected void onCreate() {
-        this.dataCriado = LocalDateTime.now();
-    }
 
     private LocalDateTime dataAtualizacao;
-    @PreUpdate
-    protected void onUpdate() {
-        this.dataAtualizacao = LocalDateTime.now();
-    }
-
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
     public boolean verifyStatus(){
-        return this.status == Status.I;
+        return this.status == Status.ACTIVE;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataCriado = DateUtils.nowWithoutNanos();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataAtualizacao = DateUtils.nowWithoutNanos();
     }
 }

@@ -1,14 +1,16 @@
 package com.main.numOps.Enuns;
 
-public enum Status {
-    A("Ativo"),
-    I("Inativo"),
-    P("Pendente"),
-    R("Resevado"),
-    N("Novo"),
-    F("Finalizado");
+import lombok.Getter;
 
-    Status(String descricao) {
+@Getter
+public enum Status {
+    ACTIVE("ACTIVE"),
+    INACTIVE("INACTIVE");
+
+    private final String descriptor;
+
+    Status(String descriptor) {
+        this.descriptor = descriptor;
     }
 
 }

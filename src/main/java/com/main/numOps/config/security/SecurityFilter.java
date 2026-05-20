@@ -3,11 +3,12 @@ package com.main.numOps.config.security;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.main.numOps.config.TokenService;
-import com.main.numOps.domain.users.UsuarioRepository;
+import com.main.numOps.domain.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,22 +21,52 @@ import java.io.IOException;
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
 
-    public SecurityFilter(TokenService tokenService, UsuarioRepository usuarioRepository) {
+    public SecurityFilter(TokenService tokenService, UserRepository userRepository) {
         this.tokenService = tokenService;
-        this.usuarioRepository = usuarioRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain)
+            throws ServletException, IOException
+    {
 
-        String token = this.recoverToken(request);
+        String token = recoverToken(request);
+
 
         if (token != null) {
-            String usuario;
             try {
-                usuario = tokenService.validateToken(token);
+
+                String user = tokenService.validateToken(token);
+
+
+
+                if (user != null &&
+                        SecurityContextHolder.getContext().getAuthentication() == null) {
+
+                    var userOpt = userRepository.findByEmail(user);
+
+                    if (userOpt.isEmpty()) {
+                        filterChain.doFilter(request, response);
+                        System.out.println("Usuario Vazoi");
+                        return;
+                    }
+
+                    UserDetails userDetails = userOpt.get();
+
+                    var authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
 
             } catch (TokenExpiredException ex) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -49,11 +80,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 response.getWriter().write("{\"error\": \"Token invalido\"}");
                 return;
             }
-
-            UserDetails user = usuarioRepository.findByUsuario(usuario);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);
