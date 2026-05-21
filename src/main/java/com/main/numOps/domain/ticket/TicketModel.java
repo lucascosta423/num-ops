@@ -27,24 +27,6 @@ public class TicketModel {
 
     private String ticket;
 
-    private String razao;
-
-    private String document;
-
-    private String cep;
-
-    private String logradouro;
-
-    private String numeroEndereco;
-
-    private String complemento;
-
-    private String bairro;
-
-    private String cidade;
-
-    private String uf;
-
     private String fatura;
 
     @ManyToOne
@@ -59,9 +41,9 @@ public class TicketModel {
 
     private LocalDateTime dateFinished;
 
-    private String cancelRequestedBy;
+    private String cancelBy;
 
-    private LocalDateTime cancelRequestedAt;
+    private LocalDateTime cancelAt;
 
     @Enumerated(EnumType.STRING)
     private TicketType type;
@@ -72,6 +54,7 @@ public class TicketModel {
     @PrePersist
     protected void onCreate() {
         this.dateCreated = DateUtils.nowWithoutNanos();
+        this.status = TicketStatus.CREATED;
 
         if (this.id == null) {
             if (this.type == null) {

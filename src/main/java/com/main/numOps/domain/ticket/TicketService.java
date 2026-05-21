@@ -5,7 +5,6 @@ import com.main.numOps.domain.providers.ProviderModel;
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
 import com.main.numOps.domain.ticket.enuns.TicketStatus;
-import com.main.numOps.mapper.TicketMapper;
 import com.main.numOps.utils.AuthUtils;
 import com.main.numOps.utils.DateUtils;
 import com.main.storage.factory.StorageFactory;
@@ -22,22 +21,20 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final PortabilityService portabilityService;
     private final StorageFactory storageFactory;
-    private final TicketMapper mapper;
     private final AuthUtils authUtils;
 
 
-    public TicketService(TicketRepository ticketRepository, PortabilityService portabilityService, StorageFactory storageFactory, TicketMapper mapper, AuthUtils authUtils) {
+    public TicketService(TicketRepository ticketRepository, PortabilityService portabilityService, StorageFactory storageFactory, AuthUtils authUtils) {
         this.ticketRepository = ticketRepository;
         this.portabilityService = portabilityService;
         this.storageFactory = storageFactory;
-        this.mapper = mapper;
         this.authUtils = authUtils;
     }
 
     @Transactional
     public TicketModel save(TicketRequest ticketRequest) {
 
-        TicketModel ticket = mapper.toModel(ticketRequest);
+        TicketModel ticket = new TicketModel();
 
         TicketModel saved = ticketRepository.save(ticket);
 
@@ -81,8 +78,8 @@ public class TicketService {
         }
 
         ticket.setStatus(TicketStatus.CANCELED);
-        ticket.setCancelRequestedBy(authUtils.getCurrentUser().getEmail());
-        ticket.setCancelRequestedAt(DateUtils.nowWithoutNanos());
+        ticket.setCancelBy(authUtils.getCurrentUser().getEmail());
+        ticket.setCancelAt(DateUtils.nowWithoutNanos());
 
         TicketModel saved = ticketRepository.save(ticket);
 

@@ -2,6 +2,7 @@ package com.main.numOps.domain.ticket;
 
 import com.main.numOps.domain.ticket.dtos.TicketReponse;
 import com.main.numOps.domain.ticket.dtos.TicketRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.core.io.InputStreamResource;
@@ -27,6 +28,10 @@ public class TicketController {
     }
 
     @GetMapping
+    @Operation(
+            summary = "List tickets with pagination",
+            description = "Returns a paginated list of tickets registered in the system, allowing sorting and page control."
+    )
     public ResponseEntity<Page<TicketReponse>> listTicket(
             @PageableDefault(page = 0, size = 10, direction = Sort.Direction.ASC) Pageable pageable
     ) {

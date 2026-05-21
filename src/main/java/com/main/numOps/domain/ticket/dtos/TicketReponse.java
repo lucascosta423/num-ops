@@ -11,24 +11,6 @@ public record TicketReponse(
 
         String ticket,
 
-        String razao,
-
-        String document,
-
-        String cep,
-
-        String logradouro,
-
-        String numeroEndereco,
-
-        String complemento,
-
-        String bairro,
-
-        String cidade,
-
-        String uf,
-
         String fatura,
 
         String user,
@@ -53,20 +35,11 @@ public record TicketReponse(
         return new TicketReponse(
                 model.getId(),
                 model.getTicket(),
-                model.getRazao(),
-                model.getDocument(),
-                model.getCep(),
-                model.getLogradouro(),
-                model.getNumeroEndereco(),
-                model.getComplemento(),
-                model.getBairro(),
-                model.getCidade(),
-                model.getUf(),
                 model.getFatura(),
                 model.getUser().getName(),
                 model.getProvider().getNome(),
-                model.getCancelRequestedBy(),
-                model.getCancelRequestedAt(),
+                model.getCancelBy(),
+                model.getCancelAt(),
                 model.getDateCreated(),
                 model.getDateFinished(),
                 model.getType(),
