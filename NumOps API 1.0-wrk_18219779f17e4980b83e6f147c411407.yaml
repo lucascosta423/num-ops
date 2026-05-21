@@ -1,0 +1,1398 @@
+type: spec.insomnia.rest/5.0
+name: NumOps API 1.0
+meta:
+  id: wrk_18219779f17e4980b83e6f147c411407
+  created: 1779367153798
+  modified: 1779367153798
+  description: ""
+environments:
+  name: Base Environment
+  meta:
+    id: env_20eb1ea989731134a3bd30398dc1ffe8b424e6dd
+    created: 1779367153802
+    modified: 1779367153802
+    isPrivate: false
+spec:
+  contents:
+    openapi: 3.0.1
+    info:
+      title: NumOps API
+      description: Documentação da API com Swagger OpenAPI
+      version: "1.0"
+    servers:
+      - url: http://localhost:8080
+        description: Generated server url
+    tags:
+      - name: AUTH
+        description: Authentication
+      - name: USER
+        description: Management Users
+      - name: PROVIDER
+        description: Management Providers
+      - name: CUSTOMER
+        description: Management Customer
+      - name: TICKET
+        description: Management Tickets
+      - name: DIDs CONFIGURED
+        description: Active DIDs management
+      - name: PORTABILITY
+        description: Management Providers
+      - name: DIDs AVAILABLE
+        description: Management Available DID pool
+      - name: OPERATORS
+        description: Management Providers
+    paths:
+      /usuario/update/{id}:
+        put:
+          tags:
+            - USER
+          operationId: updateUser
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+                format: uuid
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestUpdateUsuarioDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /provedor/update/{id}:
+        put:
+          tags:
+            - PROVIDER
+          operationId: updateProvedor
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestProviderDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /portability/update:
+        put:
+          tags:
+            - PORTABILITY
+          operationId: update
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/PortabilityUpdate"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: object
+      /customer/{id}:
+        put:
+          tags:
+            - CUSTOMER
+          summary: Update data customer
+          operationId: update_1
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CustomerUpdateDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /usuario/save/user:
+        post:
+          tags:
+            - USER
+          operationId: saveUsuario
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestSaveUsuarioDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /ticket:
+        get:
+          tags:
+            - TICKET
+          operationId: listTicket
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+        post:
+          tags:
+            - TICKET
+          operationId: createdTicket
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  $ref: "#/components/schemas/TicketRequest"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/TicketModel"
+      /provedor/save:
+        post:
+          tags:
+            - PROVIDER
+          operationId: saveProvedor
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestProviderDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /operadoras/upload:
+        post:
+          tags:
+            - OPERATORS
+          operationId: uploadFile
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  required:
+                    - file
+                  type: object
+                  properties:
+                    file:
+                      type: string
+                      format: binary
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: string
+      /dids/upload:
+        post:
+          tags:
+            - DIDs AVAILABLE
+          summary: Upload DIDs
+          description: |
+            The file must be a .csv or .txt file separated by semicolons.
+
+            ### 📄 Layout do arquivo
+
+            | Campo   | Tipo   | Obrigatório | Descrição              | Exemplo     |
+            |--------|--------|------------|------------------------|------------|
+            | cn     | String | Sim        | Codigo Nacional (DDD)  | 27         |
+            | prefixo| String | Sim        | Prefixo do DID         | 2888       |
+            | mcdu   | String | Sim        | Código MCDU            | 0000       |
+            | area   | String | Sim        | Nome da Cidade         | Serra      |
+            | uf     | String | Sim        | Estado                 | ES         |
+            | status | String | Não        | Status do DID          | AVAILABLE  |
+
+            ### 🧾 Exemplo de arquivo
+
+            ```
+            cn;prefixo;mcdu;area;uf;status
+            27;2888;0000;Serra;ES;AVAILABLE
+            ```
+          operationId: uploadFile_1
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  required:
+                    - file
+                  type: object
+                  properties:
+                    file:
+                      type: string
+                      format: binary
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /dids/filter:
+        post:
+          tags:
+            - DIDs AVAILABLE
+          summary: Filter DIDs by range
+          operationId: filter
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/DidAvailableRangeFilterDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /did/activate:
+        post:
+          tags:
+            - DIDs CONFIGURED
+          summary: Request activation of dids
+          operationId: activate
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ActivateDidRequest"
+            required: true
+          responses:
+            "201":
+              description: Created
+              content:
+                "*/*":
+                  schema:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DidModel"
+      /customer:
+        get:
+          tags:
+            - CUSTOMER
+          summary: List all customer
+          operationId: list_1
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageCustomerResponseDTO"
+        post:
+          tags:
+            - CUSTOMER
+          summary: Created new customer
+          operationId: created
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CustomerRequestDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /auth/login:
+        post:
+          tags:
+            - AUTH
+          operationId: login
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/AuthenticationDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/LoginResponseDTO"
+      /ticket/cancel/{id}:
+        patch:
+          tags:
+            - TICKET
+          operationId: cancelTicket
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+      /dids:
+        get:
+          tags:
+            - DIDs AVAILABLE
+          summary: List all DIDs
+          operationId: listAll
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidAvailableModel"
+        patch:
+          tags:
+            - DIDs AVAILABLE
+          summary: Update status in batch
+          operationId: updateByRange
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/DidAvailableRangeUpdateRequest"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseInteger"
+      /usuario/listAll:
+        get:
+          tags:
+            - USER
+          operationId: getAllUsuarios
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /ticket/{id}/fatura:
+        get:
+          tags:
+            - TICKET
+          operationId: downloadFatura
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: string
+                    format: binary
+      /provedor/{id}:
+        get:
+          tags:
+            - PROVIDER
+          operationId: getById
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ProviderModel"
+      /provedor/listAll:
+        get:
+          tags:
+            - PROVIDER
+          operationId: getALlProvedor
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /portability:
+        get:
+          tags:
+            - PORTABILITY
+          operationId: list
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /operadoras/numero:
+        get:
+          tags:
+            - OPERATORS
+          operationId: getByNumero
+          parameters:
+            - name: lookupDTO
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/NumberLookupDTO"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/CarrierResponse"
+      /operadoras/list:
+        get:
+          tags:
+            - OPERATORS
+          operationId: findAll
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /dids/available:
+        get:
+          tags:
+            - DIDs AVAILABLE
+          summary: List of available DIDs
+          operationId: findAllAvailable
+          parameters:
+            - name: area
+              in: query
+              required: true
+              schema:
+                type: string
+            - name: uf
+              in: query
+              required: true
+              schema:
+                maxLength: 2
+                minLength: 2
+                type: string
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidAvailable"
+      /did:
+        get:
+          tags:
+            - DIDs CONFIGURED
+          summary: List from dids configured
+          operationId: listAll_1
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidWithoutDidDTO"
+      /did/customer/{id}:
+        get:
+          tags:
+            - DIDs CONFIGURED
+          summary: List from dids by customer
+          operationId: listByCustomer
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidWithoutDidDTO"
+      /usuario/delete/{id}:
+        delete:
+          tags:
+            - USER
+          operationId: changeProviderStatus
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+                format: uuid
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /provedor/delete/{id}:
+        delete:
+          tags:
+            - PROVIDER
+          operationId: changeProviderStatus_1
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+    components:
+      schemas:
+        RequestUpdateUsuarioDTO:
+          type: object
+          properties:
+            nome:
+              type: string
+            email:
+              type: string
+            senha:
+              type: string
+        SucessResponse:
+          type: object
+          properties:
+            mensagem:
+              type: string
+            status:
+              type: string
+        RequestProviderDTO:
+          required:
+            - contato
+            - document
+            - email
+            - nome
+          type: object
+          properties:
+            nome:
+              type: string
+            contato:
+              type: string
+            document:
+              type: string
+            email:
+              pattern: ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+              type: string
+        PortabilityUpdate:
+          type: object
+          properties:
+            numerosId:
+              type: array
+              items:
+                type: integer
+                format: int32
+            dataAgendamento:
+              type: string
+            horaAgendamento:
+              type: string
+            status:
+              type: string
+              enum:
+                - AUTHORIZED
+                - PENDING
+                - REJECTED
+                - PORTED
+        CustomerUpdateDTO:
+          type: object
+          properties:
+            providerId:
+              type: integer
+              format: int64
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+        ApiError:
+          type: object
+          properties:
+            field:
+              type: string
+            message:
+              type: string
+        ApiResponseVoid:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              type: object
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        RequestSaveUsuarioDTO:
+          required:
+            - email
+            - nome
+            - provedor
+            - role
+            - senha
+          type: object
+          properties:
+            nome:
+              type: string
+            email:
+              type: string
+            senha:
+              type: string
+            provedor:
+              type: integer
+              format: int64
+            role:
+              type: string
+        TicketRequest:
+          required:
+            - document
+            - numeros
+            - razao
+          type: object
+          properties:
+            razao:
+              type: string
+            document:
+              type: string
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            type:
+              type: string
+              enum:
+                - DID
+                - PORTABILITY
+                - CANCELLATION
+            numeros:
+              type: array
+              items:
+                type: string
+            fatura:
+              type: string
+              format: binary
+        GrantedAuthority:
+          type: object
+          properties:
+            authority:
+              type: string
+        ProviderModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            nome:
+              type: string
+            contato:
+              type: string
+            document:
+              type: string
+            email:
+              type: string
+            dataCriado:
+              type: string
+              format: date-time
+            dataAtualizacao:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+        TicketModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            ticket:
+              type: string
+            razao:
+              type: string
+            document:
+              type: string
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            fatura:
+              type: string
+            user:
+              $ref: "#/components/schemas/UserModel"
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            dateCreated:
+              type: string
+              format: date-time
+            dateFinished:
+              type: string
+              format: date-time
+            cancelRequestedBy:
+              type: string
+            cancelRequestedAt:
+              type: string
+              format: date-time
+            type:
+              type: string
+              enum:
+                - DID
+                - PORTABILITY
+                - CANCELLATION
+            status:
+              type: string
+              enum:
+                - CREATED
+                - IN_ANALYSIS
+                - PROCESSING
+                - COMPLETED
+                - CANCELED
+        UserModel:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+            role:
+              type: string
+              enum:
+                - ADMIN
+                - USER
+                - SUPER_ADMIN
+            dataCriado:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            enabled:
+              type: boolean
+            admin:
+              type: boolean
+            authorities:
+              type: array
+              items:
+                $ref: "#/components/schemas/GrantedAuthority"
+            username:
+              type: string
+            accountNonExpired:
+              type: boolean
+            accountNonLocked:
+              type: boolean
+            credentialsNonExpired:
+              type: boolean
+        DidAvailableRangeFilterDTO:
+          required:
+            - cn
+            - end
+            - prefixo
+            - start
+          type: object
+          properties:
+            cn:
+              maxLength: 2
+              minLength: 2
+              type: string
+            prefixo:
+              maxLength: 4
+              minLength: 4
+              type: string
+            start:
+              maxLength: 4
+              minLength: 4
+              type: string
+            end:
+              maxLength: 4
+              minLength: 4
+              type: string
+        Pageable:
+          type: object
+          properties:
+            page:
+              minimum: 0
+              type: integer
+              format: int32
+            size:
+              minimum: 1
+              type: integer
+              format: int32
+            sort:
+              type: array
+              items:
+                type: string
+        PageMetadata:
+          type: object
+          properties:
+            size:
+              type: integer
+              format: int64
+            number:
+              type: integer
+              format: int64
+            totalElements:
+              type: integer
+              format: int64
+            totalPages:
+              type: integer
+              format: int64
+        PagedModel:
+          type: object
+          properties:
+            content:
+              type: array
+              items:
+                type: object
+            page:
+              $ref: "#/components/schemas/PageMetadata"
+        ActivateDidRequest:
+          required:
+            - idCustomer
+            - numeros
+          type: object
+          properties:
+            numeros:
+              type: array
+              items:
+                type: integer
+                format: int64
+            idCustomer:
+              type: integer
+              format: int64
+        CustomerModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            razao:
+              type: string
+            document:
+              type: string
+            typeDocument:
+              type: string
+              enum:
+                - CNPJ
+                - CPF
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            createdAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+        DidAvailableModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            cn:
+              type: string
+            prefixo:
+              type: string
+            mcdu:
+              type: string
+            area:
+              type: string
+            ufArea:
+              type: string
+            uploadAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+            numero:
+              type: string
+        DidModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            did:
+              $ref: "#/components/schemas/DidAvailableModel"
+            customer:
+              $ref: "#/components/schemas/CustomerModel"
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            createdAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+                - ACTIVE
+                - CANCEL
+        CustomerRequestDTO:
+          required:
+            - document
+            - razao
+            - typeDocument
+          type: object
+          properties:
+            razao:
+              type: string
+            document:
+              type: string
+            typeDocument:
+              type: string
+              enum:
+                - CNPJ
+                - CPF
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+        AuthenticationDTO:
+          type: object
+          properties:
+            login:
+              type: string
+            password:
+              type: string
+        LoginResponseDTO:
+          type: object
+          properties:
+            token:
+              type: string
+        DidAvailableRangeUpdateRequest:
+          required:
+            - cn
+            - end
+            - prefixo
+            - start
+            - status
+          type: object
+          properties:
+            cn:
+              maxLength: 2
+              minLength: 2
+              type: string
+            prefixo:
+              maxLength: 4
+              minLength: 4
+              type: string
+            start:
+              maxLength: 4
+              minLength: 4
+              type: string
+            end:
+              maxLength: 4
+              minLength: 4
+              type: string
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+        ApiResponseInteger:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              type: integer
+              format: int32
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        NumberLookupDTO:
+          type: object
+          properties:
+            codigoNacional:
+              type: string
+            prefixo:
+              type: string
+            mcdu:
+              type: string
+        CarrierResponse:
+          type: object
+          properties:
+            municipio:
+              type: string
+            cnlMunicipio:
+              type: integer
+              format: int32
+            areaLocal:
+              type: string
+        ApiResponsePageDidAvailableModel:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        PageObject:
+          type: object
+          properties:
+            totalElements:
+              type: integer
+              format: int64
+            totalPages:
+              type: integer
+              format: int32
+            pageable:
+              $ref: "#/components/schemas/PageableObject"
+            first:
+              type: boolean
+            last:
+              type: boolean
+            size:
+              type: integer
+              format: int32
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/DidAvailableModel"
+            number:
+              type: integer
+              format: int32
+            sort:
+              type: array
+              items:
+                $ref: "#/components/schemas/SortObject"
+            numberOfElements:
+              type: integer
+              format: int32
+            empty:
+              type: boolean
+        PageableObject:
+          type: object
+          properties:
+            paged:
+              type: boolean
+            pageNumber:
+              type: integer
+              format: int32
+            pageSize:
+              type: integer
+              format: int32
+            offset:
+              type: integer
+              format: int64
+            sort:
+              type: array
+              items:
+                $ref: "#/components/schemas/SortObject"
+            unpaged:
+              type: boolean
+        SortObject:
+          type: object
+          properties:
+            direction:
+              type: string
+            nullHandling:
+              type: string
+            ascending:
+              type: boolean
+            property:
+              type: string
+            ignoreCase:
+              type: boolean
+        ApiResponsePageDidAvailable:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        ApiResponsePageDidWithoutDidDTO:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        ApiResponsePageCustomerResponseDTO:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+  meta:
+    id: spc_3cdb983025f54c76b7e1c80e3a889f7d
+    created: 1779367153800
+    modified: 1779367153800
