@@ -1,0 +1,2280 @@
+type: spec.insomnia.rest/5.0
+name: NumOps API 1.0
+meta:
+  id: wrk_a55476e4dbe74da4ad020af795f7af4b
+  created: 1779366538756
+  modified: 1779366538756
+  description: ""
+collection:
+  - name: USER
+    meta:
+      id: fld_89a6f0a41aec4d6b8af882f9e35f1af5
+      created: 1779366595920
+      modified: 1779366595920
+      sortKey: -1779366595920
+      description: Management Users
+    children:
+      - url: "{{ _.base_url }}/usuario/update/{{ _.id }}"
+        name: /usuario/update/{id}
+        meta:
+          id: req_3ff18d60b2154aabac852b435438829b
+          created: 1779366595922
+          modified: 1779366595922
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595922
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "string",
+              "email": "string",
+              "senha": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuario/save/user"
+        name: /usuario/save/user
+        meta:
+          id: req_4bda3912d84c4ed998fbf328f00a75db
+          created: 1779366595923
+          modified: 1779366595923
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595923
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "string",
+              "email": "string",
+              "senha": "string",
+              "provedor": 0,
+              "role": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuario/listAll"
+        name: /usuario/listAll
+        meta:
+          id: req_5ac4eb345d7e4134b7f39cb5ba635524
+          created: 1779366595927
+          modified: 1779366595927
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595927
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuario/delete/{{ _.id }}"
+        name: /usuario/delete/{id}
+        meta:
+          id: req_92d39b616cc74527b4166b755e0625e0
+          created: 1779366595930
+          modified: 1779366595930
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595930
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: AUTH
+    meta:
+      id: fld_ac504d0ceb4149db963aaf7ed3169b6e
+      created: 1779366595920
+      modified: 1779366595920
+      sortKey: -1779366595920
+      description: Authentication
+    children:
+      - url: "{{ _.base_url }}/auth/login"
+        name: /auth/login
+        meta:
+          id: req_6aaa18cde45c4f6d8d941d1ea7f85102
+          created: 1779366595926
+          modified: 1779366708171
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595926
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "login": "string",
+              "password": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: DIDs CONFIGURED
+    meta:
+      id: fld_31c51c2c55c249899c9525233c9c0301
+      created: 1779366595921
+      modified: 1779366595921
+      sortKey: -1779366595921
+      description: Active DIDs management
+    children:
+      - url: "{{ _.base_url }}/did/activate"
+        name: Request activation of dids
+        meta:
+          id: req_ca18e4561ed24e36b52e5c1122ce93a9
+          created: 1779366595925
+          modified: 1779366595925
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595925
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "numeros": [
+                0
+              ],
+              "idCustomer": 0
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/did"
+        name: List from dids configured
+        meta:
+          id: req_78f1e738346644bfa0facdb7c718f7f0
+          created: 1779366595929
+          modified: 1779366595929
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595929
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/did/customer/{{ _.id }}"
+        name: List from dids by customer
+        meta:
+          id: req_96ac9d79f5e44692a6642a1cff816b06
+          created: 1779366595930
+          modified: 1779366595930
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595930
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: PROVIDER
+    meta:
+      id: fld_8581173575de44f6a8c99477d941caa6
+      created: 1779366595921
+      modified: 1779366595921
+      sortKey: -1779366595921
+      description: Management Providers
+    children:
+      - url: "{{ _.base_url }}/provedor/update/{{ _.id }}"
+        name: /provedor/update/{id}
+        meta:
+          id: req_4d872a3ae8364e19a4d1759f54d7870e
+          created: 1779366595923
+          modified: 1779366595923
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595923
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "string",
+              "contato": "string",
+              "document": "string",
+              "email": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/provedor/save"
+        name: /provedor/save
+        meta:
+          id: req_adabd1ac4b9140e0b72364eba48993c5
+          created: 1779366595924
+          modified: 1779366595924
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595924
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "string",
+              "contato": "string",
+              "document": "string",
+              "email": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/provedor/{{ _.id }}"
+        name: /provedor/{id}
+        meta:
+          id: req_21ce7bc1a8de464593db1665c9ac5c4c
+          created: 1779366595928
+          modified: 1779366595928
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595928
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/provedor/listAll"
+        name: /provedor/listAll
+        meta:
+          id: req_869a858250134187a4fc7844d025d4db
+          created: 1779366595928
+          modified: 1779366595928
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595928
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/provedor/delete/{{ _.id }}"
+        name: /provedor/delete/{id}
+        meta:
+          id: req_8e0d7049b0b8468b9974a05f4b0b0c89
+          created: 1779366595930
+          modified: 1779366595930
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595930
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: PORTABILITY
+    meta:
+      id: fld_906ac963f90246a5953594004299d476
+      created: 1779366595921
+      modified: 1779366595921
+      sortKey: -1779366595921
+      description: Management Providers
+    children:
+      - url: "{{ _.base_url }}/portability/update"
+        name: /portability/update
+        meta:
+          id: req_3f9e9bbfef904d6bb2c8e2862e3d9db3
+          created: 1779366595923
+          modified: 1779366595923
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595923
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "numerosId": [
+                0
+              ],
+              "dataAgendamento": "string",
+              "horaAgendamento": "string",
+              "status": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/portability"
+        name: /portability
+        meta:
+          id: req_e6de665530944a378b2213b048509a45
+          created: 1779366595928
+          modified: 1779366595928
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595928
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: TICKET
+    meta:
+      id: fld_da62d3029c8741f4b749df441e520971
+      created: 1779366595921
+      modified: 1779366595921
+      sortKey: -1779366595921
+      description: Management Tickets
+    children:
+      - url: "{{ _.base_url }}/ticket"
+        name: /ticket
+        meta:
+          id: req_1558b70ea868416c8cf44fbd21ad97fc
+          created: 1779366595924
+          modified: 1779366595924
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595924
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/ticket"
+        name: /ticket
+        meta:
+          id: req_1cee69ccda6546278c4c72ce900af805
+          created: 1779366595924
+          modified: 1779366595924
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595924
+        method: POST
+        body:
+          mimeType: multipart/form-data
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: multipart/form-data
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/ticket/cancel/{{ _.id }}"
+        name: /ticket/cancel/{id}
+        meta:
+          id: req_adf80ec446c341138b1dedb45fa6a0c6
+          created: 1779366595926
+          modified: 1779366595926
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595926
+        method: PATCH
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/ticket/{{ _.id }}/fatura"
+        name: /ticket/{id}/fatura
+        meta:
+          id: req_cb727806acde4abc92267c7ba9c4e9b5
+          created: 1779366595927
+          modified: 1779366595927
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595927
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: CUSTOMER
+    meta:
+      id: fld_ec7f6cea29674948b48c3f0f64262af4
+      created: 1779366595921
+      modified: 1779366595921
+      sortKey: -1779366595921
+      description: Management Customer
+    children:
+      - url: "{{ _.base_url }}/customer/{{ _.id }}"
+        name: Update data customer
+        meta:
+          id: req_2a9862f4462f4539818ac2cb2ac2302e
+          created: 1779366595923
+          modified: 1779366595923
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595923
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "providerId": 0,
+              "cep": "string",
+              "logradouro": "string",
+              "numeroEndereco": "string",
+              "complemento": "string",
+              "bairro": "string",
+              "cidade": "string",
+              "uf": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/customer"
+        name: List all customer
+        meta:
+          id: req_e219a76d00b24e9f86c51b9775240bb8
+          created: 1779366595925
+          modified: 1779366595925
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595925
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/customer"
+        name: Created new customer
+        meta:
+          id: req_c08d5f5ec7114c5585a1643e6b291c97
+          created: 1779366595926
+          modified: 1779366595926
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595926
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "razao": "string",
+              "document": "string",
+              "typeDocument": "string",
+              "cep": "string",
+              "logradouro": "string",
+              "numeroEndereco": "string",
+              "complemento": "string",
+              "bairro": "string",
+              "cidade": "string",
+              "uf": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: DIDs AVAILABLE
+    meta:
+      id: fld_2b8d09acc49b4bc48b3fbc2b79d667ec
+      created: 1779366595922
+      modified: 1779366595922
+      sortKey: -1779366595922
+      description: Management Available DID pool
+    children:
+      - url: "{{ _.base_url }}/dids/filter"
+        name: Filter DIDs by range
+        meta:
+          id: req_0290e0aed7a9429696339e7bc04b0bf1
+          created: 1779366595925
+          modified: 1779366595925
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595925
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "cn": "string",
+              "prefixo": "string",
+              "start": "string",
+              "end": "string"
+            }
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/dids/upload"
+        name: Upload DIDs
+        meta:
+          id: req_ddb9fd90657548c0926915b45975a14b
+          created: 1779366595925
+          modified: 1779366595925
+          isPrivate: false
+          description: |
+            The file must be a .csv or .txt file separated by semicolons.
+
+            ### 📄 Layout do arquivo
+
+            | Campo   | Tipo   | Obrigatório | Descrição              | Exemplo     |
+            |--------|--------|------------|------------------------|------------|
+            | cn     | String | Sim        | Codigo Nacional (DDD)  | 27         |
+            | prefixo| String | Sim        | Prefixo do DID         | 2888       |
+            | mcdu   | String | Sim        | Código MCDU            | 0000       |
+            | area   | String | Sim        | Nome da Cidade         | Serra      |
+            | uf     | String | Sim        | Estado                 | ES         |
+            | status | String | Não        | Status do DID          | AVAILABLE  |
+
+            ### 🧾 Exemplo de arquivo
+
+            ```
+            cn;prefixo;mcdu;area;uf;status
+            27;2888;0000;Serra;ES;AVAILABLE
+            ```
+          sortKey: -1779366595925
+        method: POST
+        body:
+          mimeType: multipart/form-data
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: multipart/form-data
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/dids"
+        name: Update status in batch
+        meta:
+          id: req_98747d99ecde43faadebf5a8ff8f55ef
+          created: 1779366595927
+          modified: 1779366595927
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595927
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "cn": "string",
+              "prefixo": "string",
+              "start": "string",
+              "end": "string",
+              "status": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/dids"
+        name: List all DIDs
+        meta:
+          id: req_9cb1655e3e544335ad1314070eabc5e9
+          created: 1779366595927
+          modified: 1779366595927
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595927
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/dids/available"
+        name: List of available DIDs
+        meta:
+          id: req_47faac36d788455fafc4fd5b3ad93af3
+          created: 1779366595929
+          modified: 1779366595929
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595929
+        method: GET
+        parameters:
+          - name: area
+            disabled: false
+            value: string
+          - name: uf
+            disabled: false
+            value: string
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: OPERATORS
+    meta:
+      id: fld_d4c4508d8ecd4ebe90e0cf38a29a1d26
+      created: 1779366595922
+      modified: 1779366595922
+      sortKey: -1779366595922
+      description: Management Providers
+    children:
+      - url: "{{ _.base_url }}/operadoras/upload"
+        name: /operadoras/upload
+        meta:
+          id: req_c7f05f3e916d4f77b273dff7438e794f
+          created: 1779366595924
+          modified: 1779366595924
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595924
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "file": "string"
+            }
+        headers:
+          - name: Content-Type
+            disabled: false
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/operadoras/numero"
+        name: /operadoras/numero
+        meta:
+          id: req_0345cbd4d4a14a0b8650b15d46e78611
+          created: 1779366595928
+          modified: 1779366595928
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595928
+        method: GET
+        parameters:
+          - name: lookupDTO
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/operadoras/list"
+        name: /operadoras/list
+        meta:
+          id: req_366078db539842548ae15126fa3b1909
+          created: 1779366595929
+          modified: 1779366595929
+          isPrivate: false
+          description: ""
+          sortKey: -1779366595929
+        method: GET
+        parameters:
+          - name: pageable
+            disabled: false
+            value: "[object Object]"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_2bd585f4440268b924cf5549298daf6a0261e0c1
+    created: 1779366540990
+    modified: 1779366540990
+environments:
+  name: Base Environment
+  meta:
+    id: env_2bd585f4440268b924cf5549298daf6a0261e0c1
+    created: 1779366538769
+    modified: 1779366595919
+    isPrivate: false
+  data:
+    base_url: "{{ _.scheme }}://{{ _.host }}{{ _.base_path }}"
+  subEnvironments:
+    - name: OpenAPI env localhost:8080
+      meta:
+        id: env_060467b752934323b36934c941a081c5
+        created: 1779366595920
+        modified: 1779366595920
+        isPrivate: false
+        sortKey: 1779366595920
+      data:
+        scheme: http
+        base_path: ""
+        host: localhost:8080
+spec:
+  contents:
+    openapi: 3.0.1
+    info:
+      title: NumOps API
+      description: Documentação da API com Swagger OpenAPI
+      version: "1.0"
+    servers:
+      - url: http://localhost:8080
+        description: Generated server url
+    tags:
+      - name: AUTH
+        description: Authentication
+      - name: USER
+        description: Management Users
+      - name: PROVIDER
+        description: Management Providers
+      - name: CUSTOMER
+        description: Management Customer
+      - name: TICKET
+        description: Management Tickets
+      - name: DIDs CONFIGURED
+        description: Active DIDs management
+      - name: PORTABILITY
+        description: Management Providers
+      - name: DIDs AVAILABLE
+        description: Management Available DID pool
+      - name: OPERATORS
+        description: Management Providers
+    paths:
+      /usuario/update/{id}:
+        put:
+          tags:
+            - USER
+          operationId: updateUser
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+                format: uuid
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestUpdateUsuarioDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /provedor/update/{id}:
+        put:
+          tags:
+            - PROVIDER
+          operationId: updateProvedor
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestProviderDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /portability/update:
+        put:
+          tags:
+            - PORTABILITY
+          operationId: update
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/PortabilityUpdate"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: object
+      /customer/{id}:
+        put:
+          tags:
+            - CUSTOMER
+          summary: Update data customer
+          operationId: update_1
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CustomerUpdateDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /usuario/save/user:
+        post:
+          tags:
+            - USER
+          operationId: saveUsuario
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestSaveUsuarioDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /ticket:
+        get:
+          tags:
+            - TICKET
+          operationId: listTicket
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+        post:
+          tags:
+            - TICKET
+          operationId: createdTicket
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  $ref: "#/components/schemas/TicketRequest"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/TicketModel"
+      /provedor/save:
+        post:
+          tags:
+            - PROVIDER
+          operationId: saveProvedor
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/RequestProviderDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /operadoras/upload:
+        post:
+          tags:
+            - OPERATORS
+          operationId: uploadFile
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  required:
+                    - file
+                  type: object
+                  properties:
+                    file:
+                      type: string
+                      format: binary
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: string
+      /dids/upload:
+        post:
+          tags:
+            - DIDs AVAILABLE
+          summary: Upload DIDs
+          description: |
+            The file must be a .csv or .txt file separated by semicolons.
+
+            ### 📄 Layout do arquivo
+
+            | Campo   | Tipo   | Obrigatório | Descrição              | Exemplo     |
+            |--------|--------|------------|------------------------|------------|
+            | cn     | String | Sim        | Codigo Nacional (DDD)  | 27         |
+            | prefixo| String | Sim        | Prefixo do DID         | 2888       |
+            | mcdu   | String | Sim        | Código MCDU            | 0000       |
+            | area   | String | Sim        | Nome da Cidade         | Serra      |
+            | uf     | String | Sim        | Estado                 | ES         |
+            | status | String | Não        | Status do DID          | AVAILABLE  |
+
+            ### 🧾 Exemplo de arquivo
+
+            ```
+            cn;prefixo;mcdu;area;uf;status
+            27;2888;0000;Serra;ES;AVAILABLE
+            ```
+          operationId: uploadFile_1
+          requestBody:
+            content:
+              multipart/form-data:
+                schema:
+                  required:
+                    - file
+                  type: object
+                  properties:
+                    file:
+                      type: string
+                      format: binary
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /dids/filter:
+        post:
+          tags:
+            - DIDs AVAILABLE
+          summary: Filter DIDs by range
+          operationId: filter
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/DidAvailableRangeFilterDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /did/activate:
+        post:
+          tags:
+            - DIDs CONFIGURED
+          summary: Request activation of dids
+          operationId: activate
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ActivateDidRequest"
+            required: true
+          responses:
+            "201":
+              description: Created
+              content:
+                "*/*":
+                  schema:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DidModel"
+      /customer:
+        get:
+          tags:
+            - CUSTOMER
+          summary: List all customer
+          operationId: list_1
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageCustomerResponseDTO"
+        post:
+          tags:
+            - CUSTOMER
+          summary: Created new customer
+          operationId: created
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/CustomerRequestDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseVoid"
+      /auth/login:
+        post:
+          tags:
+            - AUTH
+          operationId: login
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/AuthenticationDTO"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/LoginResponseDTO"
+      /ticket/cancel/{id}:
+        patch:
+          tags:
+            - TICKET
+          operationId: cancelTicket
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+      /dids:
+        get:
+          tags:
+            - DIDs AVAILABLE
+          summary: List all DIDs
+          operationId: listAll
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidAvailableModel"
+        patch:
+          tags:
+            - DIDs AVAILABLE
+          summary: Update status in batch
+          operationId: updateByRange
+          requestBody:
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/DidAvailableRangeUpdateRequest"
+            required: true
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponseInteger"
+      /usuario/listAll:
+        get:
+          tags:
+            - USER
+          operationId: getAllUsuarios
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /ticket/{id}/fatura:
+        get:
+          tags:
+            - TICKET
+          operationId: downloadFatura
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    type: string
+                    format: binary
+      /provedor/{id}:
+        get:
+          tags:
+            - PROVIDER
+          operationId: getById
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ProviderModel"
+      /provedor/listAll:
+        get:
+          tags:
+            - PROVIDER
+          operationId: getALlProvedor
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /portability:
+        get:
+          tags:
+            - PORTABILITY
+          operationId: list
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /operadoras/numero:
+        get:
+          tags:
+            - OPERATORS
+          operationId: getByNumero
+          parameters:
+            - name: lookupDTO
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/NumberLookupDTO"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/CarrierResponse"
+      /operadoras/list:
+        get:
+          tags:
+            - OPERATORS
+          operationId: findAll
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/PagedModel"
+      /dids/available:
+        get:
+          tags:
+            - DIDs AVAILABLE
+          summary: List of available DIDs
+          operationId: findAllAvailable
+          parameters:
+            - name: area
+              in: query
+              required: true
+              schema:
+                type: string
+            - name: uf
+              in: query
+              required: true
+              schema:
+                maxLength: 2
+                minLength: 2
+                type: string
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidAvailable"
+      /did:
+        get:
+          tags:
+            - DIDs CONFIGURED
+          summary: List from dids configured
+          operationId: listAll_1
+          parameters:
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidWithoutDidDTO"
+      /did/customer/{id}:
+        get:
+          tags:
+            - DIDs CONFIGURED
+          summary: List from dids by customer
+          operationId: listByCustomer
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+            - name: pageable
+              in: query
+              required: true
+              schema:
+                $ref: "#/components/schemas/Pageable"
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/ApiResponsePageDidWithoutDidDTO"
+      /usuario/delete/{id}:
+        delete:
+          tags:
+            - USER
+          operationId: changeProviderStatus
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: string
+                format: uuid
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+      /provedor/delete/{id}:
+        delete:
+          tags:
+            - PROVIDER
+          operationId: changeProviderStatus_1
+          parameters:
+            - name: id
+              in: path
+              required: true
+              schema:
+                type: integer
+                format: int64
+          responses:
+            "200":
+              description: OK
+              content:
+                "*/*":
+                  schema:
+                    $ref: "#/components/schemas/SucessResponse"
+    components:
+      schemas:
+        RequestUpdateUsuarioDTO:
+          type: object
+          properties:
+            nome:
+              type: string
+            email:
+              type: string
+            senha:
+              type: string
+        SucessResponse:
+          type: object
+          properties:
+            mensagem:
+              type: string
+            status:
+              type: string
+        RequestProviderDTO:
+          required:
+            - contato
+            - document
+            - email
+            - nome
+          type: object
+          properties:
+            nome:
+              type: string
+            contato:
+              type: string
+            document:
+              type: string
+            email:
+              pattern: ^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$
+              type: string
+        PortabilityUpdate:
+          type: object
+          properties:
+            numerosId:
+              type: array
+              items:
+                type: integer
+                format: int32
+            dataAgendamento:
+              type: string
+            horaAgendamento:
+              type: string
+            status:
+              type: string
+              enum:
+                - AUTHORIZED
+                - PENDING
+                - REJECTED
+                - PORTED
+        CustomerUpdateDTO:
+          type: object
+          properties:
+            providerId:
+              type: integer
+              format: int64
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+        ApiError:
+          type: object
+          properties:
+            field:
+              type: string
+            message:
+              type: string
+        ApiResponseVoid:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              type: object
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        RequestSaveUsuarioDTO:
+          required:
+            - email
+            - nome
+            - provedor
+            - role
+            - senha
+          type: object
+          properties:
+            nome:
+              type: string
+            email:
+              type: string
+            senha:
+              type: string
+            provedor:
+              type: integer
+              format: int64
+            role:
+              type: string
+        TicketRequest:
+          required:
+            - document
+            - numeros
+            - razao
+          type: object
+          properties:
+            razao:
+              type: string
+            document:
+              type: string
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            type:
+              type: string
+              enum:
+                - DID
+                - PORTABILITY
+                - CANCELLATION
+            numeros:
+              type: array
+              items:
+                type: string
+            fatura:
+              type: string
+              format: binary
+        GrantedAuthority:
+          type: object
+          properties:
+            authority:
+              type: string
+        ProviderModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            nome:
+              type: string
+            contato:
+              type: string
+            document:
+              type: string
+            email:
+              type: string
+            dataCriado:
+              type: string
+              format: date-time
+            dataAtualizacao:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+        TicketModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            ticket:
+              type: string
+            razao:
+              type: string
+            document:
+              type: string
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            fatura:
+              type: string
+            user:
+              $ref: "#/components/schemas/UserModel"
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            dateCreated:
+              type: string
+              format: date-time
+            dateFinished:
+              type: string
+              format: date-time
+            cancelRequestedBy:
+              type: string
+            cancelRequestedAt:
+              type: string
+              format: date-time
+            type:
+              type: string
+              enum:
+                - DID
+                - PORTABILITY
+                - CANCELLATION
+            status:
+              type: string
+              enum:
+                - CREATED
+                - IN_ANALYSIS
+                - PROCESSING
+                - COMPLETED
+                - CANCELED
+        UserModel:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            email:
+              type: string
+            password:
+              type: string
+            role:
+              type: string
+              enum:
+                - ADMIN
+                - USER
+                - SUPER_ADMIN
+            dataCriado:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+                - INACTIVE
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            enabled:
+              type: boolean
+            admin:
+              type: boolean
+            authorities:
+              type: array
+              items:
+                $ref: "#/components/schemas/GrantedAuthority"
+            username:
+              type: string
+            accountNonExpired:
+              type: boolean
+            accountNonLocked:
+              type: boolean
+            credentialsNonExpired:
+              type: boolean
+        DidAvailableRangeFilterDTO:
+          required:
+            - cn
+            - end
+            - prefixo
+            - start
+          type: object
+          properties:
+            cn:
+              maxLength: 2
+              minLength: 2
+              type: string
+            prefixo:
+              maxLength: 4
+              minLength: 4
+              type: string
+            start:
+              maxLength: 4
+              minLength: 4
+              type: string
+            end:
+              maxLength: 4
+              minLength: 4
+              type: string
+        Pageable:
+          type: object
+          properties:
+            page:
+              minimum: 0
+              type: integer
+              format: int32
+            size:
+              minimum: 1
+              type: integer
+              format: int32
+            sort:
+              type: array
+              items:
+                type: string
+        PageMetadata:
+          type: object
+          properties:
+            size:
+              type: integer
+              format: int64
+            number:
+              type: integer
+              format: int64
+            totalElements:
+              type: integer
+              format: int64
+            totalPages:
+              type: integer
+              format: int64
+        PagedModel:
+          type: object
+          properties:
+            content:
+              type: array
+              items:
+                type: object
+            page:
+              $ref: "#/components/schemas/PageMetadata"
+        ActivateDidRequest:
+          required:
+            - idCustomer
+            - numeros
+          type: object
+          properties:
+            numeros:
+              type: array
+              items:
+                type: integer
+                format: int64
+            idCustomer:
+              type: integer
+              format: int64
+        CustomerModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            razao:
+              type: string
+            document:
+              type: string
+            typeDocument:
+              type: string
+              enum:
+                - CNPJ
+                - CPF
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            createdAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - ACTIVE
+        DidAvailableModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            cn:
+              type: string
+            prefixo:
+              type: string
+            mcdu:
+              type: string
+            area:
+              type: string
+            ufArea:
+              type: string
+            uploadAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+            numero:
+              type: string
+        DidModel:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            did:
+              $ref: "#/components/schemas/DidAvailableModel"
+            customer:
+              $ref: "#/components/schemas/CustomerModel"
+            provider:
+              $ref: "#/components/schemas/ProviderModel"
+            createdAt:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+                - ACTIVE
+                - CANCEL
+        CustomerRequestDTO:
+          required:
+            - document
+            - razao
+            - typeDocument
+          type: object
+          properties:
+            razao:
+              type: string
+            document:
+              type: string
+            typeDocument:
+              type: string
+              enum:
+                - CNPJ
+                - CPF
+            cep:
+              type: string
+            logradouro:
+              type: string
+            numeroEndereco:
+              type: string
+            complemento:
+              type: string
+            bairro:
+              type: string
+            cidade:
+              type: string
+            uf:
+              type: string
+        AuthenticationDTO:
+          type: object
+          properties:
+            login:
+              type: string
+            password:
+              type: string
+        LoginResponseDTO:
+          type: object
+          properties:
+            token:
+              type: string
+        DidAvailableRangeUpdateRequest:
+          required:
+            - cn
+            - end
+            - prefixo
+            - start
+            - status
+          type: object
+          properties:
+            cn:
+              maxLength: 2
+              minLength: 2
+              type: string
+            prefixo:
+              maxLength: 4
+              minLength: 4
+              type: string
+            start:
+              maxLength: 4
+              minLength: 4
+              type: string
+            end:
+              maxLength: 4
+              minLength: 4
+              type: string
+            status:
+              type: string
+              enum:
+                - AVAILABLE
+                - UNAVAILABLE
+                - RESERVED
+        ApiResponseInteger:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              type: integer
+              format: int32
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        NumberLookupDTO:
+          type: object
+          properties:
+            codigoNacional:
+              type: string
+            prefixo:
+              type: string
+            mcdu:
+              type: string
+        CarrierResponse:
+          type: object
+          properties:
+            municipio:
+              type: string
+            cnlMunicipio:
+              type: integer
+              format: int32
+            areaLocal:
+              type: string
+        ApiResponsePageDidAvailableModel:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        PageObject:
+          type: object
+          properties:
+            totalElements:
+              type: integer
+              format: int64
+            totalPages:
+              type: integer
+              format: int32
+            pageable:
+              $ref: "#/components/schemas/PageableObject"
+            first:
+              type: boolean
+            last:
+              type: boolean
+            size:
+              type: integer
+              format: int32
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/DidAvailableModel"
+            number:
+              type: integer
+              format: int32
+            sort:
+              type: array
+              items:
+                $ref: "#/components/schemas/SortObject"
+            numberOfElements:
+              type: integer
+              format: int32
+            empty:
+              type: boolean
+        PageableObject:
+          type: object
+          properties:
+            paged:
+              type: boolean
+            pageNumber:
+              type: integer
+              format: int32
+            pageSize:
+              type: integer
+              format: int32
+            offset:
+              type: integer
+              format: int64
+            sort:
+              type: array
+              items:
+                $ref: "#/components/schemas/SortObject"
+            unpaged:
+              type: boolean
+        SortObject:
+          type: object
+          properties:
+            direction:
+              type: string
+            nullHandling:
+              type: string
+            ascending:
+              type: boolean
+            property:
+              type: string
+            ignoreCase:
+              type: boolean
+        ApiResponsePageDidAvailable:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        ApiResponsePageDidWithoutDidDTO:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+        ApiResponsePageCustomerResponseDTO:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+            status:
+              type: integer
+              format: int32
+            success:
+              type: boolean
+            message:
+              type: string
+            data:
+              $ref: "#/components/schemas/PageObject"
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/ApiError"
+            path:
+              type: string
+  meta:
+    id: spc_1724f080c9e24344bb7a4564dd895f24
+    created: 1779366538766
+    modified: 1779366538767
